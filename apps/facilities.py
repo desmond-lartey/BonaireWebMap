@@ -29,7 +29,7 @@ def app():
         m.add_geojson(geojson, layer_name=layer_name)
 
     # Example of adding a shapefile layer
-    shapefile_path = "C:\\Users\\Gebruiker\\Desktop\\My Lab\\Bonaire\\BonaireWebMap\\data\\newlyexportedshp\\bonaireboundary.shp"
+    shapefile_path = "C:\\Users\\Gebruiker\\Desktop\\My Lab\\Bonaire\\BonaireWebMap\\newlyexportedshp\\bonaireboundary.shp"
     add_shapefile_layer(shapefile_path, "Bonaire Boundary")
 
     # After adding layers, manually adjust the view.
