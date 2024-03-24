@@ -2,6 +2,10 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from apps import home, facilities  # Make sure to import your app modules here
 
+import streamlit as st
+from streamlit_option_menu import option_menu
+from apps import home, facilities
+
 # Setting up the page configuration
 st.set_page_config(page_title="Bonaire Geospatial", layout="wide")
 
