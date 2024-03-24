@@ -10,3 +10,4 @@ streamlit
 streamlit-option-menu
 streamlit-folium
 psycopg2-binary
+fiona
