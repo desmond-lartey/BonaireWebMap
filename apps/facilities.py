@@ -8,15 +8,23 @@ import os
 def app():
     st.title("Facilities and Land Uses")
 
-    # Sidebar for base map selection
+    # Assuming 'basemap_choice' is obtained from the sidebar selection
     basemap_choice = st.sidebar.radio(
         "Choose a basemap",
-        ("OpenStreetMap", "HYBRID", "TERRAIN", "ESRI Satellite"),  # Add more basemap options here
-        index=0  # Default to OpenStreetMap
+        ("OpenStreetMap", "HYBRID", "TERRAIN", "ESRI Satellite"),  # Example options
+        index=0
     )
 
-    # Initialize the map without specifying center and zoom here
-    m = leafmap.Map()
+    # Mapping user choice to leafmap basemap constants (this is an example, adjust based on actual basemap options)
+    basemap_mapping = {
+        "OpenStreetMap": "ROADMAP",
+        "HYBRID": "HYBRID",
+        "TERRAIN": "TERRAIN",
+        "ESRI Satellite": "ESRI"
+    }
+    
+    # Create the Map object with the selected basemap
+    m = Map(basemap=basemap_mapping.get(basemap_choice, "OpenStreetMap"))
 
     # Function to add a shapefile layer
     def add_shapefile_layer(shapefile_path, layer_name):
