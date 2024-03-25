@@ -1,5 +1,6 @@
 # apps/facilities.py
 import streamlit as st
+from leafmap.foliumap import Map 
 import leafmap.foliumap as leafmap
 import geopandas as gpd
 import json
