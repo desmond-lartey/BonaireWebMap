@@ -3,6 +3,7 @@ import streamlit as st
 import geemap.foliumap as geemap
 import geopandas as gpd
 import os
+from branca.element import Template, MacroElement
 
 def app():
     st.title("Facilities and Land Uses")
@@ -70,6 +71,6 @@ def app():
 
     # Add the legend to the map
     add_legend(m, legend_title, legend_colors)
-    
+
     # Display the map
     m.to_streamlit(height=700)
