@@ -9,20 +9,30 @@ import os
 def app():
     st.title("Facilities and Land Uses")
 
-    # Assuming 'basemap_choice' is obtained from the sidebar selection
+    # Sidebar for base map selection
     basemap_choice = st.sidebar.radio(
         "Choose a basemap",
-        ("OpenStreetMap", "HYBRID", "TERRAIN", "ESRI Satellite"),  # Example options
+        ["OpenStreetMap", "HYBRID", "TERRAIN", "ESRI Satellite"],  # Example options
         index=0
     )
 
-    # Mapping user choice to leafmap basemap constants (this is an example, adjust based on actual basemap options)
-    basemap_mapping = {
-        "OpenStreetMap": "ROADMAP",
-        "HYBRID": "HYBRID",
-        "TERRAIN": "TERRAIN",
+    # Assuming you've mapped basemap choices to leafmap's basemap names
+    basemaps = {
+        "OpenStreetMap": "OPENSTREETMAP",
+        "HYBRID": "GOOGLE_HYBRID",
+        "TERRAIN": "GOOGLE_TERRAIN",
         "ESRI Satellite": "ESRI"
     }
+
+    # Create the Map object directly with the selected basemap
+    selected_basemap = basemaps.get(basemap_choice, "OPENSTREETMAP")
+    m = Map(basemap=selected_basemap)
+
+    # Example of adding a GeoJSON layer or other operations...
+    # m.add_geojson(geojson_path, layer_name="Your Layer Name")
+
+    # Display the map
+    m.to_streamlit(height=700)
     
     # Create the Map object with the selected basemap
     m = Map(basemap=basemap_mapping.get(basemap_choice, "OpenStreetMap"))
