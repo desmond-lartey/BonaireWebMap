@@ -13,7 +13,7 @@ st.set_page_config(page_title="Bonaire Geospatial", layout="wide")
 apps = [
     {"func": home.app, "title": "Home", "icon": "house"},
     {"func": facilities.app, "title": "Facilities", "icon": "building"},
-    {"func": area.app, "title": "Facilities", "icon": "building"},
+    {"func": area.app, "title": "Neighborhoods", "icon": "building"},
 ]
 
 # Creating the sidebar menu
