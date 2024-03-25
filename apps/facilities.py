@@ -57,9 +57,9 @@ def app():
                     bottom: 50px; left: 50px; width: 150px; height: 90px; 
                     background-color: white; border:2px solid grey; z-index:9999; font-size:14px;
                     ">&nbsp; <b>{legend_title}</b> <br>
-                    {{%- for label, color in legend_colors.items() %}}
+                    {%- for label, color in legend_colors.items() %}
                     &nbsp; <i class="fa fa-square fa-2x" style="color:{color}"></i> {label}<br>
-                    {{%- endfor %}}
+                    {%- endfor %}
         </div>
         {{% endmacro %}}
         """
