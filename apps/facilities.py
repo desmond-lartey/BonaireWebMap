@@ -3,6 +3,7 @@ import streamlit as st
 import leafmap.foliumap as leafmap
 import geopandas as gpd
 import json
+import os
 
 def app():
     st.title("Facilities and Land Uses")
@@ -29,7 +30,12 @@ def app():
         m.add_geojson(geojson, layer_name=layer_name)
 
     # Example of adding a shapefile layer
-    shapefile_path = "C:\\Users\\Gebruiker\\Desktop\\My Lab\\Bonaire\\BonaireWebMap\\newlyexportedshp\\bonaireboundary.shp"
+    # shapefile_path = "C:\\Users\\Gebruiker\\Desktop\\My Lab\\Bonaire\\BonaireWebMap\\newlyexportedshp\\bonaireboundary.shp"
+    # add_shapefile_layer(shapefile_path, "Bonaire Boundary")
+
+    base_path = os.path.dirname(__file__)  # Gets the directory where the script is located
+    shapefile_rel_path = "newlyexportedshp/bonaireboundary.shp"
+    shapefile_path = os.path.join(base_path, shapefile_rel_path)
     add_shapefile_layer(shapefile_path, "Bonaire Boundary")
 
     # After adding layers, manually adjust the view.
