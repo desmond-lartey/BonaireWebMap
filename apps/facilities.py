@@ -98,5 +98,8 @@ def app():
     for _, row in gdf.iterrows():
         folium.GeoJson(row['geometry'], tooltip=row['name']).add_to(m)
 
-    # Display the map in Streamlit
-    m._to_html()
+    # Your map creation code
+    m = folium.Map(location=[12.15, -68.27], zoom_start=11)
+
+    # Instead of m._to_html(), use folium_static to display the map in Streamlit
+    folium_static(m)
