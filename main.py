@@ -1,10 +1,10 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from apps import home, facilities, neighbourhoods  # Make sure to import your app modules here
+from apps import home, facilities, area  # Make sure to import your app modules here
 
-import streamlit as st
-from streamlit_option_menu import option_menu
-from apps import home, facilities, neighbourhoods
+# import streamlit as st
+# from streamlit_option_menu import option_menu
+# from apps import home, facilities, neighbourhoods
 
 # Setting up the page configuration
 st.set_page_config(page_title="Bonaire Geospatial", layout="wide")
@@ -13,7 +13,7 @@ st.set_page_config(page_title="Bonaire Geospatial", layout="wide")
 apps = [
     {"func": home.app, "title": "Home", "icon": "house"},
     {"func": facilities.app, "title": "Facilities", "icon": "building"},
-    {"func": neighbourhoods.app, "title": "Facilities", "icon": "building"},
+    {"func": area.app, "title": "Facilities", "icon": "building"},
 ]
 
 # Creating the sidebar menu
