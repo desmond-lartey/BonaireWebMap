@@ -57,15 +57,15 @@ def app():
                     bottom: 50px; left: 50px; width: 150px; height: 90px; 
                     background-color: white; border:2px solid grey; z-index:9999; font-size:14px;
                     ">&nbsp; <b>{legend_title}</b> <br>
-                    {%- for label, color in legend_colors.items() %}
-                    &nbsp; <i class="fa fa-square fa-2x" style="color:{color}"></i> {label}<br>
-                    {%- endfor %}
+                    {{%- for label, color in legend_colors.items() %}}
+                    &nbsp; <i class="fa fa-square fa-2x" style="color:{{{{color}}}}"></i> {{{{label}}}}<br>
+                    {{%- endfor %}}
         </div>
         {{% endmacro %}}
         """
 
         macro = MacroElement()
-        macro._template = Template(template.format(legend_title=legend_title, legend_colors=legend_colors))
+        macro._template = Template(template.format(legend_title=legend_title, legend_colors=json.dumps(legend_colors)))
 
         m.get_root().add_child(macro)
 
