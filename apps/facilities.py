@@ -33,10 +33,11 @@ def app():
     # shapefile_path = "C:\\Users\\Gebruiker\\Desktop\\My Lab\\Bonaire\\BonaireWebMap\\newlyexportedshp\\bonaireboundary.shp"
     # add_shapefile_layer(shapefile_path, "Bonaire Boundary")
 
-    base_path = os.path.dirname(__file__)  # Gets the directory where the script is located
-    shapefile_rel_path = "newlyexportedshp/bonaireboundary.shp"
+    base_path = os.path.dirname(os.path.dirname(__file__))  # Goes up one directory level from 'apps'
+    shapefile_rel_path = os.path.join("newlyexportedshp", "bonaireboundary.shp")
     shapefile_path = os.path.join(base_path, shapefile_rel_path)
     add_shapefile_layer(shapefile_path, "Bonaire Boundary")
+
 
     # After adding layers, manually adjust the view.
     m.set_center(lon=-68.27, lat=12.15, zoom=10)
