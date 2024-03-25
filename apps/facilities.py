@@ -38,5 +38,38 @@ def app():
     shapefile_path = os.path.join(project_root, "newlyexportedshp", "bonaireboundary.shp")
     add_shapefile_layer(shapefile_path, "Bonaire Boundary")
 
+    # Define the legend
+    legend_colors = {
+        "Agricultural": "green",
+        "Urban": "red",
+        "Water": "blue",
+        "Forest": "darkgreen",
+        "Barren": "gray"
+    }
+    legend_title = "Land Use Types"
+
+    # Function to add a legend to the map
+    def add_legend(m, legend_title, legend_colors):
+        template = """
+        {% macro html(this, kwargs) %}
+        <div style="position: fixed; 
+                    bottom: 50px; left: 50px; width: 150px; height: 90px; 
+                    background-color: white; border:2px solid grey; z-index:9999; font-size:14px;
+                    ">&nbsp; <b>{legend_title}</b> <br>
+                    {%- for label, color in legend_colors.items() %}
+                    &nbsp; <i class="fa fa-square fa-2x" style="color:{color}"></i> {label}<br>
+                    {%- endfor %}
+        </div>
+        {% endmacro %}
+        """
+
+        macro = MacroElement()
+        macro._template = Template(template.format(legend_title=legend_title, legend_colors=legend_colors))
+
+        m.get_root().add_child(macro)
+
+    # Add the legend to the map
+    add_legend(m, legend_title, legend_colors)
+    
     # Display the map
     m.to_streamlit(height=700)

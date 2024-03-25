@@ -11,3 +11,7 @@ streamlit-option-menu
 streamlit-folium
 psycopg2-binary
 fiona
+networkx
+osmnx
+pandas
+folium 
