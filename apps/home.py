@@ -45,7 +45,7 @@ def app():
     st.sidebar.markdown(
         """
         **Urban Cycling Institute**  
-        [https://urbancyclinginstitute.org/enhancing-active-mobility-on-bonaire/](https://wetlands.io)  
+        [Read more](https://urbancyclinginstitute.org/enhancing-active-mobility-on-bonaire/)  
         [Education](https://urbancyclinginstitute.org/education/) | [Events](https://urbancyclinginstitute.org/events/) | [Projects](https://urbancyclinginstitute.org/projects/) | [LinkedIn](https://www.linkedin.com/company/urbancyclinginstitute/)
         """
     )
