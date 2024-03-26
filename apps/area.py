@@ -54,4 +54,5 @@ def app():
     # Display the map in Streamlit
     folium_static(m)
 
+
 # Remember to include this module in your main.py or wherever you're aggregating your app modules.
