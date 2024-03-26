@@ -34,11 +34,17 @@ def app():
     # Load geographic data
     base_path = os.path.dirname(__file__)  # Directory of this script
     project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
-    buildings_gdf = os.path.join(project_root, "neighbourhood", "buildings2.shp")
+    buildings_gdf = os.path.join(project_root, "neighbourhood", "roads.shp")
     add_shapefile_layer(buildings_gdf, "Bonaire Buildings")
+
+    # base_path = os.path.dirname(__file__)  # Directory of this script
+    # project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
+    # shapefile_path = os.path.join(project_root, "newlyexportedshp", "bonaireboundary.shp")
+    # add_shapefile_layer(shapefile_path, "Bonaire Boundary")
 
     # Call the function to create neighborhoods
     neighborhoods_gdf = create_neighborhoods(buildings_gdf, n_neighborhoods=15)
+
 
     # Add the neighborhoods to the map
     folium.GeoJson(neighborhoods_gdf, name="Neighborhoods").add_to(m)
