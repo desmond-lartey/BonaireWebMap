@@ -1,60 +1,31 @@
-# neighborhoods.py
 import streamlit as st
-from turtle import st
 import geopandas as gpd
-import rasterio
-from rasterstats import zonal_stats
-import pandas as pd
-import matplotlib.pyplot as plt
+import folium
+from streamlit_folium import folium_static
 import os
 
-def calculate_zonal_stats(hexgrid_shp_path, population_tif_path):
-    # Ensure both shapefile and .tif file paths exist
-    if not os.path.exists(hexgrid_shp_path):
-        st.error(f"Hexgrid shapefile not found at {hexgrid_shp_path}")
-        return None
-    if not os.path.exists(population_tif_path):
-        st.error(f"Population .tif file not found at {population_tif_path}")
-        return None
-    
-    # Load the hexgrid shapefile
-    hexgrids = gpd.read_file(hexgrid_shp_path)
-
-    # Calculate zonal statistics
-    stats = zonal_stats(hexgrid_shp_path, population_tif_path, stats="sum", all_touched=True)
-
-    # Add population data to hexgrids GeoDataFrame
-    hexgrids['population'] = [stat['sum'] for stat in stats]
-    
-    # Assuming the area of hexgrids is in square meters, calculate population density
-    hexgrids['pop_density'] = hexgrids['population'] / hexgrids.geometry.area * 1000000  # for density per sq km
-
-    return hexgrids
-
-def plot_population_density(hexgrids):
-    # Assuming 'pop_density' is in people per sq km
-    hexgrids.plot(column='pop_density', legend=True, cmap='OrRd')
-    plt.title("Population Density per Neighborhood")
-    plt.xlabel("Longitude")
-    plt.ylabel("Latitude")
-    plt.tight_layout()
-    return plt
-
 def app():
-    st.title("Population Analysis")
+    st.title("Population Analysis - Interactive Hexgrids")
 
-    # Dynamically construct the path to the shapefile and .tif file
+    # Dynamically construct the path to the shapefile
     base_path = os.path.dirname(__file__)  # Directory of this script
     project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
-    hexgrid_shp_path = os.path.join(project_root, "data", "bonairehexgrid.shp")
-    population_tif_path = os.path.join(project_root, "data", "population.tif")
+    shapefile_path = os.path.join(project_root, "newlyexportedshp", "zonalstats.shp")
+    
+    # Load the shapefile
+    hexgrids = gpd.read_file(shapefile_path)
+    
+    # Initialize a folium map centered on Bonaire
+    m = folium.Map(location=[12.15, -68.27], zoom_start=11)
+    
+    # Add hexgrids to the map as clickable polygons
+    for _, row in hexgrids.iterrows():
+        # Simplify geometry for faster rendering (optional)
+        simplified_geom = row.geometry.simplify(0.001, preserve_topology=True)
+        # Create a popup with the population 'sum' information
+        popup = folium.Popup(f"Population Sum: {row['_sum']}", parse_html=True)
+        # Add polygon to the map
+        folium.GeoJson(simplified_geom, popup=popup).add_to(m)
 
-    # Run analysis
-    hexgrids = calculate_zonal_stats(hexgrid_shp_path, population_tif_path)
-    if hexgrids is not None:
-        # Show DataFrame in Streamlit
-        st.write(hexgrids[['population', 'pop_density']])
-
-        # Generate plot and show in Streamlit
-        fig = plot_population_density(hexgrids)
-        st.pyplot(fig)
+    # Display the map in Streamlit
+    folium_static(m)
