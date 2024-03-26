@@ -15,3 +15,4 @@ networkx
 osmnx
 pandas
 folium 
+scikit-learn
