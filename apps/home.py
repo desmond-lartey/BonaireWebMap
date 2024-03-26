@@ -36,8 +36,8 @@ def app():
     
     st.sidebar.info(
         """
-        **Web App URL**: [https://streamlit.geemap.org](https://streamlit.geemap.org)  
-        **GitHub repository**: [https://github.com/giswqs/streamlit-geospatial](https://github.com/giswqs/streamlit-geospatial)
+        **Web App URL**: [https://active-mobility-bonaire-uci.streamlit.app/)  
+        **GitHub repository**: [https://github.com/desmond-lartey/BonaireWebMap](https://github.com/desmond-lartey/BonaireWebMap)
         """
     )
 
