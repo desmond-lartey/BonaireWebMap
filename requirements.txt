@@ -17,3 +17,9 @@ osmnx
 pandas
 folium
 rasterstats
+pandas
+geopandas
+folium
+streamlit
+streamlit-folium
+openpyxl
