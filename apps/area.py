@@ -1,33 +1,59 @@
-# neighborhoods.py
-import streamlit as st
-import folium
-from streamlit_folium import folium_static
+# neighborhoods.pyimport streamlit as st
+from turtle import st
 import geopandas as gpd
-from shapely.geometry import Point, Polygon
+import rasterio
+from rasterstats import zonal_stats
+import pandas as pd
+import matplotlib.pyplot as plt
+import os
+
+def calculate_zonal_stats(hexgrid_shp_path, population_tif_path):
+    # Ensure both shapefile and .tif file paths exist
+    if not os.path.exists(hexgrid_shp_path):
+        st.error(f"Hexgrid shapefile not found at {hexgrid_shp_path}")
+        return None
+    if not os.path.exists(population_tif_path):
+        st.error(f"Population .tif file not found at {population_tif_path}")
+        return None
+    
+    # Load the hexgrid shapefile
+    hexgrids = gpd.read_file(hexgrid_shp_path)
+
+    # Calculate zonal statistics
+    stats = zonal_stats(hexgrid_shp_path, population_tif_path, stats="sum", all_touched=True)
+
+    # Add population data to hexgrids GeoDataFrame
+    hexgrids['population'] = [stat['sum'] for stat in stats]
+    
+    # Assuming the area of hexgrids is in square meters, calculate population density
+    hexgrids['pop_density'] = hexgrids['population'] / hexgrids.geometry.area * 1000000  # for density per sq km
+
+    return hexgrids
+
+def plot_population_density(hexgrids):
+    # Assuming 'pop_density' is in people per sq km
+    hexgrids.plot(column='pop_density', legend=True, cmap='OrRd')
+    plt.title("Population Density per Neighborhood")
+    plt.xlabel("Longitude")
+    plt.ylabel("Latitude")
+    plt.tight_layout()
+    return plt
 
 def app():
-    st.title("Neighborhoods of Bonaire")
+    st.title("Population Analysis")
 
-    # Initialize a map centered on Bonaire
-    m = folium.Map(location=[12.15, -68.27], zoom_start=11)
+    # Dynamically construct the path to the shapefile and .tif file
+    base_path = os.path.dirname(__file__)  # Directory of this script
+    project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
+    hexgrid_shp_path = os.path.join(project_root, "data", "bonairehexgrid.shp")
+    population_tif_path = os.path.join(project_root, "data", "population.tif")
 
-    # Example list of neighborhoods with manually approximated central points (latitude, longitude)
-    neighborhoods_info = [
-        {"name": "Playa", "location": (12.1500, -68.2767)},
-        # Add other neighborhoods with their approximate central locations
-    ]
+    # Run analysis
+    hexgrids = calculate_zonal_stats(hexgrid_shp_path, population_tif_path)
+    if hexgrids is not None:
+        # Show DataFrame in Streamlit
+        st.write(hexgrids[['population', 'pop_density']])
 
-    # Creating approximate neighborhood boundaries (e.g., circles with a radius of 500 meters)
-    for neighborhood in neighborhoods_info:
-        # Creating a point for the neighborhood center
-        center_point = Point(neighborhood["location"][1], neighborhood["location"][0])
-        # Buffering the point to create an approximate area (polygon)
-        area = center_point.buffer(0.005)  # Adjust the buffer size as necessary
-        
-        # Adding the buffered area as a polygon to the map
-        folium.GeoJson(area, tooltip=neighborhood["name"]).add_to(m)
-
-    # Display the map in Streamlit
-    folium_static(m)
-
-# Remember to include this module in your main.py or wherever you're aggregating your app modules.
+        # Generate plot and show in Streamlit
+        fig = plot_population_density(hexgrids)
+        st.pyplot(fig)

@@ -14,4 +14,5 @@ fiona
 networkx
 osmnx
 pandas
-folium 
+folium
+rasterstats
