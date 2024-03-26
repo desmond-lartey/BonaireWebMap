@@ -40,7 +40,7 @@ def app():
     add_shapefile_layer(shapefile_path, "Bonaire Boundary")
     shapefile_path = os.path.join(project_root, "newlyexportedshp", "bonairehexgrid.shp")
     add_shapefile_layer(shapefile_path, "Neighbourhoods")
-    shapefile_path = os.path.join(project_root, "newlyexportedshp", "Zonalstats.shp")
+    shapefile_path = os.path.join(project_root, "newlyexportedshp", "zonalstats.shp")
     add_shapefile_layer(shapefile_path, "Zonalstats")
 
     # Define the legend
