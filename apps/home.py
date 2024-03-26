@@ -69,7 +69,7 @@ def app():
     import datetime
 
     current_year = datetime.datetime.now().year
-    st.sidebar.markdown(f"© {current_year} Copyright Urban Cycling Institute")
+    st.sidebar.markdown(f"© {current_year} Urban Cycling Institute")
 
     row1_col1, row1_col2 = st.columns(2)
     with row1_col1:
