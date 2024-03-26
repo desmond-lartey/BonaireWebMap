@@ -38,9 +38,10 @@ def app():
     project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
     shapefile_path = os.path.join(project_root, "newlyexportedshp", "bonaireboundary.shp")
     add_shapefile_layer(shapefile_path, "Bonaire Boundary")
-
     shapefile_path = os.path.join(project_root, "newlyexportedshp", "bonairehexgrid.shp")
     add_shapefile_layer(shapefile_path, "Neighbourhoods")
+    shapefile_path = os.path.join(project_root, "newlyexportedshp", "Zonalstats.shp")
+    add_shapefile_layer(shapefile_path, "Zonalstats")
 
     # Define the legend
     # legend_colors = {
