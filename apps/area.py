@@ -1,9 +1,29 @@
 # neighborhoods.py
-import os
-import geopandas as gpd
+import streamlit as st
 import folium
 from streamlit_folium import folium_static
-import streamlit as st
+import geopandas as gpd
+import numpy as np
+from sklearn.cluster import KMeans
+import os
+
+def create_neighborhoods(buildings_gdf, n_neighborhoods):
+    # Assuming buildings_gdf has 'geometry' with building locations
+    # Convert building points to coordinates array for clustering
+    building_coords = np.array(list(buildings_gdf.geometry.apply(lambda x: (x.x, x.y))))
+    
+    # Use a clustering algorithm like K-Means to group buildings
+    kmeans = KMeans(n_clusters=n_neighborhoods)
+    buildings_gdf['cluster'] = kmeans.fit_predict(building_coords)
+    
+    # Create polygons (buffers) around the clusters of buildings for initial neighborhood boundaries
+    # Here you may need more sophisticated GIS operations to generate meaningful neighborhoods
+    neighborhoods_gdf = buildings_gdf.dissolve(by='cluster', aggfunc='first').buffer(0.01)  # Example buffer, adjust as needed
+    
+    # Convert buffer polygons to a GeoDataFrame
+    neighborhoods_gdf = gpd.GeoDataFrame(geometry=gpd.GeoSeries(neighborhoods_gdf), crs=buildings_gdf.crs)
+    
+    return neighborhoods_gdf
 
 def app():
     st.title("Neighborhoods of Bonaire")
@@ -11,34 +31,19 @@ def app():
     # Initialize a map centered on Bonaire
     m = folium.Map(location=[12.15, -68.27], zoom_start=11)
 
-    # Function to add a shapefile layer
-    def add_shapefile_layer(shapefile_path, layer_name, style=None):
-        # Ensure the shapefile path exists
-        if os.path.exists(shapefile_path):
-            # Read the shapefile
-            gdf = gpd.read_file(shapefile_path)
-            
-            # Add the GeoDataFrame to the map as a GeoJson layer
-            folium.GeoJson(
-                gdf,
-                name=layer_name,
-                style_function=lambda x: style if style else {'color': 'blue', 'weight': 3}
-            ).add_to(m)
-        else:
-            st.error(f"Shapefile not found at {shapefile_path}")
-
-    # Construct the path to the shapefiles
+    # Load geographic data
     base_path = os.path.dirname(__file__)  # Directory of this script
-    boundary_path = os.path.join(base_path, "bonaireboundary.shp")
-    roads_path = os.path.join(base_path, "highways.shp")
-    buildings_path = os.path.join(base_path, "buildings2.shp")
+    project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
+    buildings_gdf = os.path.join(project_root, "neighbourhood", "buildings2.shp")
+    add_shapefile_layer(buildings_gdf, "Bonaire Buildings")
 
-    # Add each layer to the map
-    add_shapefile_layer(boundary_path, "Bonaire Boundary")
-    add_shapefile_layer(roads_path, "Roads", style={'color': 'grey', 'weight': 1})
-    add_shapefile_layer(buildings_path, "Buildings", style={'color': 'black', 'weight': 1})
+    # Call the function to create neighborhoods
+    neighborhoods_gdf = create_neighborhoods(buildings_gdf, n_neighborhoods=15)
+
+    # Add the neighborhoods to the map
+    folium.GeoJson(neighborhoods_gdf, name="Neighborhoods").add_to(m)
 
     # Display the map in Streamlit
     folium_static(m)
 
-# Rest of your Streamlit code below (e.g., if __name__ == "__main__":)
+# Remember to include this module in your main.py or wherever you're aggregating your app modules.
