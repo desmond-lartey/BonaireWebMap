@@ -4,8 +4,10 @@ import folium
 from streamlit_folium import folium_static
 import geopandas as gpd
 import numpy as np
+import sklearn
 from sklearn.cluster import KMeans
 import os
+
 
 def create_neighborhoods(buildings_gdf, n_neighborhoods):
     # Assuming buildings_gdf has 'geometry' with building locations
