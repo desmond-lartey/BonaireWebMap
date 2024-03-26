@@ -12,6 +12,7 @@ streamlit-folium
 psycopg2-binary
 fiona
 networkx
+openpyxl 
 osmnx
 pandas
 folium
