@@ -36,7 +36,7 @@ def app():
     
     st.sidebar.info(
         """
-        **Web App URL**: [https://active-mobility-bonaire-uci.streamlit.app/)  
+        **Web App URL**: [https://active-mobility-bonaire-uci.streamlit.app/]  
         **GitHub repository**: [https://github.com/desmond-lartey/BonaireWebMap](https://github.com/desmond-lartey/BonaireWebMap)
         """
     )
