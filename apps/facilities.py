@@ -12,13 +12,13 @@ def app():
     basemap_choice = st.sidebar.selectbox(
         "Choose a basemap:",
         list(geemap.basemaps.keys()),
-        index=list(geemap.basemaps.keys()).index("HYBRID")  # Default to HYBRID
+        index=list(geemap.basemaps.keys()).index("OpenStreetMap")  # Default to HYBRID
     )
 
     # Initialize the map with the selected basemap
     #m = geemap.Map(center=[12.15, -68.27], zoom=11, basemap=geemap.basemaps[basemap_choice])
     # Use a known working basemap as a string directly
-    m = geemap.Map(center=[12.15, -68.27], zoom=11, basemap='HYBRID')
+    m = geemap.Map(center=[12.15, -68.27], zoom=12, basemap='OpenStreetMap')
 
 
     # Function to add a shapefile layer
