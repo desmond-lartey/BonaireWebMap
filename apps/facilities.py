@@ -18,7 +18,7 @@ def app():
     # Initialize the map with the selected basemap
     #m = geemap.Map(center=[12.15, -68.27], zoom=11, basemap=geemap.basemaps[basemap_choice])
     # Use a known working basemap as a string directly
-    m = geemap.Map(center=[12.15, -68.27], zoom=14, basemap='OpenStreetMap')
+    m = geemap.Map(center=[12.15, -68.27], zoom=15, basemap='OpenStreetMap')
 
 
     # Function to add a shapefile layer
