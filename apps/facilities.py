@@ -42,6 +42,8 @@ def app():
     add_shapefile_layer(shapefile_path, "Neighbourhoods")
     shapefile_path = os.path.join(project_root, "newlyexportedshp", "zonalstats.shp")
     add_shapefile_layer(shapefile_path, "Zonalstats")
+    shapefile_path = os.path.join(project_root, "newlyexportedshp", "HexagonDemographicStatistics_AllBands1.geojson")
+    add_shapefile_layer(shapefile_path, "Demographic")
 
     # Define the legend
     # legend_colors = {
