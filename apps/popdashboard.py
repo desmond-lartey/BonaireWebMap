@@ -32,7 +32,7 @@ def load_data():
 
 
 # Ensure the file name matches your CSV file name without the extension
-df = load_data("HexagonDemographicStatistics_AllBands_CSV")
+df = load_data()
 
 # Additional code for visualization and dashboard setup here
 # Example: Function to create bar chart visualization
