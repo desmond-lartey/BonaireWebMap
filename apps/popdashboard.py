@@ -3,61 +3,69 @@ import pandas as pd
 import plotly.express as px
 import os
 
-# Apply the custom CSS from the template you provided
-def apply_custom_css():
-    with open(os.path.join(os.path.dirname(__file__), "style.css")) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+# Inline CSS
+CUSTOM_CSS = """
+<style>
+/* Custom styles */
+[data-testid="stSidebar"] { background-color: #f0f2f6; }
+[data-testid="stHeader"] { background-color: #ffffff; }
+/* Add more custom styles as needed */
+</style>
+"""
 
-# Load data function adapted to fit the dynamic file path logic
+# Apply custom CSS
+def apply_custom_css():
+    st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+
+# Load and prepare data
 def load_data(file_name):
-    base_path = os.path.dirname(__file__)  # Gets the directory where the script is located
-    file_path = os.path.join(base_path, "data", file_name)  # Adjust folder and file names as needed
+    # Assuming the 'data' folder is at the same level as your script
+    base_path = os.path.dirname(__file__)
+    file_path = os.path.join(base_path, "newlyexportedshp", "HexagonDemographicStatistics_AllBands_CSV.csv")
     if os.path.exists(file_path):
-        return pd.read_csv(file_path)
+        df = pd.read_csv(file_path)
+        # Preprocess data here if needed
+        return df
     else:
         st.error(f"CSV file not found at {file_path}")
-        return pd.DataFrame()  # Return an empty DataFrame if the file is not found
+        return pd.DataFrame()  # Return an empty DataFrame if file is not found
 
-# Function to create bar chart visualizations
+# Create bar chart visualization
 def create_bar_chart(df, sex, age_group):
-    df_filtered = df[df["sex"] == sex]
-    bar_chart = px.bar(df_filtered, x='hex_id', y=f'{sex}_{age_group}', 
-                       title=f"Population for {age_group} Year Olds ({sex})",
-                       labels={'hex_id': 'Hexagon ID', f'{sex}_{age_group}': 'Population'})
+    column_name = f"{sex}_{age_group}_sum"
+    bar_chart = px.bar(df, x='hex_id', y=column_name,
+                       title=f"Population Sum for {age_group} Year Olds ({sex})",
+                       labels={'hex_id': 'Hexagon ID', column_name: 'Population Sum'})
     return bar_chart
 
-# Main app function for the population dashboard
+# Main app function
 def app():
     apply_custom_css()
     st.title("Hexagon Population Dashboard")
 
-    # Sidebar filters for age group and sex
+    # Load data
     df = load_data("HexagonDemographicStatistics_AllBands_CSV.csv")
     if df.empty:
-        st.error("No data to display.")
-        return
+        return  # Early exit if no data
 
-    age_groups = [col.split("_")[1] for col in df.columns if "_" in col and col.endswith("mean")]
-    selected_age_group = st.sidebar.selectbox("Select an Age Group", sorted(set(age_groups)))
-    sex_options = ['Female', 'Male']
-    selected_sex = st.sidebar.radio("Select Sex", sex_options)
+    # Sidebar for filter selection
+    age_groups = sorted(set(col.split("_")[1] for col in df.columns if col.startswith(("F_", "M_"))))
+    selected_age_group = st.sidebar.selectbox("Select an Age Group", age_groups)
+    sex_options = ['F', 'M']
+    selected_sex = st.sidebar.selectbox("Select Sex", sex_options)
 
-    # Main panel
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        # Main visualization (bar chart)
-        st.plotly_chart(create_bar_chart(df, selected_sex, selected_age_group), use_container_width=True)
+    # Display the bar chart based on user selection
+    st.plotly_chart(create_bar_chart(df, selected_sex, selected_age_group), use_container_width=True)
 
-    with col2:
-        # Top statistics or additional data presentation
-        # For example, displaying top hexagons by population
-        st.header("Top Hexagons")
-        top_hexagons = df.nlargest(5, f'{selected_sex}_{selected_age_group}')
-        st.write(top_hexagons[['hex_id', f'{selected_sex}_{selected_age_group}']])
+    # Additional data presentation
+    st.header("Top Hexagons")
+    top_hexagons = df.nlargest(5, f'{selected_sex}_{selected_age_group}_sum')
+    st.write(top_hexagons[['hex_id', f'{selected_sex}_{selected_age_group}_sum']])
 
-    # Footer
+    # Footer with additional info
     st.markdown("---")
     st.markdown("### About")
-    st.markdown("This dashboard is powered by data from the HexagonDemographicStatistics project.")
+    st.markdown("This dashboard visualizes population demographics across different hexagons.")
 
-# Ensure to call this function in your main.py or add it to the app's navigation
+if __name__ == "__main__":
+    app()
