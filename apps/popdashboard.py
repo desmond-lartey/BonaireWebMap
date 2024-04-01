@@ -18,22 +18,26 @@ def apply_custom_css():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 # Load and prepare data
-def load_data(file_name):
-    # Dynamic file path construction
-    base_path = os.path.dirname(__file__)  # Directory of this script
-    project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
-    file_path = os.path.join(project_root, "newlyexportedshp", "HexagonDemographicStatistics_AllBands_CSV")  # Adjust folder name as needed
+# Load and prepare data
+def load_data():
+    # Adjust the path to directly point to your CSV file within the 'newlyexportedshp' folder
+    file_path = os.path.join(os.path.dirname(__file__), "newlyexportedshp", "HexagonDemographicStatistics_AllBands_CSV.csv")
     if os.path.exists(file_path):
         df = pd.read_csv(file_path)
-        # Preprocess data here if needed
+        # Add any necessary data preprocessing steps here
         return df
     else:
         st.error(f"CSV file not found at {file_path}")
-        return pd.DataFrame()  # Return an empty DataFrame if file is not found
+        return pd.DataFrame()  # Return an empty DataFrame if the file is not found
 
-# Create bar chart visualization
+
+# Ensure the file name matches your CSV file name without the extension
+df = load_data("HexagonDemographicStatistics_AllBands_CSV")
+
+# Additional code for visualization and dashboard setup here
+# Example: Function to create bar chart visualization
 def create_bar_chart(df, sex, age_group):
-    column_name = f"{sex}_{age_group}_sum"  # Use '_sum' to aggregate population
+    column_name = f"{sex}_{age_group}_sum"
     bar_chart = px.bar(df, x='hex_id', y=column_name,
                        title=f"Population Sum for {age_group} Year Olds ({sex})",
                        labels={'hex_id': 'Hexagon ID', column_name: 'Population Sum'})
@@ -43,11 +47,6 @@ def create_bar_chart(df, sex, age_group):
 def app():
     apply_custom_css()
     st.title("Hexagon Population Dashboard")
-
-    # Load data
-    df = load_data("HexagonDemographicStatistics_AllBands_CSV.csv")
-    if df.empty:
-        return  # Early exit if no data
 
     # Sidebar for filter selection
     age_groups = sorted(set(col.split("_")[1] for col in df.columns if col.startswith(("F_", "M_"))))
