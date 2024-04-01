@@ -22,7 +22,7 @@ def load_data(file_name):
     # Dynamic file path construction
     base_path = os.path.dirname(__file__)  # Directory of this script
     project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
-    file_path = os.path.join(project_root, "newlyexportedshp", "fHexagonDemographicStatistics_AllBands_CSV")  # Adjust folder name as needed
+    file_path = os.path.join(project_root, "newlyexportedshp", "HexagonDemographicStatistics_AllBands_CSV")  # Adjust folder name as needed
     if os.path.exists(file_path):
         df = pd.read_csv(file_path)
         # Preprocess data here if needed
