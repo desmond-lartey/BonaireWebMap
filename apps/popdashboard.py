@@ -19,9 +19,10 @@ def apply_custom_css():
 
 # Load and prepare data
 def load_data(file_name):
-    # Assuming the 'data' folder is at the same level as your script
-    base_path = os.path.dirname(__file__)
-    file_path = os.path.join(base_path, "newlyexportedshp", "HexagonDemographicStatistics_AllBands_CSV.csv")
+    # Dynamic file path construction
+    base_path = os.path.dirname(__file__)  # Directory of this script
+    project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
+    file_path = os.path.join(project_root, "newlyexportedshp", "fHexagonDemographicStatistics_AllBands_CSV")  # Adjust folder name as needed
     if os.path.exists(file_path):
         df = pd.read_csv(file_path)
         # Preprocess data here if needed
@@ -32,7 +33,7 @@ def load_data(file_name):
 
 # Create bar chart visualization
 def create_bar_chart(df, sex, age_group):
-    column_name = f"{sex}_{age_group}_sum"
+    column_name = f"{sex}_{age_group}_sum"  # Use '_sum' to aggregate population
     bar_chart = px.bar(df, x='hex_id', y=column_name,
                        title=f"Population Sum for {age_group} Year Olds ({sex})",
                        labels={'hex_id': 'Hexagon ID', column_name: 'Population Sum'})
