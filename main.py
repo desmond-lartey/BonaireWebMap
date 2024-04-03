@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from apps import home, facilities, popdashboard #area  # Make sure to import your app modules here
+from apps import home, facilities, popdashboard2 #area  # Make sure to import your app modules here
 
 # import streamlit as st
 # from streamlit_option_menu import option_menu
