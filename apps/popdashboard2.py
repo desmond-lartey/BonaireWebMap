@@ -17,6 +17,28 @@ def load_data(filename):
         st.error(f"Data file not found at {data_path}")
         return pd.DataFrame()
 
+def aggregate_age_groups(data):
+            # Define age groups
+            age_groups = {
+                '0-15': ['0', '1', '5', '10', '15'],
+                '16-30': ['20', '25', '30'],
+                '31-45': ['35', '40', '45'],
+                '46-60': ['50', '55', '60'],
+                '61-80': ['65', '70', '75', '80']
+            }
+
+            # Create a new DataFrame to store aggregated data
+            aggregated_data = pd.DataFrame()
+
+            for gender in ['M', 'F']:
+                for group, ages in age_groups.items():
+                    # Sum populations for each age group and gender
+                    column_names = [f"{gender}_{age}sum" for age in ages]
+                    aggregated_data[f'{gender}_{group}'] = data[column_names].sum(axis=1)
+
+            aggregated_data['id'] = data['id']  # Ensure we keep the neighborhood identifier
+            return aggregated_data
+
 def app():
     st.title("Population Dashboard")
 
@@ -59,41 +81,22 @@ def app():
         # Additional visualizations for deeper insights into the data can be added here
         # Examples: Age cohort comparison within each gender, neighborhood comparisons, etc.
 
+                    # Call the aggregation function on your significant_data DataFrame
+        aggregated_data = aggregate_age_groups(significant_data)
 
-def aggregate_age_groups(data):
-    # Define age groups
-    age_groups = {
-        '0-15': ['0', '1', '5', '10', '15'],
-        '16-30': ['20', '25', '30'],
-        '31-45': ['35', '40', '45'],
-        '46-60': ['50', '55', '60'],
-        '61-80': ['65', '70', '75', '80']
-    }
+            # Generate a visualization for the aggregated age groups
+        st.header('Broad Age Group Comparison across Neighborhoods')
 
-    # Create a new DataFrame to store aggregated data
-    aggregated_data = pd.DataFrame()
+            # Melt the aggregated data for visualization
+        melted_aggregated_data = aggregated_data.melt(id_vars=['id'], var_name='Group', value_name='Population')
 
-    for gender in ['M', 'F']:
-        for group, ages in age_groups.items():
-            # Sum populations for each age group and gender
-            column_names = [f"{gender}_{age}sum" for age in ages]
-            aggregated_data[f'{gender}_{group}'] = data[column_names].sum(axis=1)
+            # Create and display the Plotly chart
+        fig_age_groups = px.bar(melted_aggregated_data, x='id', y='Population', color='Group', barmode='group', title="Population by Broad Age Groups across Neighborhoods")
+        st.plotly_chart(fig_age_groups)
 
-    aggregated_data['id'] = data['id']  # Ensure we keep the neighborhood identifier
-    return aggregated_data
+        
 
-# Call the aggregation function on your significant_data DataFrame
-aggregated_data = aggregate_age_groups(significant_data)
 
-# Generate a visualization for the aggregated age groups
-st.header('Broad Age Group Comparison across Neighborhoods')
-
-# Melt the aggregated data for visualization
-melted_aggregated_data = aggregated_data.melt(id_vars=['id'], var_name='Group', value_name='Population')
-
-# Create and display the Plotly chart
-fig_age_groups = px.bar(melted_aggregated_data, x='id', y='Population', color='Group', barmode='group', title="Population by Broad Age Groups across Neighborhoods")
-st.plotly_chart(fig_age_groups)
 
 if __name__ == "__main__":
     app()
