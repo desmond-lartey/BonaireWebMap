@@ -28,14 +28,6 @@ def create_choropleth(geodata, population_data):
     
     # Create choropleth map using Plotly
     # Create choropleth map using Plotly
-    def create_choropleth(geodata, population_data):
-    # Merge the geodata with population data on the 'id' column
-    merged_data = geodata.merge(population_data, how='left', left_on='id', right_on='id')
-    
-    # Determine the correct column for population data
-    population_column = '_sum_x' if '_sum_x' in merged_data else '_sum_y'
-    
-    # Create choropleth map using Plotly
     fig = px.choropleth(merged_data,
                         geojson=merged_data.geometry,
                         locations=merged_data.index,
@@ -77,7 +69,6 @@ def create_choropleth(geodata, population_data):
     )
 
     return fig
-
 
 
 
