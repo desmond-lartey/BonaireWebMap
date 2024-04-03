@@ -1,4 +1,5 @@
 import streamlit as st
+import geopandas as gpd
 import pandas as pd
 import plotly.express as px
 import os
@@ -74,7 +75,7 @@ def app():
     # Load the dataset
     data = load_data('HexagonDemographicStatistics_AllBands_CSV.csv')
 
-    #Lets visualise our chloropleth first
+    #-----Lets visualise our chloropleth first-----
     # Load GeoJSON and population data
     geodata = load_geodata('HexagonDemographicStatistics_AllBands1.geojson')
     population_data = load_data('HexagonDemographicStatistics_AllBands_CSV.csv')
@@ -85,6 +86,7 @@ def app():
         choropleth_fig = create_choropleth(geodata, population_data)
         st.plotly_chart(choropleth_fig, use_container_width=True)
 
+    #-----We can continue with other visualisation fucntions----
     if not data.empty:
         # Apply a threshold to filter out neighborhoods with insignificant populations for clarity in visualization
         threshold = st.slider('Population Sum Threshold for Visualization', min_value=10, max_value=2000, value=10, step=10)
