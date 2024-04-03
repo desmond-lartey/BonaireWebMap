@@ -25,7 +25,7 @@ def app():
 
     if not data.empty:
         # Apply a threshold to filter out neighborhoods with insignificant populations for clarity in visualization
-        threshold = st.slider('Population Sum Threshold for Visualization', min_value=0.0, max_value=1.0, value=0.1, step=0.01)
+        threshold = st.slider('Population Sum Threshold for Visualization', min_value=10, max_value=2000, value=10, step=10)
         significant_data = data[data['_sum'] > threshold]
 
         # Display Overall Population Distribution Across All Significant Neighborhoods
