@@ -5,23 +5,28 @@ import os
 
 def load_data(filename):
     # Dynamically construct the path to the data file
-    base_path = os.path.dirname(__file__)
-    project_root = os.path.join(base_path, os.pardir)
-    data_path = os.path.join(project_root, "newlyexportedshp", filename)
+    base_path = os.path.dirname(__file__)  # Directory of this script
+    project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
+    data_path = os.path.join(project_root, "newlyexportedshp", filename)  # Path to your data directory
 
     # Ensure the data file path exists
     if os.path.exists(data_path):
         # Read the CSV data file
-        return pd.read_csv(data_path)
+        data = pd.read_csv(data_path)
+        return data
     else:
         st.error(f"Data file not found at {data_path}")
-        return pd.DataFrame()
+        return pd.DataFrame()  # Return an empty DataFrame if the file is not found
 
 def app():
     st.title("Population Dashboard")
 
     # Load the dataset
     data = load_data('HexagonDemographicStatistics_AllBands_CSV.csv')
+
+    if not data.empty:
+        # Streamlit app layout
+        st.header('Population Distribution Across Neighborhoods')
 
     if not data.empty:
         # Apply a threshold to filter out neighborhoods with insignificant populations for clarity in visualization
