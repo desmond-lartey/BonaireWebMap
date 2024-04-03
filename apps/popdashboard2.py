@@ -3,6 +3,34 @@ import pandas as pd
 import plotly.express as px
 import os
 
+
+#We will add a chloropleth
+def load_geodata(filename):
+    base_path = os.path.dirname(__file__)
+    geojson_path = os.path.join(base_path, filename)
+
+    if os.path.exists(geojson_path):
+        return gpd.read_file(geojson_path)
+    else:
+        st.error(f"GeoJSON file not found at {geojson_path}")
+        return gpd.GeoDataFrame()
+def create_choropleth(geodata, population_data):
+    # Merge the geodata with population data on the 'id' column
+    merged_data = geodata.merge(population_data, left_on='id', right_on='id')
+    
+    # Create choropleth map using Plotly
+    fig = px.choropleth(merged_data,
+                        geojson=merged_data.geometry,
+                        locations=merged_data.index,
+                        color='_sum',
+                        color_continuous_scale="Viridis",
+                        title="Population by Area")
+    fig.update_geos(fitbounds="locations", visible=False)
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    return fig
+
+
+#We will agregate the age groups
 def load_data(filename):
     # Dynamically construct the path to the data file
     base_path = os.path.dirname(__file__)
@@ -39,11 +67,23 @@ def aggregate_age_groups(data):
             aggregated_data['id'] = data['id']  # Ensure we keep the neighborhood identifier
             return aggregated_data
 
+
 def app():
     st.title("Population Dashboard")
 
     # Load the dataset
     data = load_data('HexagonDemographicStatistics_AllBands_CSV.csv')
+
+    #Lets visualise our chloropleth first
+    # Load GeoJSON and population data
+    geodata = load_geodata('HexagonDemographicStatistics_AllBands1.geojson')
+    population_data = load_data('HexagonDemographicStatistics_AllBands_CSV.csv')
+
+    # Check if the GeoJSON and population data have been loaded successfully
+    if not geodata.empty and not population_data.empty:
+        # Create and display the choropleth map
+        choropleth_fig = create_choropleth(geodata, population_data)
+        st.plotly_chart(choropleth_fig, use_container_width=True)
 
     if not data.empty:
         # Apply a threshold to filter out neighborhoods with insignificant populations for clarity in visualization
