@@ -28,6 +28,16 @@ def app():
         # Streamlit app layout
         st.header('Population Distribution Across Neighborhoods')
 
+        # Selecting specific neighborhoods to visualize
+        options = st.multiselect('Select Neighborhood IDs', data['id'].unique())
+        if options:
+            filtered_data = data[data['id'].isin(options)]
+            fig = px.bar(filtered_data, x='id', y='_sum', labels={'_sum': 'Population Sum'}, title="Population Sum by Neighborhood")
+            st.plotly_chart(fig)
+        else:
+            st.write("Please select at least one neighborhood to visualize.")
+
+
     if not data.empty:
         # Apply a threshold to filter out neighborhoods with insignificant populations for clarity in visualization
         threshold = st.slider('Population Sum Threshold for Visualization', min_value=0.0, max_value=1.0, value=0.1, step=0.01)
