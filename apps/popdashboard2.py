@@ -48,6 +48,14 @@ def app():
         fig_gender_age = px.bar(gender_data, x='id', y='Population', color='Age Cohort', title=f"Population by Age Cohort for {gender_option} across Neighborhoods")
         st.plotly_chart(fig_gender_age)
 
+        # Additional Chart: Age Cohort Comparison within and across Neighborhoods
+        st.header('Age Cohort Comparison within and across Neighborhoods')
+        cohort_columns = [col for col in data.columns if col.endswith('sum') and col != '_sum']
+        cohort_data = significant_data[cohort_columns + ['id']]
+        cohort_data = cohort_data.melt(id_vars=['id'], var_name='Age Cohort', value_name='Population')
+        cohort_data['Age Cohort'] = cohort_data['Age Cohort'].apply(lambda x: x.split('_')[1] + ' years (' + x.split('_')[0] + ')')
+        fig_cohorts_comparison = px.bar(cohort_data, x='id', y='Population', color='Age Cohort', barmode='group', title="Age Cohort Comparison across Neighborhoods")
+        st.plotly_chart(fig_cohorts_comparison)
         # Additional visualizations for deeper insights into the data can be added here
         # Examples: Age cohort comparison within each gender, neighborhood comparisons, etc.
 
