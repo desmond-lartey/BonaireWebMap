@@ -27,14 +27,30 @@ def create_choropleth(geodata, population_data):
     population_column = '_sum_x' if '_sum_x' in merged_data else '_sum_y'
     
     # Create choropleth map using Plotly
+    # Create choropleth map using Plotly
     fig = px.choropleth(merged_data,
                         geojson=merged_data.geometry,
                         locations=merged_data.index,
                         color=population_column,
-                        color_continuous_scale="Viridis",
+                        color_continuous_scale="Blues",  # Blue color scale
                         title="Population by Area")
-    fig.update_geos(fitbounds="locations", visible=False)
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+
+    # Update the layout of the map to match the image style
+    fig.update_geos(
+        fitbounds="locations",
+        visible=False,
+        bgcolor='rgba(255,255,255,255)'  # Set background color to white
+    )
+    fig.update_layout(
+        margin={"r":0, "t":0, "l":0, "b":0},
+        geo=dict(
+            landcolor='rgba(255,255,255,255)',  # Set land color to white
+            lakecolor='rgba(255,255,255,255)',  # Set lake color to white, if applicable
+            showocean=True, oceancolor='rgba(255,255,255,255)',  # Set ocean color to white
+            subunitcolor='black'  # Set borders color to black
+        ),
+        paper_bgcolor='rgba(255,255,255,255)'  # Set the paper background color to white
+    )
     return fig
 
 
