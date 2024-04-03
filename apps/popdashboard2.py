@@ -7,8 +7,10 @@ import os
 
 #We will add a chloropleth
 def load_geodata(filename):
+    # Here we use the "newlyexportedshp" directory as part of the path
     base_path = os.path.dirname(__file__)
-    geojson_path = os.path.join(base_path, filename)
+    project_root = os.path.join(base_path, os.pardir)  # Move up one directory from the current file's location
+    geojson_path = os.path.join(project_root, "newlyexportedshp", filename)
 
     if os.path.exists(geojson_path):
         return gpd.read_file(geojson_path)
@@ -31,7 +33,7 @@ def create_choropleth(geodata, population_data):
     return fig
 
 
-#We will agregate the age groups
+#-----We will agregate the age groups-----
 def load_data(filename):
     # Dynamically construct the path to the data file
     base_path = os.path.dirname(__file__)
