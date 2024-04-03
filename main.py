@@ -1,34 +1,47 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
-from apps import home, facilities, popdashboard2 #area  # Make sure to import your app modules here
+import pandas as pd
+import plotly.express as px
+import os
 
-# import streamlit as st
-# from streamlit_option_menu import option_menu
-# from apps import home, facilities, neighbourhoods
+def load_data(filename):
+    base_path = os.path.dirname(__file__)
+    project_root = os.path.join(base_path, os.pardir)
+    data_path = os.path.join(project_root, "newlyexportedshp", filename)
+    if os.path.exists(data_path):
+        return pd.read_csv(data_path)
+    else:
+        st.error(f"Data file not found at {data_path}")
+        return pd.DataFrame()
 
-# Setting up the page configuration
-st.set_page_config(page_title="Bonaire Geospatial", layout="wide")
+def app():
+    st.title("Population Dashboard")
 
-# Defining the apps and their titles and icons
-apps = [
-    {"func": home.app, "title": "Home", "icon": "house"},
-    {"func": facilities.app, "title": "Facilities", "icon": "building"},
-    {"func": popdashboard2.app, "title": "Population", "icon": "building"},
-    #{"func": area.app, "title": "Neighborhoods", "icon": "building"},
-]
+    # Load the dataset
+    data = load_data('HexagonDemographicStatistics_AllBands_CSV.csv')
 
-# Creating the sidebar menu
-with st.sidebar:
-    selected = option_menu(
-        menu_title="Main Menu",  # The title of the menu
-        options=[app["title"] for app in apps],  # The list of options
-        icons=[app["icon"] for app in apps],  # The list of icons
-        menu_icon="cast",  # The icon of the menu
-        default_index=0,  # The default option selected
-    )
+    if not data.empty:
+        # Filter out neighborhoods with insignificant populations (example threshold: sum of populations < 0.1)
+        significant_data = data[data['_sum'] > 10]
 
-# Displaying the selected app
-for app in apps:
-    if app["title"] == selected:
-        app["func"]()
-        break
+        # Overall Population Distribution Across All Significant Neighborhoods
+        st.header('Overall Population Distribution Across Neighborhoods')
+        fig_overall = px.bar(significant_data, x='id', y='_sum', labels={'_sum': 'Population Sum'}, title="Population Sum by Neighborhood")
+        st.plotly_chart(fig_overall)
+
+        # Gender Distribution Across Neighborhoods
+        st.header('Gender Distribution Across Neighborhoods')
+        gender_columns = [col for col in data.columns if 'F_' in col or 'M_' in col]
+        gender_data = significant_data[gender_columns + ['id']].melt(id_vars=['id'], var_name='Gender/Age', value_name='Population')
+        fig_gender = px.bar(gender_data, x='id', y='Population', color='Gender/Age', title="Population by Gender and Age Group across Neighborhoods")
+        st.plotly_chart(fig_gender)
+
+        # Age Cohorts Distribution
+        st.header('Age Cohorts Distribution Across Neighborhoods')
+        # You might want to refine this to show specific cohorts or comparisons that are most relevant.
+        age_cohorts = [col for col in data.columns if '_' in col and 'sum' in col]
+        cohort_data = significant_data[age_cohorts + ['id']].melt(id_vars=['id'], var_name='Age Cohort', value_name='Population')
+        fig_cohorts = px.bar(cohort_data, x='id', y='Population', color='Age Cohort', title="Population by Age Cohort across Neighborhoods")
+        st.plotly_chart(fig_cohorts)
+
+        # Add more visualizations here as needed
+
