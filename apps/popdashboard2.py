@@ -109,9 +109,9 @@ def aggregate_age_groups(data):
             aggregated_data['id'] = data['id']  # Ensure we keep the neighborhood identifier
             return aggregated_data
 
-
+#---Now we will create the main app----
 def app():
-    st.title("Population Dashboard")
+    st.title("Demographic")
 
     # Load the dataset
     data = load_data('HexagonDemographicStatistics_AllBands_CSV.csv')
