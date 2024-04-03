@@ -53,7 +53,7 @@ def create_choropleth(geodata, population_data):
             thicknessmode="pixels", thickness=15,
             lenmode="pixels", len=300,
             yanchor="top", y=0.99,
-            ticks="outside", ticksuffix=" people"
+            ticks="outside", #ticksuffix=" people"
         )
     )
     
