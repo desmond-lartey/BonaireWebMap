@@ -19,18 +19,24 @@ def load_geodata(filename):
         return gpd.GeoDataFrame()
 def create_choropleth(geodata, population_data):
     # Merge the geodata with population data on the 'id' column
-    merged_data = geodata.merge(population_data, left_on='id', right_on='id')
+    merged_data = geodata.merge(population_data, how='left', left_on='id', right_on='id')
+    
+    # Ensure the correct column is used for the color scale. It might be '_sum_x' or '_sum_y' after the merge.
+    # You should choose the correct one based on which DataFrame contains the population data you want to display.
+    # For this example, we assume '_sum_x' is the correct column.
+    population_column = '_sum_x' if '_sum_x' in merged_data else '_sum_y'
     
     # Create choropleth map using Plotly
     fig = px.choropleth(merged_data,
                         geojson=merged_data.geometry,
                         locations=merged_data.index,
-                        color='_sum',
+                        color=population_column,
                         color_continuous_scale="Viridis",
                         title="Population by Area")
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     return fig
+
 
 
 #-----We will agregate the age groups-----
