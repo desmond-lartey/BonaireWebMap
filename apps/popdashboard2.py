@@ -36,7 +36,7 @@ def create_choropleth(geodata, population_data):
     
     # Set the layout for a dark background
     fig.update_layout(
-        title_text="Total Population",
+        #title_text="Total Population",
         title_x=0.5,
         geo=dict(
             landcolor='rgb(217, 217, 217)',  # Light grey color for the map
