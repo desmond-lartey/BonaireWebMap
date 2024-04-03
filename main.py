@@ -1,38 +1,34 @@
 import streamlit as st
-import pandas as pd
-import plotly.express as px
-import os
+from streamlit_option_menu import option_menu
+from apps import home, facilities, popdashboard2 #area  # Make sure to import your app modules here
 
-def load_data(filename):
-    # Dynamically construct the path to the data file
-    base_path = os.path.dirname(__file__)  # Directory of this script
-    project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
-    data_path = os.path.join(project_root, "newlyexportedshp", filename)  # Path to your data directory
+# import streamlit as st
+# from streamlit_option_menu import option_menu
+# from apps import home, facilities, neighbourhoods
 
-    # Ensure the data file path exists
-    if os.path.exists(data_path):
-        # Read the CSV data file
-        data = pd.read_csv(data_path)
-        return data
-    else:
-        st.error(f"Data file not found at {data_path}")
-        return pd.DataFrame()  # Return an empty DataFrame if the file is not found
+# Setting up the page configuration
+st.set_page_config(page_title="Bonaire Geospatial", layout="wide")
 
-def app():
-    st.title("Population Dashboard")
+# Defining the apps and their titles and icons
+apps = [
+    {"func": home.app, "title": "Home", "icon": "house"},
+    {"func": facilities.app, "title": "Facilities", "icon": "building"},
+    {"func": popdashboard2.app, "title": "Population", "icon": "building"},
+    #{"func": area.app, "title": "Neighborhoods", "icon": "building"},
+]
 
-    # Load the dataset
-    data = load_data('HexagonDemographicStatistics_AllBands_CSV.csv')
+# Creating the sidebar menu
+with st.sidebar:
+    selected = option_menu(
+        menu_title="Main Menu",  # The title of the menu
+        options=[app["title"] for app in apps],  # The list of options
+        icons=[app["icon"] for app in apps],  # The list of icons
+        menu_icon="cast",  # The icon of the menu
+        default_index=0,  # The default option selected
+    )
 
-    if not data.empty:
-        # Streamlit app layout
-        st.header('Population Distribution Across Neighborhoods')
-
-        # Selecting specific neighborhoods to visualize
-        options = st.multiselect('Select Neighborhood IDs', data['id'].unique())
-        if options:
-            filtered_data = data[data['id'].isin(options)]
-            fig = px.bar(filtered_data, x='id', y='_sum', labels={'_sum': 'Population Sum'}, title="Population Sum by Neighborhood")
-            st.plotly_chart(fig)
-        else:
-            st.write("Please select at least one neighborhood to visualize.")
+# Displaying the selected app
+for app in apps:
+    if app["title"] == selected:
+        app["func"]()
+        break
