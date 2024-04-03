@@ -28,30 +28,56 @@ def create_choropleth(geodata, population_data):
     
     # Create choropleth map using Plotly
     # Create choropleth map using Plotly
+    def create_choropleth(geodata, population_data):
+    # Merge the geodata with population data on the 'id' column
+    merged_data = geodata.merge(population_data, how='left', left_on='id', right_on='id')
+    
+    # Determine the correct column for population data
+    population_column = '_sum_x' if '_sum_x' in merged_data else '_sum_y'
+    
+    # Create choropleth map using Plotly
     fig = px.choropleth(merged_data,
                         geojson=merged_data.geometry,
                         locations=merged_data.index,
                         color=population_column,
                         color_continuous_scale="Blues",  # Blue color scale
                         title="Population by Area")
-
-    # Update the layout of the map to match the image style
-    fig.update_geos(
-        fitbounds="locations",
-        visible=False,
-        bgcolor='rgba(255,255,255,255)'  # Set background color to white
-    )
+    
+    # Set the layout for a dark background
     fig.update_layout(
-        margin={"r":0, "t":0, "l":0, "b":0},
+        title_text="Total Population",
+        title_x=0.5,
         geo=dict(
-            landcolor='rgba(255,255,255,255)',  # Set land color to white
-            lakecolor='rgba(255,255,255,255)',  # Set lake color to white, if applicable
-            showocean=True, oceancolor='rgba(255,255,255,255)',  # Set ocean color to white
-            subunitcolor='black'  # Set borders color to black
+            landcolor='rgb(217, 217, 217)',  # Light grey color for the map
+            lakecolor='rgb(255, 255, 255)',  # White color for lakes
+            bgcolor='rgb(10, 10, 10)',  # Dark background for the outside map area
+            showocean=True, oceancolor='rgb(10, 10, 10)',  # Dark color for the ocean
+            subunitcolor='rgb(255, 255, 255)'  # White borders for states
         ),
-        paper_bgcolor='rgba(255,255,255,255)'  # Set the paper background color to white
+        paper_bgcolor='rgb(10, 10, 10)',  # Dark background for the plot area
+        margin={"r":0, "t":0, "l":0, "b":0},
+        coloraxis_colorbar=dict(
+            title="Population",
+            thicknessmode="pixels", thickness=15,
+            lenmode="pixels", len=300,
+            yanchor="top", y=0.99,
+            ticks="outside", ticksuffix=" people"
+        )
     )
+    
+    # Remove axis lines and grid lines
+    fig.update_geos(
+        showcountries=True, countrycolor="White",
+        showsubunits=True, subunitcolor="White",
+        showland=True, landcolor="rgb(217, 217, 217)",
+        showlakes=True, lakecolor="rgb(255, 255, 255)",
+        showocean=True, oceancolor="rgb(10, 10, 10)",
+        fitbounds="locations",
+        visible=False
+    )
+
     return fig
+
 
 
 
