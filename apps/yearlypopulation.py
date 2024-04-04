@@ -11,16 +11,21 @@ base_population_data = pd.DataFrame({
 
 # Simulate multiple observations around the given population numbers
 # Create a wider distribution for larger populations and a narrower one for smaller populations
+# Simulate multiple observations around the given population numbers
 def simulate_data(row):
-    np.random.seed(row['year'])  # Ensure reproducibility
-    return np.random.normal(loc=row['population_sum'], scale=row['population_sum'] / 10, size=100)
+    year_as_int = int(row['year'])  # Explicitly convert year to an integer for the seed
+    np.random.seed(year_as_int)  # Ensure reproducibility
+    simulated_values = np.random.normal(loc=row['population_sum'], scale=row['population_sum'] / 10, size=100)
+    return simulated_values.tolist()  # Convert the numpy array to a list
+
 
 # Apply the simulation to each row
 simulated_data = base_population_data.apply(simulate_data, axis=1).explode().reset_index(drop=True)
 simulated_data = pd.DataFrame({
-    'population_sum': simulated_data,
-    'year': np.repeat(base_population_data['year'], 100)
+    'population_sum': pd.to_numeric(simulated_data),  # Ensure the population_sum is numeric
+    'year': np.repeat(base_population_data['year'], 100)  # Repeat the year values accordingly
 })
+
 
 # Convert population_sum to numeric
 simulated_data['population_sum'] = pd.to_numeric(simulated_data['population_sum'])
