@@ -2,6 +2,7 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 import os
+import numpy as np
 
 # Correctly navigating the directory structure to load neighborhood population data
 def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV.csv"):
