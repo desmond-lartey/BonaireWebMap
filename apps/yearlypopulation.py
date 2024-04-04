@@ -8,14 +8,14 @@ population_data = pd.DataFrame({
     'year': [2000, 2005, 2010, 2015, 2020]
 })
 
-# Function to create violin plot
+# Function to create a horizontal violin plot
 def create_violin_plot(data):
     chart = alt.Chart(data).mark_area(
-        orient='horizontal',
+        orient='vertical',  # Orientation is now vertical
         opacity=0.6
     ).encode(
-        alt.Y('year:N', title='Year'),
-        alt.X('population_sum:Q', title='Population'),
+        alt.X('year:O', title='Year'),  # Treat 'year' as an ordinal variable for discrete x-axis
+        alt.Y('population_sum:Q', title='Population'),
         color='year:N'
     ).properties(
         width=600,
