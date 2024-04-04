@@ -13,8 +13,8 @@ st.set_page_config(page_title="Bonaire Geospatial", layout="wide")
 apps = [
     {"func": home.app, "title": "Home", "icon": "house"},
     {"func": facilities.app, "title": "Facilities", "icon": "building"},
-    {"func": popdashboard2.app, "title": "Population", "icon": "building"},
-    {"func": yearlypopulation.app, "title": "Yearly Population", "icon": "building"},
+    {"func": popdashboard2.app, "title": "Population by Age_Sex", "icon": "building"},
+    {"func": yearlypopulation.app, "title": "Population by Neighborhood", "icon": "building"},
     #{"func": area.app, "title": "Neighborhoods", "icon": "building"},
 ]
 
