@@ -71,7 +71,3 @@ if __name__ == '__main__':
     app()
 
 
-# Execute the app function when running the script
-if __name__ == '__main__':
-    app()
-
