@@ -18,21 +18,24 @@ def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV
 
 # Adjusted Function to create a treemap for neighborhood population data
 def create_neighborhood_treemap(data):
-    # Assuming ".geo" column exists and can be used as a unique identifier
-    # Melt the DataFrame to long format with 'Year' as the variable name
-    melted_data = data.melt(id_vars=[".geo"], value_vars=['2000', '2005', '2010', '2015', '2020'], 
+    # Melt the DataFrame to long format with 'Year' as the variable name and 'Population_Sum' as the value
+    melted_data = data.melt(id_vars=["id"], value_vars=['2000', '2005', '2010', '2015', '2020'], 
                             var_name='Year', value_name='Population_Sum')
     
     # Creating the treemap
     fig = px.treemap(
         melted_data,
-        path=[px.Constant("All Neighborhoods"), 'Year', ".geo"],  # Use 'Year' to match melted data
+        path=['Year', 'id'],  # Use 'Year' and 'id' in the path for hierarchical grouping
         values='Population_Sum',
-        color='Population_Sum',
-        color_continuous_scale='Viridis'
+        color='Population_Sum',  # Color based on the Population_Sum to show size proportion
+        color_continuous_scale='Viridis',
+        title='Neighborhood Population by Year'
     )
     
-    fig.update_layout(margin=dict(t=50, l=25, r=25, b=25), title_text='Neighborhood Population by Year')
+    # Adjust layout for readability
+    fig.update_layout(margin=dict(t=50, l=25, r=25, b=25))
+    fig.update_traces(textinfo='label+value')  # Show 'id' and population sum on the treemap
+
     return fig
 
 # Define the Streamlit app
