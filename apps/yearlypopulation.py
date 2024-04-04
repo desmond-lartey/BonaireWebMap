@@ -16,19 +16,25 @@ def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV
         return pd.DataFrame()
 
 # Adjusted function to create a treemap for neighborhood population data considering the new data structure
+@st.experimental_memo
 def create_neighborhood_treemap(data):
     melted_data = data.melt(id_vars=["id"], value_vars=['2000', '2005', '2010', '2015', '2020'], 
                             var_name='Year', value_name='Population_Sum')
-    
+
+    # Calculate a midpoint for coloring. Here, we'll use the average population as an approximation.
+    color_midpoint = np.average(melted_data['Population_Sum'], weights=melted_data['Population_Sum'])
+
     fig = px.treemap(
         melted_data,
-        path=[px.Constant("All Neighborhoods"), 'Year', 'id'],  # Using 'Year' and 'id' in the path
+        path=[px.Constant("All Neighborhoods"), 'Year', 'id'],
         values='Population_Sum',
         color='Population_Sum',
-        color_continuous_scale='Viridis'
+        color_continuous_scale='RdBu',
+        color_continuous_midpoint=color_midpoint
     )
     
     fig.update_layout(margin=dict(t=50, l=25, r=25, b=25), title_text='Neighborhood Population by Year')
+
     return fig
 
 # Streamlit app definition
