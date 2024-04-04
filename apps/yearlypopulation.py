@@ -3,14 +3,17 @@ import plotly.express as px
 import pandas as pd
 import os
 
-# Adjusted Function to load the neighborhood population data from 'newlyexportedshp' directory
+# Function to load the neighborhood population data, correctly navigating the directory structure
 def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV.csv"):
-    # Construct the path to the CSV file within the 'newlyexportedshp' directory
-    file_path = os.path.join(os.path.dirname(__file__), "newlyexportedshp", filename)
-    if os.path.exists(file_path):
-        return pd.read_csv(file_path)
+    # Use the adjusted logic to match your directory structure, moving up one directory from the current file's location
+    base_path = os.path.dirname(__file__)
+    project_root = os.path.join(base_path, os.pardir)  # Move up one directory from the current file's location
+    csv_path = os.path.join(project_root, "newlyexportedshp", filename)
+    
+    if os.path.exists(csv_path):
+        return pd.read_csv(csv_path)
     else:
-        st.error(f"CSV file not found at {file_path}")
+        st.error(f"CSV file not found at {csv_path}")
         return pd.DataFrame()
 
 # Function to create a treemap for neighborhood population data
@@ -64,7 +67,7 @@ def app():
         st.plotly_chart(scatter_fig, theme=None)
     
     # Load neighborhood population data and create the third treemap
-    neighborhood_data = load_neighborhood_population_data("NeighborhoodPopulationByYear_CSV.csv")
+    neighborhood_data = load_neighborhood_population_data()
     if not neighborhood_data.empty:
         neighborhood_treemap_fig = create_neighborhood_treemap(neighborhood_data)
         st.plotly_chart(neighborhood_treemap_fig, use_container_width=True)
