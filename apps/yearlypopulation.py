@@ -28,9 +28,7 @@ def app():
     # Display the treemap in Streamlit
     st.plotly_chart(fig, use_container_width=True)
 
-    # Inside your Streamlit app, after creating the treemap
-    st.write("Sunburst Chart of Population by Year")
-    st.plotly_chart(sunburst_fig, use_container_width=True)
+
 
 
 import plotly.express as px
@@ -65,6 +63,10 @@ def create_sunburst_chart(years, population):
 # Usage
 years = [2000, 2005, 2010, 2015, 2020]
 population = [9531.10755, 11662.60621, 14270.78473, 17462.24582, 21367.43252]
+
+    # Inside your Streamlit app, after creating the treemap
+st.write("Sunburst Chart of Population by Year")
+st.plotly_chart(sunburst_fig, use_container_width=True)
 
 # Create the sunburst chart
 sunburst_fig = create_sunburst_chart(years, population)
