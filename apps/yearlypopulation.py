@@ -31,6 +31,7 @@ def app():
 
 
 
+import streamlit as st
 import plotly.express as px
 import pandas as pd
 
@@ -60,18 +61,20 @@ def create_sunburst_chart(years, population):
 
     return fig
 
-# Usage
-years = [2000, 2005, 2010, 2015, 2020]
-population = [9531.10755, 11662.60621, 14270.78473, 17462.24582, 21367.43252]
+def app():
+    # Use the 'years' and 'population' lists to create the sunburst chart
+    years = [2000, 2005, 2010, 2015, 2020]
+    population = [9531.10755, 11662.60621, 14270.78473, 17462.24582, 21367.43252]
 
-    # Inside your Streamlit app, after creating the treemap
-st.write("Sunburst Chart of Population by Year")
-st.plotly_chart(sunburst_fig, use_container_width=True)
+    # Create the sunburst chart
+    sunburst_fig = create_sunburst_chart(years, population)
 
-# Create the sunburst chart
-sunburst_fig = create_sunburst_chart(years, population)
+    # Display the sunburst chart in Streamlit
+    st.write("Sunburst Chart of Population by Year")
+    st.plotly_chart(sunburst_fig, use_container_width=True)
 
-# Execute the app function when running the script
+# Run the Streamlit app
 if __name__ == '__main__':
     app()
+
 
