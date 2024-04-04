@@ -3,58 +3,39 @@ import pandas as pd
 import numpy as np
 import altair as alt
 
-# Initial population data
-base_population_data = pd.DataFrame({
-    'population_sum': [9531.10755, 11662.60621, 14270.78473, 17462.24582, 21367.43252],
-    'year': [2000, 2005, 2010, 2015, 2020]
+# Sample data with multiple observations per year
+data = pd.DataFrame({
+    'population_sum': np.concatenate([
+        np.random.normal(9531, 500, 100),   # Simulated population data for 2000
+        np.random.normal(11662, 600, 100),  # Simulated population data for 2005
+        np.random.normal(14270, 700, 100),  # Simulated population data for 2010
+        np.random.normal(17462, 800, 100),  # Simulated population data for 2015
+        np.random.normal(21367, 900, 100),  # Simulated population data for 2020
+    ]),
+    'year': ['2000'] * 100 + ['2005'] * 100 + ['2010'] * 100 + ['2015'] * 100 + ['2020'] * 100
 })
 
-# Function to simulate additional data points for the violin plot
-def simulate_data(row):
-    year_as_int = int(row['year'])  # Convert year to an integer for the random seed
-    np.random.seed(year_as_int)  # Set the seed
-    # Generate a normal distribution around the population_sum value
-    return pd.Series(np.random.normal(loc=row['population_sum'], scale=row['population_sum'] / 10, size=100))
-
-# Apply the simulate_data function to the population data
-simulated_population = base_population_data.apply(simulate_data, axis=1).stack().reset_index(level=1, drop=True)
-simulated_population.name = 'population_sum'  # Name the Series so it can be joined to the base data
-# Join the simulated population data to the base data's year column
-simulated_data = base_population_data.drop(columns='population_sum').join(simulated_population)
-
-# Altair code for the violin plot
-def create_violin_plot(data):
-    chart = alt.Chart(data).transform_density(
-        'population_sum',
-        as_=['population_sum', 'density'],
-        extent=[data.population_sum.min(), data.population_sum.max()],
-        groupby=['year']
-    ).mark_area(
-        orient='vertical',
-        opacity=0.6
-    ).encode(
-        alt.X('year:O', title='Year'),
-        alt.Y('density:Q'),
-        color='year:N',
+# Function to create a violin plot
+def create_violin_plot(df):
+    violin_plot = alt.Chart(df).mark_area().encode(
+        x=alt.X('year:N', axis=alt.Axis(labels=True, title='Year')),
+        y=alt.Y('population_sum:Q', axis=alt.Axis(labels=True, title='Population')),
+        color=alt.Color('year:N', scale=alt.Scale(scheme='category20b'))
     ).properties(
-        width=100,
-        height=300
-    ).configure_facet(
-        spacing=10
-    ).configure_view(
-        strokeWidth=0
+        width=100
+    ).transform_density(
+        density='population_sum',
+        bandwidth=0.3,
+        groupby=['year'],
+        as_=['population_sum', 'density']
     )
-    
-    return chart
+    return violin_plot
 
-# Streamlit app code
+# Creating the app
 def app():
-    st.title('Population Data Visualization')
-    # Create the violin plot
-    violin_plot = create_violin_plot(simulated_data)
-    # Display the plot
-    st.altair_chart(violin_plot, use_container_width=True)
+    st.title("Population Data Visualization")
+    violin_chart = create_violin_plot(data)
+    st.altair_chart(violin_chart, use_container_width=True)
 
-# Run the app
-if __name__ == '__main__':
+if __name__ == "__main__":
     app()
