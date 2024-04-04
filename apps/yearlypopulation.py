@@ -18,25 +18,32 @@ def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV
 
 # Adjusted Function to create a treemap for neighborhood population data
 def create_neighborhood_treemap(data):
+    # Assuming your DataFrame uses a different name for the neighborhood identifier. Adjust as necessary.
+    identifier_column = "id" if ".geo" in data.columns else None  # Update this line based on your DataFrame's actual identifier column
+    
+    if identifier_column is None:
+        st.error("Identifier column for neighborhoods not found in the DataFrame.")
+        return
+    
     # Melt the DataFrame to long format with 'Year' as the variable name and 'Population_Sum' as the value
-    melted_data = data.melt(id_vars=["id"], value_vars=['2000', '2005', '2010', '2015', '2020'], 
+    year_columns = ['2000', '2005', '2010', '2015', '2020']
+    melted_data = data.melt(id_vars=[identifier_column], value_vars=year_columns, 
                             var_name='Year', value_name='Population_Sum')
     
     # Creating the treemap
     fig = px.treemap(
         melted_data,
-        path=['Year', 'id'],  # Use 'Year' and 'id' in the path for hierarchical grouping
+        path=[px.Constant("All Neighborhoods"), 'Year', identifier_column],  # Use the dynamic identifier in the path
         values='Population_Sum',
         color='Population_Sum',  # Color based on the Population_Sum to show size proportion
-        color_continuous_scale='Viridis',
-        title='Neighborhood Population by Year'
+        color_continuous_scale='Viridis'
     )
     
-    # Adjust layout for readability
-    fig.update_layout(margin=dict(t=50, l=25, r=25, b=25))
-    fig.update_traces(textinfo='label+value')  # Show 'id' and population sum on the treemap
-
+    fig.update_layout(margin=dict(t=50, l=25, r=25, b=25), title_text='Neighborhood Population by Year')
+    fig.update_traces(textinfo='label+value')  # Optional: Adjust this line to control what information is displayed on the treemap blocks
+    
     return fig
+
 
 # Define the Streamlit app
 def app():
