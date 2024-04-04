@@ -12,26 +12,37 @@ def app():
         'year': [2000, 2005, 2010, 2015, 2020]
     })
 
-    # Convert year to string to be used as a categorical variable for treemap path
-    population_data['year'] = population_data['year'].astype(str)
+    # Treemap visualization
+    population_data['year_str'] = population_data['year'].astype(str)  # For treemap path
+    treemap_fig = px.treemap(
+        population_data,
+        path=['year_str'],
+        values='population_sum',
+        color='population_sum',
+        color_continuous_scale='Blues'
+    )
+    treemap_fig.update_layout(margin=dict(t=50, l=25, r=25, b=25), title_text='Population by Year')
+    st.plotly_chart(treemap_fig, use_container_width=True)
 
-    # Create a treemap
-    fig = px.treemap(population_data, 
-                     path=['year'], 
-                     values='population_sum', 
-                     color='population_sum',
-                     color_continuous_scale='Blues')
+    # Scatter plot visualization
+    scatter_fig = px.scatter(
+        population_data,
+        x="year",
+        y="population_sum",
+        size="population_sum",
+        hover_name="year",
+        size_max=60,
+        title="Population Scatter Plot over Years"
+    )
+    scatter_fig.update_layout(margin=dict(t=50, l=25, r=25, b=25))
 
-    # Update the layout for better margins and title
-    fig.update_layout(margin=dict(t=50, l=25, r=25, b=25), title_text='Population by Year')
-
-    # Display the treemap in Streamlit
-    st.plotly_chart(fig, use_container_width=True)
-
-
+    # Display the scatter plot in Streamlit with tabs for themes
+    tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
+    with tab1:
+        st.plotly_chart(scatter_fig, theme="streamlit")
+    with tab2:
+        st.plotly_chart(scatter_fig, theme=None)
 
 # Run the Streamlit app
 if __name__ == '__main__':
     app()
-
-
