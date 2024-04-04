@@ -19,7 +19,7 @@ def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV
 # Adjusted Function to create a treemap for neighborhood population data
 def create_neighborhood_treemap(data):
     # Assuming your DataFrame uses a different name for the neighborhood identifier. Adjust as necessary.
-    identifier_column = "id" if ".geo" in data.columns else None  # Update this line based on your DataFrame's actual identifier column
+    identifier_column = "id" if "id" in data.columns else None  # Update this line based on your DataFrame's actual identifier column
     
     if identifier_column is None:
         st.error("Identifier column for neighborhoods not found in the DataFrame.")
