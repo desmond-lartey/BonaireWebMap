@@ -50,3 +50,4 @@ def app():
 # Ensure to call the app function if this script is run standalone
 if __name__ == "__main__":
     app()
+

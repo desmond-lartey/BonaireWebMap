@@ -29,7 +29,7 @@ with st.sidebar:
     )
 
 # Displaying the selected app
-# for app in apps:
-#     if app["title"] == selected:
-#         app["func"]()
-#         break
+for app in apps:
+    if app["title"] == selected:
+        app["func"]()
+        break
