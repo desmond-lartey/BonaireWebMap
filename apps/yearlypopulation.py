@@ -5,9 +5,8 @@ import os
 
 # Function to load the neighborhood population data
 def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV.csv"):
-    # Assuming the CSV file is in the same directory as your script
-    # Adjust the path as necessary if it's located elsewhere
-    file_path = os.path.join(os.path.dirname(__file__), filename)
+    # Construct the path to the CSV file within the 'newlyexportedshp' directory
+    file_path = os.path.join(os.path.dirname(__file__), "newlyexportedshp", filename)
     if os.path.exists(file_path):
         return pd.read_csv(file_path)
     else:
