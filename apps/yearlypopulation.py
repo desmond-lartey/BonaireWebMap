@@ -3,9 +3,8 @@ import plotly.express as px
 import pandas as pd
 import os
 
-# Function to load the neighborhood population data, correctly navigating the directory structure
+# Correctly navigating the directory structure to load neighborhood population data
 def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV.csv"):
-    # Adjusted logic to match your directory structure
     base_path = os.path.dirname(__file__)
     project_root = os.path.join(base_path, os.pardir)  # Move up one directory from the current file's location
     csv_path = os.path.join(project_root, "newlyexportedshp", filename)
@@ -16,54 +15,66 @@ def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV
         st.error(f"CSV file not found at {csv_path}")
         return pd.DataFrame()
 
-# Adjusted Function to create a treemap for neighborhood population data
+# Adjusted function to create a treemap for neighborhood population data considering the new data structure
 def create_neighborhood_treemap(data):
-    # Assuming your DataFrame uses a different name for the neighborhood identifier. Adjust as necessary.
-    identifier_column = "id" if "id" in data.columns else None  # Update this line based on your DataFrame's actual identifier column
-    
-    if identifier_column is None:
-        st.error("Identifier column for neighborhoods not found in the DataFrame.")
-        return
-    
-    # Melt the DataFrame to long format with 'Year' as the variable name and 'Population_Sum' as the value
-    year_columns = ['2000', '2005', '2010', '2015', '2020']
-    melted_data = data.melt(id_vars=[identifier_column], value_vars=year_columns, 
+    melted_data = data.melt(id_vars=["id"], value_vars=['2000', '2005', '2010', '2015', '2020'], 
                             var_name='Year', value_name='Population_Sum')
     
-    # Creating the treemap
     fig = px.treemap(
         melted_data,
-        path=[px.Constant("All Neighborhoods"), 'Year', identifier_column],  # Use the dynamic identifier in the path
+        path=[px.Constant("All Neighborhoods"), 'Year', 'id'],  # Using 'Year' and 'id' in the path
         values='Population_Sum',
-        color='Population_Sum',  # Color based on the Population_Sum to show size proportion
+        color='Population_Sum',
         color_continuous_scale='Viridis'
     )
     
     fig.update_layout(margin=dict(t=50, l=25, r=25, b=25), title_text='Neighborhood Population by Year')
-    fig.update_traces(textinfo='label+value')  # Optional: Adjust this line to control what information is displayed on the treemap blocks
-    
     return fig
 
-
-# Define the Streamlit app
+# Streamlit app definition
 def app():
     st.title("Population Data Visualization")
 
-    # Sample population data with years and population sums
+    # Initial population data and treemap visualization
     population_data = pd.DataFrame({
         'population_sum': [9531.10755, 11662.60621, 14270.78473, 17462.24582, 21367.43252],
         'year': [2000, 2005, 2010, 2015, 2020]
     })
 
-    # Treemap and Scatter plot visualization code...
+    population_data['year_str'] = population_data['year'].astype(str)
+    treemap_fig = px.treemap(
+        population_data,
+        path=['year_str'],
+        values='population_sum',
+        color='population_sum',
+        color_continuous_scale='Blues'
+    )
+    treemap_fig.update_layout(margin=dict(t=50, l=25, r=25, b=25), title_text='Population by Year')
+    st.plotly_chart(treemap_fig, use_container_width=True)
 
-    # Load neighborhood population data and create the third treemap
-    neighborhood_data = load_neighborhood_population_data("NeighborhoodPopulationByYear_CSV.csv")
+    # Scatter plot visualization
+    scatter_fig = px.scatter(
+        population_data,
+        x="year",
+        y="population_sum",
+        size="population_sum",
+        hover_name="year",
+        size_max=60,
+        title="Population Scatter Plot over Years"
+    )
+    scatter_fig.update_layout(margin=dict(t=50, l=25, r=25, b=25))
+    tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
+    with tab1:
+        st.plotly_chart(scatter_fig, theme="streamlit")
+    with tab2:
+        st.plotly_chart(scatter_fig, theme=None)
+    
+    # Load neighborhood population data and add the third treemap
+    neighborhood_data = load_neighborhood_population_data()
     if not neighborhood_data.empty:
-        # Assuming ".geo" column exists and can be used as a unique identifier
         neighborhood_treemap_fig = create_neighborhood_treemap(neighborhood_data)
         st.plotly_chart(neighborhood_treemap_fig, use_container_width=True)
 
-# Run the Streamlit app
+# Execute the Streamlit app
 if __name__ == '__main__':
     app()
