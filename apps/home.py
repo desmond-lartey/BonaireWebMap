@@ -3,8 +3,8 @@ import streamlit as st
 
 
 def app():
-    st.title("Home")
-    st.markdown("Welcome to the Bonaire Interactive Map Portal.")
+    #st.title("Home")
+    #st.markdown("Welcome to the Bonaire Interactive Map Portal.")
 
     st.header("Enhancing Active Mobility in Bonaire")
     st.markdown("""
