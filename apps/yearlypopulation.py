@@ -40,7 +40,7 @@ def create_neighborhood_treemap(data):
 
 # Streamlit app definition
 def app():
-    st.title("Population Data Visualization")
+    st.title("Population")
 
     # Initial population data and treemap visualization
     population_data = pd.DataFrame({
@@ -67,7 +67,7 @@ def app():
         size="population_sum",
         hover_name="year",
         size_max=60,
-        title="Population Scatter Plot over Years"
+        title="Population increase over Years"
     )
     scatter_fig.update_layout(margin=dict(t=50, l=25, r=25, b=25))
     tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
