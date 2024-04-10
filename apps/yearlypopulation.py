@@ -19,7 +19,7 @@ def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV
 # Adjusted function to create a treemap for neighborhood population data considering the new data structure
 @st.experimental_memo
 def create_neighborhood_treemap(data):
-    melted_data = data.melt(id_vars=["id"], value_vars=['2000', '2005', '2010', '2015', '2020', '2024', '2028', '2040'], 
+    melted_data = data.melt(id_vars=["id"], value_vars=['2000', '2005', '2010', '2015', '2020', '2024', '2028', '2038'], 
                             var_name='Year', value_name='Population_Sum')
 
     # Calculate a midpoint for coloring. Here, we'll use the average population as an approximation.
@@ -45,7 +45,7 @@ def app():
     # Initial population data and treemap visualization
     population_data = pd.DataFrame({
         'population_sum': [9531.10755, 11662.60621, 14270.78473, 17462.24582, 21367.43252, 25100, 29485, 44099],
-        'year': [2000, 2005, 2010, 2015, 2020, 2024, 2028, 2040]
+        'year': [2000, 2005, 2010, 2015, 2020, 2024, 2028, 2038]
     })
 
     population_data['year_str'] = population_data['year'].astype(str)
