@@ -44,8 +44,8 @@ def app():
 
     # Initial population data and treemap visualization
     population_data = pd.DataFrame({
-        'population_sum': [9531.10755, 11662.60621, 14270.78473, 17462.24582, 21367.43252],
-        'year': [2000, 2005, 2010, 2015, 2020]
+        'population_sum': [9531.10755, 11662.60621, 14270.78473, 17462.24582, 21367.43252, 25100, 29485, 44099],
+        'year': [2000, 2005, 2010, 2015, 2020, 2024, 2028, 2038]
     })
 
     population_data['year_str'] = population_data['year'].astype(str)
