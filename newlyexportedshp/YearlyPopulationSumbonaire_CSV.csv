@@ -1,6 +1,9 @@
 system:index,population_sum,year,.geo
-0,9531.107550120767,2000,"{""type"":""MultiPoint"",""coordinates"":[]}"
-1,11662.606205958504,2005,"{""type"":""MultiPoint"",""coordinates"":[]}"
-2,14270.784731037602,2010,"{""type"":""MultiPoint"",""coordinates"":[]}"
-3,17462.245820717562,2015,"{""type"":""MultiPoint"",""coordinates"":[]}"
-4,21367.43251600377,2020,"{""type"":""MultiPoint"",""coordinates"":[]}"
+0,9531.10755,2000,"{""type"":""MultiPoint"",""coordinates"":[]}"
+1,11662.60621,2005,"{""type"":""MultiPoint"",""coordinates"":[]}"
+2,14270.78473,2010,"{""type"":""MultiPoint"",""coordinates"":[]}"
+3,17462.24582,2015,"{""type"":""MultiPoint"",""coordinates"":[]}"
+4,21367.43252,2020,"{""type"":""MultiPoint"",""coordinates"":[]}"
+5,25100,2024,
+6,29485,2028,
+7,44099,2038,
