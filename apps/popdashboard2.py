@@ -139,7 +139,7 @@ def app():
 
         # Display Overall Population Distribution Across All Significant Neighborhoods
         st.header('Overall Population Distribution Across Neighborhoods')
-        fig_overall = px.bar(significant_data, x='id', y='_sum', labels={'_sum': 'Population Sum'}, title="Population Sum by Neighborhood")
+        fig_overall = px.bar(significant_data, x='id', y='_sum', labels={'_sum': 'Population sum'}, title="Population Sum by Neighborhood")
         st.plotly_chart(fig_overall)
 
         # Interactive Gender and Age Cohort Distribution Visualizations
