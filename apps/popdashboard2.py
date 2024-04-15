@@ -104,7 +104,7 @@ def aggregate_age_groups(data):
             # Create a new DataFrame to store aggregated data
             aggregated_data = pd.DataFrame()
 
-            for gender in ['M', 'F']:
+            for gender in ['Male', 'Femal']:
                 for group, ages in age_groups.items():
                     # Sum populations for each age group and gender
                     column_names = [f"{gender}_{age}sum" for age in ages]
@@ -139,7 +139,7 @@ def app():
 
         # Display Overall Population Distribution Across All Significant Neighborhoods
         st.header('Overall Population Distribution Across Neighborhoods')
-        fig_overall = px.bar(significant_data, x='id', y='_sum', labels={'_sum': 'Population Sum'}, title="Population Sum by Neighborhood")
+        fig_overall = px.bar(significant_data, x='id', y='_sum', labels={'_sum': 'Population'}, title="Population Sum by Neighborhood")
         st.plotly_chart(fig_overall)
 
         # Interactive Gender and Age Cohort Distribution Visualizations
