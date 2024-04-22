@@ -34,22 +34,19 @@ def convert_categorical_to_numeric(data):
 
 
 def plot_analysis(data, question):
-    sns.set(style="whitegrid")
-    fig, axes = plt.subplots(2, 2, figsize=(14, 18))
-    color_palette = ["Set2", "Set3", "Pastel1", "Pastel2"]
-
-    # Handle specific analysis based on the question selected
-    if question == "Demographic Distributions":
-        demographic_distributions(data, axes, color_palette)
-    elif question == "Travel Mode Analysis":
-        travel_mode_analysis(data, axes, color_palette)
-    elif question == "Correlation Analysis":
-        correlation_analysis(data, axes)
+    if question == "Correlation Analysis":
+        correlation_analysis(data)
     elif question == "Distribution Analysis":
-        distribution_analysis(data, axes)
+        distribution_analysis(data)
+    else:
+        fig, axes = plt.subplots(2, 2, figsize=(14, 18))
+        if question == "Demographic Distributions":
+            demographic_distributions(data, axes)
+        elif question == "Travel Mode Analysis":
+            travel_mode_analysis(data, axes)
+        plt.tight_layout()
+        st.pyplot(fig)
 
-    plt.tight_layout()
-    st.pyplot(fig)
 
 def demographic_distributions(data, axes, color_palette):
     sns.countplot(data=data, x='Gender', ax=axes[0, 0], palette=color_palette[0])
@@ -86,16 +83,21 @@ def correlation_analysis(data, axes):
     else:
         st.write("Not enough numerical columns for correlation analysis.")
 
-def distribution_analysis(data, axes):
+def distribution_analysis(data, fig):
     num_cols = data.select_dtypes(include=[np.number]).columns
     if len(num_cols) > 0:
+        n_rows = (len(num_cols) + 1) // 2  # Ensure there are enough rows to handle the columns
+        fig, axes = plt.subplots(n_rows, 2, figsize=(14, 5 * n_rows))  # Adjust the figure size based on the number of rows
+        axes = axes.flatten()  # Flatten the axes array to make indexing easier
         for i, col in enumerate(num_cols):
-            sns.histplot(data[col], kde=True, ax=axes.flat[i])
-            axes.flat[i].set_title(f'Distribution of {col}')
-        for i in range(len(num_cols), 4):
-            axes.flat[i].set_visible(False)
+            sns.histplot(data[col], kde=True, ax=axes[i])
+            axes[i].set_title(f'Distribution of {col}')
+        for j in range(i + 1, len(axes)):  # Hide unused axes if any
+            axes[j].set_visible(False)
+        plt.tight_layout()
     else:
         st.write("No numerical columns available for distribution analysis.")
+
 
 def app():
     st.title("Active Mobility Data Analysis")
