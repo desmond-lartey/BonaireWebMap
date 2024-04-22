@@ -1,16 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# Import necessary libraries
 import os
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 def load_data(filename):
-    data_path = os.path.join(os.path.dirname(__file__), filename)
-    return pd.read_excel(data_path)
+    # Dynamically construct the path to the data file
+    base_path = os.path.dirname(__file__)  # Directory of this script
+    project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
+    data_path = os.path.join(project_root, filename)
+    if os.path.exists(data_path):
+        return pd.read_excel(data_path)
+    else:
+        st.error(f"Data file not found at {data_path}")
+        return None
 
 def app():
     st.title("Active Mobility Data Analysis")
