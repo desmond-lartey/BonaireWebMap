@@ -18,23 +18,37 @@ def load_data(filename):
         return pd.DataFrame()
 
 def plot_analysis(data, question):
-    fig, axes = plt.subplots(2, 2, figsize=(15, 12))  # Create a 2x2 grid of plots
+    sns.set(style="whitegrid")
+    fig, axes = plt.subplots(2, 2, figsize=(14, 18))  # A 2x2 grid for multiple visualizations
 
-    # Different types of analyses and plots depending on the question
-    if question == "Activity Type Distribution":
-        sns.countplot(data=data, x='Activitytype', ax=axes[0, 0])
-        axes[0, 0].set_title('Activity Type Distribution')
-        axes[0, 0].tick_params(axis='x', rotation=45)
+    if question == "Demographic Distributions":
+        sns.countplot(data=data, x='Gender', ax=axes[0, 0])
+        axes[0, 0].set_title('Gender Distribution')
 
-        sns.boxplot(data=data, x='Activitytype', y='Income', ax=axes[0, 1])
-        axes[0, 1].set_title('Income by Activity Type')
+        sns.countplot(data=data, x='Agegroup', ax=axes[0, 1])
+        axes[0, 1].set_title('Age Group Distribution')
+        axes[0, 1].tick_params(axis='x', rotation=45)
 
-        data['Activitytype'].value_counts().plot(kind='pie', autopct='%1.1f%%', ax=axes[1, 0])
-        axes[1, 0].set_ylabel('')
-        axes[1, 0].set_title('Activity Type Pie Chart')
+        sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0])
+        axes[1, 0].set_title('Ethnicity Distribution')
+        axes[1, 0].tick_params(axis='x', rotation=45)
 
-        sns.violinplot(data=data, x='Activitytype', y='Household', ax=axes[1, 1])
-        axes[1, 1].set_title('Household Size by Activity Type')
+        sns.countplot(data=data, x='Activitytype', ax=axes[1, 1])
+        axes[1, 1].set_title('Activity Type Distribution')
+        axes[1, 1].tick_params(axis='x', rotation=45)
+
+    elif question == "Travel Mode Analysis":
+        travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
+        sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="Blues", ax=axes[0, 0])
+        axes[0, 0].set_title('Travel Mode by Age Group')
+
+        sns.countplot(data=data, x='Travel', ax=axes[0, 1])
+        axes[0, 1].set_title('Travel Mode Preferences')
+        axes[0, 1].tick_params(axis='x', rotation=45)
+
+        sns.countplot(data=data, x='Car', ax=axes[1, 0])
+        axes[1, 0].set_title('Car Usage Frequency')
+        axes[1, 0].tick_params(axis='x', rotation=45)
 
     plt.tight_layout()
     st.pyplot(fig)
@@ -42,11 +56,9 @@ def plot_analysis(data, question):
 def app():
     st.title("Active Mobility Data Analysis")
 
-    # Load Data
     observations_data = load_data('Bonaire_Observations2.xlsx')
     survey_data = load_data('Bonaire_Survey2.xlsx')
 
-    # Sidebar for user interaction
     st.sidebar.title("User Selection")
     dataset_choice = st.sidebar.radio("Choose the dataset:", ('Observations', 'Survey'))
     data = observations_data if dataset_choice == 'Observations' else survey_data
@@ -54,26 +66,22 @@ def app():
     if st.sidebar.checkbox("Show Data"):
         st.write(data)
 
-    # Define questions based on the selected dataset
     questions = {
-        'Observations': ["Activity Type Distribution", "Gender Distribution", "Peak Activity Times"],
-        'Survey': ["Travel Mode Preferences", "Income Distribution", "Household Size Analysis"]
+        'Observations': ["Demographic Distributions"],
+        'Survey': ["Travel Mode Analysis"]
     }
 
     selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
 
-    # Choose type of analysis
     analysis_type = st.sidebar.radio("Choose the type of analysis:", ("Descriptive", "Predictive"))
-
     if analysis_type == "Descriptive":
         if st.sidebar.button("Analyze"):
             plot_analysis(data, selected_question)
 
-    # Predictive Analysis Example
     elif analysis_type == "Predictive":
         st.subheader("Predictive Model Results")
         if st.sidebar.button("Model"):
-            st.write("Predictive Model would be implemented here")
+            st.write("Predictive model would be implemented here")
 
     
 if __name__ == "__main__":
