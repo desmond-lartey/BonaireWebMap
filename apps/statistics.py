@@ -33,19 +33,9 @@ def convert_categorical_to_numeric(data):
     return numeric_data, data
 
 def plot_analysis(data, question):
-    if question == "Correlation Analysis":
-        correlation_analysis(data)
-    elif question == "Distribution Analysis":
-        distribution_analysis(data)  # Call without fig as it is handled inside
-    else:
-        fig, axes = plt.subplots(2, 2, figsize=(14, 18))
-        if question == "Demographic Distributions":
-            demographic_distributions(data, axes)
-        elif question == "Travel Mode Analysis":
-            travel_mode_analysis(data, axes)
-        plt.tight_layout()
-        st.pyplot(fig)  # Ensure fig is used here for non-correlation/distribution analyses
-
+    # Direct function call based on question
+    if question in analysis_functions:
+        analysis_functions[question](data)
 
 def correlation_analysis(data):
     numeric_data = data.select_dtypes(include=[np.number])
@@ -58,18 +48,14 @@ def correlation_analysis(data):
         st.write("Not enough numerical columns for correlation analysis.")
 
 def distribution_analysis(data):
-    num_cols = data.select_dtypes(include=[np.number]).columns
-    if len(num_cols) > 0:
-        n_rows = (len(num_cols) + 1) // 2  # Calculate rows needed
-        fig, axes = plt.subplots(n_rows, 2, figsize=(14, 5 * n_rows))  # Dynamically create subplots
-        axes = axes.flatten()  # Flatten the axes array for easier indexing
-        for i, col in enumerate(num_cols):
-            sns.histplot(data[col], kde=True, ax=axes[i])
+    numeric_data = data.select_dtypes(include=[np.number])
+    if not numeric_data.empty:
+        fig, axes = plt.subplots(1, len(numeric_data.columns), figsize=(5 * len(numeric_data.columns), 4))
+        for i, col in enumerate(numeric_data.columns):
+            sns.histplot(numeric_data[col], kde=True, ax=axes[i])
             axes[i].set_title(f'Distribution of {col}')
-        for j in range(i + 1, len(axes)):  # Hide unused axes if any
-            axes[j].set_visible(False)
         plt.tight_layout()
-        st.pyplot(fig)  # Display the figure within the function
+        st.pyplot()
     else:
         st.write("No numerical columns available for distribution analysis.")
 
@@ -80,7 +66,7 @@ def demographic_distributions(data):
     for i, category in enumerate(categories):
         sns.countplot(data=data, x=category, ax=axes[i//2, i%2], palette=color_palette[i%4])
         axes[i//2, i%2].set_title(f'{category} Distribution')
-        axes[i//2, i%2].tick_params(axis='x', rotation=45)  # Ensure rotation for better label visibility
+        axes[i//2, i%2].tick_params(axis='x', rotation=45)
     plt.tight_layout()
     st.pyplot()
 
@@ -91,7 +77,6 @@ def travel_mode_analysis(data):
     axes[0].set_title('Travel Mode by Age Group')
     sns.countplot(data=data, x='Travel', ax=axes[1])
     axes[1].set_title('Travel Mode Preferences')
-    axes[1].tick_params(axis='x', rotation=45)  # Apply rotation here as well
     plt.tight_layout()
     st.pyplot()
 
@@ -99,10 +84,8 @@ def vehicle_use_patterns(data):
     fig, axes = plt.subplots(1, 2, figsize=(14, 7))
     sns.countplot(data=data, x='Car', ax=axes[0], palette="Set3")
     axes[0].set_title('Car Usage Frequency')
-    axes[0].tick_params(axis='x', rotation=45)  # Apply rotation
     sns.countplot(data=data, x='Bicycle', ax=axes[1], palette="Set2")
     axes[1].set_title('Bicycle Usage Frequency')
-    axes[1].tick_params(axis='x', rotation=45)  # Apply rotation
     plt.tight_layout()
     st.pyplot()
 
@@ -110,13 +93,10 @@ def activity_analysis(data):
     fig, axes = plt.subplots(1, 2, figsize=(14, 7))
     sns.countplot(data=data, x='Activitytype', ax=axes[0], palette="Pastel1")
     axes[0].set_title('Activity Type Distribution')
-    axes[0].tick_params(axis='x', rotation=45)  # Apply rotation
     sns.countplot(data=data, x='Timeofday', ax=axes[1], palette="Pastel2")
     axes[1].set_title('Time of Day Distribution')
-    axes[1].tick_params(axis='x', rotation=45)  # Apply rotation
     plt.tight_layout()
     st.pyplot()
-
 
 def app():
     st.title("Active Mobility Data Analysis")
