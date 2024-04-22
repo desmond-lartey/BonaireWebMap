@@ -20,33 +20,36 @@ def load_data(filename):
 def plot_analysis(data, question):
     sns.set(style="whitegrid")
     fig, axes = plt.subplots(2, 2, figsize=(14, 18))  # A 2x2 grid for multiple visualizations
+    
+    # Define color palettes for diversity
+    color_palette = ["Set2", "Set3", "Pastel1", "Pastel2"]
 
     if question == "Demographic Distributions":
-        sns.countplot(data=data, x='Gender', ax=axes[0, 0])
+        sns.countplot(data=data, x='Gender', ax=axes[0, 0], palette=color_palette[0])
         axes[0, 0].set_title('Gender Distribution')
 
-        sns.countplot(data=data, x='Agegroup', ax=axes[0, 1])
+        sns.countplot(data=data, x='Agegroup', ax=axes[0, 1], palette=color_palette[1])
         axes[0, 1].set_title('Age Group Distribution')
         axes[0, 1].tick_params(axis='x', rotation=45)
 
-        sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0])
+        sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0], palette=color_palette[2])
         axes[1, 0].set_title('Ethnicity Distribution')
         axes[1, 0].tick_params(axis='x', rotation=45)
 
-        sns.countplot(data=data, x='Activitytype', ax=axes[1, 1])
+        sns.countplot(data=data, x='Activitytype', ax=axes[1, 1], palette=color_palette[3])
         axes[1, 1].set_title('Activity Type Distribution')
         axes[1, 1].tick_params(axis='x', rotation=45)
 
     elif question == "Travel Mode Analysis":
         travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
-        sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="Blues", ax=axes[0, 0])
+        sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 0])
         axes[0, 0].set_title('Travel Mode by Age Group')
 
-        sns.countplot(data=data, x='Travel', ax=axes[0, 1])
+        sns.countplot(data=data, x='Travel', ax=axes[0, 1], palette=color_palette[1])
         axes[0, 1].set_title('Travel Mode Preferences')
         axes[0, 1].tick_params(axis='x', rotation=45)
 
-        sns.countplot(data=data, x='Car', ax=axes[1, 0])
+        sns.countplot(data=data, x='Car', ax=axes[1, 0], palette=color_palette[2])
         axes[1, 0].set_title('Car Usage Frequency')
         axes[1, 0].tick_params(axis='x', rotation=45)
 
@@ -75,7 +78,8 @@ def app():
 
     analysis_type = st.sidebar.radio("Choose the type of analysis:", ("Descriptive", "Predictive"))
     if analysis_type == "Descriptive":
-        if st.sidebar.button("Analyze"):
+        plot_analysis(data, questions[dataset_choice][0])  # Automatically plot the first question
+        if st.sidebar.button("Analyze Another"):
             plot_analysis(data, selected_question)
 
     elif analysis_type == "Predictive":
@@ -83,6 +87,5 @@ def app():
         if st.sidebar.button("Model"):
             st.write("Predictive model would be implemented here")
 
-    
 if __name__ == "__main__":
     app()
