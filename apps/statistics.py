@@ -33,9 +33,19 @@ def convert_categorical_to_numeric(data):
     return numeric_data, data
 
 def plot_analysis(data, question):
-    # Direct function call based on question
-    if question in analysis_functions:
-        analysis_functions[question](data)
+    if question == "Correlation Analysis":
+        correlation_analysis(data)
+    elif question == "Distribution Analysis":
+        distribution_analysis(data)  # Call without fig as it is handled inside
+    else:
+        fig, axes = plt.subplots(2, 2, figsize=(14, 18))
+        if question == "Demographic Distributions":
+            demographic_distributions(data, axes)
+        elif question == "Travel Mode Analysis":
+            travel_mode_analysis(data, axes)
+        plt.tight_layout()
+        st.pyplot(fig)  # Ensure fig is used here for non-correlation/distribution analyses
+
 
 def correlation_analysis(data):
     numeric_data = data.select_dtypes(include=[np.number])
