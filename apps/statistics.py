@@ -26,10 +26,12 @@ def convert_categorical_to_numeric(data):
         'Ethnicity': {'White': 1, 'Non-white': 2},
         'Activitytype': {'Cycling': 1, 'Sedentary': 2, 'Dog-walking': 3, 'Walking': 4, 'Scooter/other form of mobility': 5}
     }
+    numeric_data = data.copy()
     for column, mapping in mappings.items():
-        if column in data.columns:
-            data[column] = data[column].map(mapping)
-    return data
+        if column in numeric_data.columns:
+            numeric_data[column] = numeric_data[column].map(mapping)
+    return numeric_data, data
+
 
 def plot_analysis(data, question):
     sns.set(style="whitegrid")
@@ -97,16 +99,17 @@ def distribution_analysis(data, axes):
 
 def app():
     st.title("Active Mobility Data Analysis")
-    observations_data = load_data('Bonaire_Observations2.xlsx')
+    raw_observations_data = load_data('Bonaire_Observations2.xlsx')
     survey_data = load_data('Bonaire_Survey2.xlsx')
-    observations_data = convert_categorical_to_numeric(observations_data)
+    observations_numeric_data, observations_categorical_data = convert_categorical_to_numeric(raw_observations_data)
 
     st.sidebar.title("User Selection")
     dataset_choice = st.sidebar.radio("Choose the dataset:", ('Observations', 'Survey'))
-    data = observations_data if dataset_choice == 'Observations' else survey_data
+    numeric_data = observations_numeric_data if dataset_choice == 'Observations' else survey_data
+    categorical_data = observations_categorical_data if dataset_choice == 'Observations' else survey_data
 
     if st.sidebar.checkbox("Show Data"):
-        st.write(data)
+        st.write(categorical_data)  # Show categorical data for readability
 
     questions = {
         'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis"],
@@ -114,7 +117,10 @@ def app():
     }
 
     selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
-    plot_analysis(data, selected_question)  # Automatically plot when a question is selected
+    if "Correlation Analysis" in selected_question or "Distribution Analysis" in selected_question:
+        plot_analysis(numeric_data, selected_question)
+    else:
+        plot_analysis(categorical_data, selected_question)  # Use categorical data for non-numerical analysis
 
 if __name__ == "__main__":
     app()
