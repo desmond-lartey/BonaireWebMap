@@ -41,11 +41,11 @@ def plot_analysis(data, question):
         sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 0])
         axes[0, 0].set_title('Travel Mode by Age Group')
 
-        sns.countplot(data=data, x='Travel', ax=axes[0, 1], palette=color_palette[1])
-        axes[0, 1].set_title('Travel Mode Preferences')
+        sns.countplot(data=data, x='Travel', ax=axes[1, 0], palette=color_palette[1])
+        axes[1, 0].set_title('Travel Mode Preferences')
 
-        sns.countplot(data=data, x='Car', ax=axes[1, 0], palette=color_palette[2])
-        axes[1, 0].set_title('Car Usage Frequency')
+        sns.countplot(data=data, x='Car', ax=axes[0, 1], palette=color_palette[2])
+        axes[0, 1].set_title('Car Usage Frequency')
 
     plt.tight_layout()
     st.pyplot(fig)
