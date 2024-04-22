@@ -25,7 +25,7 @@ def plot_analysis(data, question):
         sns.countplot(data=data, x='Gender', ax=axes[0, 0])
         axes[0, 0].set_title('Gender Distribution')
 
-        sns.countplot(data=data, x='Agegroup', ax=axes[0, 1])
+        sns.countplot(data=data, x='Age', ax=axes[0, 1])
         axes[0, 1].set_title('Age Group Distribution')
         axes[0, 1].tick_params(axis='x', rotation=45)
 
