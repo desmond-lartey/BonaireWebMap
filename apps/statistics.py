@@ -68,7 +68,7 @@ def app():
         'Observations': ["Demographic Distributions", "Activity Analysis"],
         'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns"]
     }
-
+    
     selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
 
     analysis_type = st.sidebar.radio("Choose the type of analysis:", ("Descriptive", "Predictive"))
@@ -81,8 +81,6 @@ def app():
         if st.sidebar.button("Model"):
             st.write("Predictive model would be implemented here")
 
-    st.sidebar.markdown("### Contact Information")
-    st.sidebar.info("This web app is maintained by [Your Name]. For any issues or suggestions, contact us via [Email](mailto:your_email@example.com).")
-
+    
 if __name__ == "__main__":
     app()
