@@ -44,9 +44,12 @@ def plot_analysis(data, question):
             demographic_distributions(data, axes)
         elif question == "Travel Mode Analysis":
             travel_mode_analysis(data, axes)
-        plt.tight_layout()
-        st.pyplot(fig)
+        # plt.tight_layout()
+        # st.pyplot(fig)
 
+
+    plt.tight_layout()
+    st.pyplot(fig)
 
 def demographic_distributions(data, axes, color_palette):
     sns.countplot(data=data, x='Gender', ax=axes[0, 0], palette=color_palette[0])
