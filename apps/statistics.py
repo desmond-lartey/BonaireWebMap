@@ -7,14 +7,14 @@ import streamlit as st
 
 def load_data(filename):
     # Dynamically construct the path to the data file
-    base_path = os.path.dirname(__file__)
-    project_root = os.path.join(base_path, os.pardir)
+    base_path = os.path.dirname(__file__)  # Directory of this script
+    project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
     data_path = os.path.join(project_root, "newlyexportedshp", filename)
 
     # Ensure the data file path exists
     if os.path.exists(data_path):
-        # Read the CSV data file
-        return pd.read_csv(data_path)
+        # Read the Excel data file
+        return pd.read_excel(data_path)
     else:
         st.error(f"Data file not found at {data_path}")
         return pd.DataFrame()
@@ -37,11 +37,13 @@ def app():
     if st.sidebar.checkbox("Show Data"):
         st.write(data)
 
-    # Select category (assuming a common column exists or using example columns)
+    # Assuming a common column 'Category' exists or handling the case when it does not
     if 'Category' in data.columns:
         categories = data['Category'].unique().tolist()
         selected_category = st.sidebar.selectbox("Select a category:", categories)
-    
+    else:
+        st.write("No 'Category' column found in the dataset.")
+
     # Select type of analysis
     analysis_type = st.sidebar.radio("Choose the type of analysis:", ("Descriptive", "Predictive"))
     
@@ -62,6 +64,6 @@ def app():
     st.sidebar.markdown("### Contact Information")
     st.sidebar.info("This web app is maintained by [Your Name]. For any issues or suggestions, contact us via [Email](mailto:your_email@example.com).")
 
-# For module functionality in the Streamlit environment
+# Ensures that this script can be run as a standalone app in Streamlit
 if __name__ == "__main__":
     app()
