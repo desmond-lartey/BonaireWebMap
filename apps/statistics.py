@@ -38,7 +38,7 @@ def plot_analysis(data, question):
 
     elif question == "Travel Mode Analysis":
         travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
-        sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 1])
+        sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 0])
         axes[0, 0].set_title('Travel Mode by Age Group')
 
         sns.countplot(data=data, x='Travel', ax=axes[0, 1], palette=color_palette[1])
