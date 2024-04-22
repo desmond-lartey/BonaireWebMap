@@ -18,39 +18,26 @@ def load_data(filename):
         return pd.DataFrame()
 
 def plot_analysis(data, question):
-    plt.figure(figsize=(10, 6))
-    
+    fig, axes = plt.subplots(2, 2, figsize=(15, 12))  # Create a 2x2 grid of plots
+
+    # Different types of analyses and plots depending on the question
     if question == "Activity Type Distribution":
-        # Distribution of activity types, useful for understanding the most common activities.
-        sns.countplot(data=data, x='Activitytype')
-        plt.title('Distribution of Activity Types')
-        plt.xticks(rotation=45)
+        sns.countplot(data=data, x='Activitytype', ax=axes[0, 0])
+        axes[0, 0].set_title('Activity Type Distribution')
+        axes[0, 0].tick_params(axis='x', rotation=45)
 
-    elif question == "Gender Distribution":
-        # Gender distribution across activities to see if there's a gender bias in activity participation.
-        sns.countplot(data=data, x='Gender')
-        plt.title('Gender Distribution')
+        sns.boxplot(data=data, x='Activitytype', y='Income', ax=axes[0, 1])
+        axes[0, 1].set_title('Income by Activity Type')
 
-    elif question == "Peak Activity Times":
-        # Visualization of activity frequency by time of day to identify peak activity times.
-        sns.countplot(data=data, x='Timeofday')
-        plt.title('Peak Activity Times')
-        plt.xticks(rotation=45)
+        data['Activitytype'].value_counts().plot(kind='pie', autopct='%1.1f%%', ax=axes[1, 0])
+        axes[1, 0].set_ylabel('')
+        axes[1, 0].set_title('Activity Type Pie Chart')
 
-    elif question == "Travel Mode Preferences":
-        # Travel mode preferences by age group to target specific age demographics.
-        travel_mode_age = pd.crosstab(data['Age'], data['Travel'])
-        sns.heatmap(travel_mode_age, annot=True, fmt="d", cmap="Blues")
-        plt.title('Travel Mode Preferences by Age Group')
+        sns.violinplot(data=data, x='Activitytype', y='Household', ax=axes[1, 1])
+        axes[1, 1].set_title('Household Size by Activity Type')
 
-    elif question == "Income Distribution":
-        # Income distribution to assess economic factors influencing travel choices.
-        data['Income'].plot(kind='hist', bins=10, color='skyblue')
-        plt.title('Income Distribution')
-        plt.xlabel('Income Levels')
-
-    st.pyplot(plt)
-
+    plt.tight_layout()
+    st.pyplot(fig)
 
 def app():
     st.title("Active Mobility Data Analysis")
@@ -64,19 +51,33 @@ def app():
     dataset_choice = st.sidebar.radio("Choose the dataset:", ('Observations', 'Survey'))
     data = observations_data if dataset_choice == 'Observations' else survey_data
 
+    if st.sidebar.checkbox("Show Data"):
+        st.write(data)
+
     # Define questions based on the selected dataset
-    if dataset_choice == 'Observations':
-        questions = ["Activity Type Distribution", "Gender Distribution"]  # Extend with more relevant questions
-    elif dataset_choice == 'Survey':
-        questions = ["Travel Mode Preferences", "Income Distribution"]  # Extend with more relevant questions
+    questions = {
+        'Observations': ["Activity Type Distribution", "Gender Distribution", "Peak Activity Times"],
+        'Survey': ["Travel Mode Preferences", "Income Distribution", "Household Size Analysis"]
+    }
 
-    # Select question for analysis
-    selected_question = st.sidebar.selectbox("Select a question:", questions)
+    selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
 
-    # Button to perform analysis
-    if st.sidebar.button("Analyze"):
-        plot_analysis(data, selected_question)
+    # Choose type of analysis
+    analysis_type = st.sidebar.radio("Choose the type of analysis:", ("Descriptive", "Predictive"))
 
+    if analysis_type == "Descriptive":
+        if st.sidebar.button("Analyze"):
+            plot_analysis(data, selected_question)
+
+    # Predictive Analysis Example
+    elif analysis_type == "Predictive":
+        st.subheader("Predictive Model Results")
+        if st.sidebar.button("Model"):
+            st.write("Predictive Model would be implemented here")
+
+    # Footer with contact information and additional resources
+    st.sidebar.markdown("### Contact Information")
+    st.sidebar.info("This web app is maintained by [Your Name]. For any issues or suggestions, contact us via [Email](mailto:your_email@example.com).")
 
 if __name__ == "__main__":
     app()
