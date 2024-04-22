@@ -71,8 +71,8 @@ def plot_analysis(data, question):
         axes[1, 0].set_title('Car Usage Frequency')
         axes[1, 0].tick_params(axis='x', rotation=45)
 
-plt.tight_layout()
-st.pyplot(fig)
+        plt.tight_layout()
+        st.pyplot(fig)
 
 def app():
     st.title("Active Mobility Data Analysis")
