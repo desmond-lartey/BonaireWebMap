@@ -76,7 +76,6 @@ def plot_analysis(data, question):
 
 def app():
     st.title("Active Mobility Data Analysis")
-
     observations_data = load_data('Bonaire_Observations2.xlsx')
     survey_data = load_data('Bonaire_Survey2.xlsx')
 
@@ -87,23 +86,16 @@ def app():
     if st.sidebar.checkbox("Show Data"):
         st.write(data)
 
+    # Update questions to include new analyses
     questions = {
-        'Observations': ["Demographic Distributions", "Activity Analysis"],
-        'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns"]
+        'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis"],
+        'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Distribution Analysis"]
     }
 
     selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
 
-    analysis_type = st.sidebar.radio("Choose the type of analysis:", ("Descriptive", "Predictive"))
-    if analysis_type == "Descriptive":
-        plot_analysis(data, questions[dataset_choice][0])  # Automatically plot the first question
-        if st.sidebar.button("Analyze Another"):
-            plot_analysis(data, selected_question)
-
-    elif analysis_type == "Predictive":
-        st.subheader("Predictive Model Results")
-        if st.sidebar.button("Model"):
-            st.write("Predictive model would be implemented here")
+    if st.sidebar.button("Analyze"):
+        plot_analysis(data, selected_question)
 
 if __name__ == "__main__":
     app()
