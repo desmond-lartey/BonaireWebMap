@@ -66,7 +66,7 @@ def demographic_distributions(data):
     for i, category in enumerate(categories):
         sns.countplot(data=data, x=category, ax=axes[i//2, i%2], palette=color_palette[i%4])
         axes[i//2, i%2].set_title(f'{category} Distribution')
-        axes[i//2, i%2].tick_params(axis='x', rotation=45)
+        axes[i//2, i%2].tick_params(axis='x', rotation=45)  # Ensure rotation for better label visibility
     plt.tight_layout()
     st.pyplot()
 
@@ -77,6 +77,7 @@ def travel_mode_analysis(data):
     axes[0].set_title('Travel Mode by Age Group')
     sns.countplot(data=data, x='Travel', ax=axes[1])
     axes[1].set_title('Travel Mode Preferences')
+    axes[1].tick_params(axis='x', rotation=45)  # Apply rotation here as well
     plt.tight_layout()
     st.pyplot()
 
@@ -84,8 +85,10 @@ def vehicle_use_patterns(data):
     fig, axes = plt.subplots(1, 2, figsize=(14, 7))
     sns.countplot(data=data, x='Car', ax=axes[0], palette="Set3")
     axes[0].set_title('Car Usage Frequency')
+    axes[0].tick_params(axis='x', rotation=45)  # Apply rotation
     sns.countplot(data=data, x='Bicycle', ax=axes[1], palette="Set2")
     axes[1].set_title('Bicycle Usage Frequency')
+    axes[1].tick_params(axis='x', rotation=45)  # Apply rotation
     plt.tight_layout()
     st.pyplot()
 
@@ -93,10 +96,13 @@ def activity_analysis(data):
     fig, axes = plt.subplots(1, 2, figsize=(14, 7))
     sns.countplot(data=data, x='Activitytype', ax=axes[0], palette="Pastel1")
     axes[0].set_title('Activity Type Distribution')
+    axes[0].tick_params(axis='x', rotation=45)  # Apply rotation
     sns.countplot(data=data, x='Timeofday', ax=axes[1], palette="Pastel2")
     axes[1].set_title('Time of Day Distribution')
+    axes[1].tick_params(axis='x', rotation=45)  # Apply rotation
     plt.tight_layout()
     st.pyplot()
+
 
 def app():
     st.title("Active Mobility Data Analysis")
