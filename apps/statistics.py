@@ -6,15 +6,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
-import numpy as np  # Import numpy for numerical operations
+import numpy as np
 
 def load_data(filename):
     base_path = os.path.dirname(__file__)
     project_root = os.path.join(base_path, os.pardir)
     data_path = os.path.join(project_root, "newlyexportedshp", filename)
     if os.path.exists(data_path):
-        data = pd.read_excel(data_path)
-        return data
+        return pd.read_excel(data_path)
     else:
         st.error(f"Data file not found at {data_path}")
         return pd.DataFrame()
@@ -34,88 +33,67 @@ def convert_categorical_to_numeric(data):
 
 def plot_analysis(data, question):
     sns.set(style="whitegrid")
-    fig, axes = plt.subplots(2, 2, figsize=(14, 18))  # A 2x2 grid for multiple visualizations
-    
-    if "Correlation Analysis" in question:
-        numerical_data = data.select_dtypes(include=[np.number])
-        if numerical_data.shape[1] > 1:
-            sns.heatmap(numerical_data.corr(), annot=True, cmap='coolwarm', ax=axes[0, 0])
-            axes[0, 0].set_title('Correlation Matrix')
-            # Hide other plots if not relevant
-            for i in range(1, 4):
-                axes.flat[i].set_visible(False)
-            plt.tight_layout()
-            st.pyplot(fig)
-            return
-        else:
-            st.write("Not enough numerical columns for correlation analysis.")
-            return
+    fig, axes = plt.subplots(2, 2, figsize=(14, 18))
+    color_palette = ["Set2", "Set3", "Pastel1", "Pastel2"]
 
-    if "Distribution Analysis" in question:
-        num_cols = data.select_dtypes(include=[np.number]).columns
-        if len(num_cols) > 0:
-            for i, col in enumerate(num_cols):
-                sns.histplot(data[col], kde=True, ax=axes.flat[i])
-                axes.flat[i].set_title(f'Distribution of {col}')
-            for i in range(len(num_cols), 4):
-                axes.flat[i].set_visible(False)
-            plt.tight_layout()
-            st.pyplot(fig)
-            return
-        else:
-            st.write("No numerical columns available for distribution analysis.")
-            return
-
-    # Implement other types of analyses
+    # Handle specific analysis based on the question selected
     if question == "Demographic Distributions":
-        sns.countplot(data=data, x='Gender', ax=axes[0, 0], palette=color_palette[0])
-        axes[0, 0].set_title('Gender Distribution')
-
-        sns.countplot(data=data, x='Agegroup', ax=axes[0, 1], palette=color_palette[1])
-        axes[0, 1].set_title('Age Group Distribution')
-        axes[0, 1].tick_params(axis='x', rotation=45)
-
-        sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0], palette=color_palette[2])
-        axes[1, 0].set_title('Ethnicity Distribution')
-        axes[1, 0].tick_params(axis='x', rotation=45)
-
-        sns.countplot(data=data, x='Activitytype', ax=axes[1, 1], palette=color_palette[3])
-        axes[1, 1].set_title('Activity Type Distribution')
-        axes[1, 1].tick_params(axis='x', rotation=45)
-
+        demographic_distributions(data, axes, color_palette)
     elif question == "Travel Mode Analysis":
-        travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
-        sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 0])
-        axes[0, 0].set_title('Travel Mode by Age Group')
-
-        sns.countplot(data=data, x='Travel', ax=axes[0, 1], palette=color_palette[1])
-        axes[0, 1].set_title('Travel Mode Preferences')
-        axes[0, 1].tick_params(axis='x', rotation=45)
-
-        sns.countplot(data=data, x='Car', ax=axes[1, 0], palette=color_palette[2])
-        axes[1, 0].set_title('Car Usage Frequency')
-        axes[1, 0].tick_params(axis='x', rotation=45)
+        travel_mode_analysis(data, axes, color_palette)
+    elif question == "Correlation Analysis":
+        correlation_analysis(data, axes)
+    elif question == "Distribution Analysis":
+        distribution_analysis(data, axes)
 
     plt.tight_layout()
     st.pyplot(fig)
 
-def demographic_distributions(data, axes):
-    color_palette = ["Set2", "Set3", "Pastel1", "Pastel2"]
+def demographic_distributions(data, axes, color_palette):
     sns.countplot(data=data, x='Gender', ax=axes[0, 0], palette=color_palette[0])
     axes[0, 0].set_title('Gender Distribution')
     sns.countplot(data=data, x='Agegroup', ax=axes[0, 1], palette=color_palette[1])
     axes[0, 1].set_title('Age Group Distribution')
+    axes[0, 1].tick_params(axis='x', rotation=45)
     sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0], palette=color_palette[2])
     axes[1, 0].set_title('Ethnicity Distribution')
+    axes[1, 0].tick_params(axis='x', rotation=45)
     sns.countplot(data=data, x='Activitytype', ax=axes[1, 1], palette=color_palette[3])
     axes[1, 1].set_title('Activity Type Distribution')
+    axes[1, 1].tick_params(axis='x', rotation=45)
 
-def travel_mode_analysis(data, axes):
+def travel_mode_analysis(data, axes, color_palette):
     travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
     sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 0])
-    sns.countplot(data=data, x='Travel', ax=axes[0, 1])
-    sns.countplot(data=data, x='Car', ax=axes[1, 0])
+    axes[0, 0].set_title('Travel Mode by Age Group')
+    sns.countplot(data=data, x='Travel', ax=axes[0, 1], palette=color_palette[1])
+    axes[0, 1].set_title('Travel Mode Preferences')
     axes[0, 1].tick_params(axis='x', rotation=45)
+    sns.countplot(data=data, x='Car', ax=axes[1, 0], palette=color_palette[2])
+    axes[1, 0].set_title('Car Usage Frequency')
+    axes[1, 0].tick_params(axis='x', rotation=45)
+
+def correlation_analysis(data, axes):
+    numerical_data = data.select_dtypes(include=[np.number])
+    if numerical_data.shape[1] > 1:
+        sns.heatmap(numerical_data.corr(), annot=True, cmap='coolwarm', ax=axes[0, 0])
+        axes[0, 0].set_title('Correlation Matrix')
+        # Hide other plots
+        for i in range(1, 4):
+            axes.flat[i].set_visible(False)
+    else:
+        st.write("Not enough numerical columns for correlation analysis.")
+
+def distribution_analysis(data, axes):
+    num_cols = data.select_dtypes(include=[np.number]).columns
+    if len(num_cols) > 0:
+        for i, col in enumerate(num_cols):
+            sns.histplot(data[col], kde=True, ax=axes.flat[i])
+            axes.flat[i].set_title(f'Distribution of {col}')
+        for i in range(len(num_cols), 4):
+            axes.flat[i].set_visible(False)
+    else:
+        st.write("No numerical columns available for distribution analysis.")
 
 def app():
     st.title("Active Mobility Data Analysis")
