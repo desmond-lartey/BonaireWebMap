@@ -21,35 +21,37 @@ def plot_analysis(data, question):
     sns.set(style="whitegrid")
     fig, axes = plt.subplots(2, 2, figsize=(14, 18))  # A 2x2 grid for multiple visualizations
 
-    try:
-        if question == "Demographic Distributions":
-            sns.countplot(data=data, x='Gender', ax=axes[0, 0])
-            axes[0, 0].set_title('Gender Distribution')
+    if question == "Demographic Distributions":
+        sns.countplot(data=data, x='Gender', ax=axes[0, 0])
+        axes[0, 0].set_title('Gender Distribution')
 
-            sns.countplot(data=data, x='Agegroup', ax=axes[0, 1])
-            axes[0, 1].set_title('Age Group Distribution')
+        sns.countplot(data=data, x='Agegroup', ax=axes[0, 1])
+        axes[0, 1].set_title('Age Group Distribution')
+        axes[0, 1].tick_params(axis='x', rotation=45)
 
-            sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0])
-            axes[1, 0].set_title('Ethnicity Distribution')
+        sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0])
+        axes[1, 0].set_title('Ethnicity Distribution')
+        axes[1, 0].tick_params(axis='x', rotation=45)
 
-            sns.countplot(data=data, x='Activitytype', ax=axes[1, 1])
-            axes[1, 1].set_title('Activity Type Distribution')
+        sns.countplot(data=data, x='Activitytype', ax=axes[1, 1])
+        axes[1, 1].set_title('Activity Type Distribution')
+        axes[1, 1].tick_params(axis='x', rotation=45)
 
-        elif question == "Travel Mode Analysis":
-            travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
-            sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="Blues", ax=axes[0, 0])
-            axes[0, 0].set_title('Travel Mode by Age Group')
+    elif question == "Travel Mode Analysis":
+        travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
+        sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="Blues", ax=axes[0, 0])
+        axes[0, 0].set_title('Travel Mode by Age Group')
 
-            sns.countplot(data=data, x='Travel', ax=axes[0, 1])
-            axes[0, 1].set_title('Travel Mode Preferences')
+        sns.countplot(data=data, x='Travel', ax=axes[0, 1])
+        axes[0, 1].set_title('Travel Mode Preferences')
+        axes[0, 1].tick_params(axis='x', rotation=45)
 
-            sns.countplot(data=data, x='Car', ax=axes[1, 0])
-            axes[1, 0].set_title('Car Usage Frequency')
+        sns.countplot(data=data, x='Car', ax=axes[1, 0])
+        axes[1, 0].set_title('Car Usage Frequency')
+        axes[1, 0].tick_params(axis='x', rotation=45)
 
-        plt.tight_layout()
-        st.pyplot(fig)
-    except KeyError as e:
-        st.error(f"Missing column in the dataset: {str(e)}")
+    plt.tight_layout()
+    st.pyplot(fig)
 
 def app():
     st.title("Active Mobility Data Analysis")
@@ -81,8 +83,6 @@ def app():
         if st.sidebar.button("Model"):
             st.write("Predictive model would be implemented here")
 
-    st.sidebar.markdown("### Contact Information")
-    st.sidebar.info("This web app is maintained by [Your Name]. For any issues or suggestions, contact us via [Email](mailto:your_email@example.com).")
-
+    
 if __name__ == "__main__":
     app()
