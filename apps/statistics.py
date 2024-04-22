@@ -48,14 +48,18 @@ def correlation_analysis(data):
         st.write("Not enough numerical columns for correlation analysis.")
 
 def distribution_analysis(data):
-    numeric_data = data.select_dtypes(include=[np.number])
-    if not numeric_data.empty:
-        fig, axes = plt.subplots(1, len(numeric_data.columns), figsize=(5 * len(numeric_data.columns), 4))
-        for i, col in enumerate(numeric_data.columns):
-            sns.histplot(numeric_data[col], kde=True, ax=axes[i])
+    num_cols = data.select_dtypes(include=[np.number]).columns
+    if len(num_cols) > 0:
+        n_rows = (len(num_cols) + 1) // 2  # Calculate rows needed
+        fig, axes = plt.subplots(n_rows, 2, figsize=(14, 5 * n_rows))  # Dynamically create subplots
+        axes = axes.flatten()  # Flatten the axes array for easier indexing
+        for i, col in enumerate(num_cols):
+            sns.histplot(data[col], kde=True, ax=axes[i])
             axes[i].set_title(f'Distribution of {col}')
+        for j in range(i + 1, len(axes)):  # Hide unused axes if any
+            axes[j].set_visible(False)
         plt.tight_layout()
-        st.pyplot()
+        st.pyplot(fig)  # Display the figure within the function
     else:
         st.write("No numerical columns available for distribution analysis.")
 
