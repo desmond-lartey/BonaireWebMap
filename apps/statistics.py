@@ -19,10 +19,28 @@ def load_data(filename):
 
 def plot_analysis(data, question):
     sns.set(style="whitegrid")
-    fig, axes = plt.subplots(2, 2, figsize=(14, 18))  # A 2x2 grid for multiple visualizations
-    
-    # Define color palettes for diversity
-    color_palette = ["Set2", "Set3", "Pastel1", "Pastel2"]
+    if "Correlation Analysis" in question:
+        if data.select_dtypes(include=[np.number]).shape[1] > 1:
+            plt.figure(figsize=(10, 8))
+            sns.heatmap(data.corr(), annot=True, cmap='coolwarm')
+            plt.title('Correlation Matrix')
+            st.pyplot(plt)
+        else:
+            st.write("Not enough numerical columns for correlation analysis.")
+
+    elif "Distribution Analysis" in question:
+        num_cols = data.select_dtypes(include=[np.number]).columns
+        fig, axes = plt.subplots(1, len(num_cols), figsize=(5 * len(num_cols), 4))
+        for i, col in enumerate(num_cols):
+            sns.histplot(data[col], kde=True, ax=axes[i])
+            axes[i].set_title(f'Distribution of {col}')
+        plt.tight_layout()
+        st.pyplot(fig)
+
+    else:
+        fig, axes = plt.subplots(2, 2, figsize=(14, 18))
+        # Define color palettes
+        color_palette = ["Set2", "Set3", "Pastel1", "Pastel2"]
 
     if question == "Demographic Distributions":
         sns.countplot(data=data, x='Gender', ax=axes[0, 0], palette=color_palette[0])
@@ -53,8 +71,8 @@ def plot_analysis(data, question):
         axes[1, 0].set_title('Car Usage Frequency')
         axes[1, 0].tick_params(axis='x', rotation=45)
 
-    plt.tight_layout()
-    st.pyplot(fig)
+        plt.tight_layout()
+        st.pyplot(fig)
 
 def app():
     st.title("Active Mobility Data Analysis")
