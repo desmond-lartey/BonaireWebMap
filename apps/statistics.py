@@ -7,14 +7,17 @@ import streamlit as st
 
 def load_data(filename):
     # Dynamically construct the path to the data file
-    base_path = os.path.dirname(__file__)  # Directory of this script
-    project_root = os.path.join(base_path, os.pardir)  # Move up to the project root
-    data_path = os.path.join(project_root, filename)
+    base_path = os.path.dirname(__file__)
+    project_root = os.path.join(base_path, os.pardir)
+    data_path = os.path.join(project_root, "newlyexportedshp", filename)
+
+    # Ensure the data file path exists
     if os.path.exists(data_path):
-        return pd.read_excel(data_path)
+        # Read the CSV data file
+        return pd.read_csv(data_path)
     else:
         st.error(f"Data file not found at {data_path}")
-        return None
+        return pd.DataFrame()
 
 def app():
     st.title("Active Mobility Data Analysis")
