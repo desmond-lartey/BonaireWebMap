@@ -36,7 +36,7 @@ def plot_analysis(data, question):
             axes[1, 1].set_title('Activity Type Distribution')
 
         elif question == "Travel Mode Analysis":
-            travel_mode_crosstab = pd.crosstab(data['Age'], data['Travel'])
+            travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
             sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="Blues", ax=axes[0, 0])
             axes[0, 0].set_title('Travel Mode by Age Group')
 
