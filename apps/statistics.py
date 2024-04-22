@@ -67,8 +67,8 @@ def app():
         st.write(data)
 
     questions = {
-        'Observations': ["Demographic Distributions"],
-        'Survey': ["Travel Mode Analysis"]
+        'Observations': ["Demographic Distributions", "Activity Analysis"],
+        'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns"]
     }
 
     selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
