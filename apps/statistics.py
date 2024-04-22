@@ -20,35 +20,36 @@ def load_data(filename):
 def plot_analysis(data, question):
     sns.set(style="whitegrid")
     fig, axes = plt.subplots(2, 2, figsize=(14, 18))  # A 2x2 grid for multiple visualizations
-    
-    color_palette = ["Set2", "Set3", "Pastel1", "Pastel2"]  # Define color palettes for diversity
 
-    if question == "Demographic Distributions":
-        sns.countplot(data=data, x='Gender', ax=axes[0, 0], palette=color_palette[0])
-        axes[0, 0].set_title('Gender Distribution')
+    try:
+        if question == "Demographic Distributions":
+            sns.countplot(data=data, x='Gender', ax=axes[0, 0])
+            axes[0, 0].set_title('Gender Distribution')
 
-        sns.countplot(data=data, x='Agegroup', ax=axes[0, 1], palette=color_palette[1])
-        axes[0, 1].set_title('Age Group Distribution')
+            sns.countplot(data=data, x='Agegroup', ax=axes[0, 1])
+            axes[0, 1].set_title('Age Group Distribution')
 
-        sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0], palette=color_palette[2])
-        axes[1, 0].set_title('Ethnicity Distribution')
+            sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0])
+            axes[1, 0].set_title('Ethnicity Distribution')
 
-        sns.countplot(data=data, x='Activitytype', ax=axes[1, 1], palette=color_palette[3])
-        axes[1, 1].set_title('Activity Type Distribution')
+            sns.countplot(data=data, x='Activitytype', ax=axes[1, 1])
+            axes[1, 1].set_title('Activity Type Distribution')
 
-    elif question == "Travel Mode Analysis":
-        travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
-        sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 0])
-        axes[0, 0].set_title('Travel Mode by Age Group')
+        elif question == "Travel Mode Analysis":
+            travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
+            sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="Blues", ax=axes[0, 0])
+            axes[0, 0].set_title('Travel Mode by Age Group')
 
-        sns.countplot(data=data, x='Travel', ax=axes[0, 1], palette=color_palette[1])
-        axes[0, 1].set_title('Travel Mode Preferences')
+            sns.countplot(data=data, x='Travel', ax=axes[0, 1])
+            axes[0, 1].set_title('Travel Mode Preferences')
 
-        sns.countplot(data=data, x='Car', ax=axes[1, 0], palette=color_palette[2])
-        axes[1, 0].set_title('Car Usage Frequency')
+            sns.countplot(data=data, x='Car', ax=axes[1, 0])
+            axes[1, 0].set_title('Car Usage Frequency')
 
-    plt.tight_layout()
-    st.pyplot(fig)
+        plt.tight_layout()
+        st.pyplot(fig)
+    except KeyError as e:
+        st.error(f"Missing column in the dataset: {str(e)}")
 
 def app():
     st.title("Active Mobility Data Analysis")
@@ -72,14 +73,16 @@ def app():
 
     analysis_type = st.sidebar.radio("Choose the type of analysis:", ("Descriptive", "Predictive"))
     if analysis_type == "Descriptive":
-        plot_analysis(data, questions[dataset_choice][0])  # Automatically plot the first question
-        if st.sidebar.button("Analyze Another"):
+        if st.sidebar.button("Analyze"):
             plot_analysis(data, selected_question)
 
     elif analysis_type == "Predictive":
         st.subheader("Predictive Model Results")
         if st.sidebar.button("Model"):
             st.write("Predictive model would be implemented here")
+
+    st.sidebar.markdown("### Contact Information")
+    st.sidebar.info("This web app is maintained by [Your Name]. For any issues or suggestions, contact us via [Email](mailto:your_email@example.com).")
 
 if __name__ == "__main__":
     app()
