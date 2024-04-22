@@ -37,19 +37,15 @@ def plot_analysis(data, question):
     if question == "Correlation Analysis":
         correlation_analysis(data)
     elif question == "Distribution Analysis":
-        distribution_analysis(data)
+        distribution_analysis(data)  # Call without fig as it is handled inside
     else:
         fig, axes = plt.subplots(2, 2, figsize=(14, 18))
         if question == "Demographic Distributions":
             demographic_distributions(data, axes)
         elif question == "Travel Mode Analysis":
             travel_mode_analysis(data, axes)
-        # plt.tight_layout()
-        # st.pyplot(fig)
-
-
-    plt.tight_layout()
-    st.pyplot(fig)
+        plt.tight_layout()
+        st.pyplot(fig)  # Ensure fig is used here for non-correlation/distribution analyses
 
 def demographic_distributions(data, axes, color_palette):
     sns.countplot(data=data, x='Gender', ax=axes[0, 0], palette=color_palette[0])
@@ -86,18 +82,19 @@ def correlation_analysis(data, axes):
     else:
         st.write("Not enough numerical columns for correlation analysis.")
 
-def distribution_analysis(data, fig):
+def distribution_analysis(data):
     num_cols = data.select_dtypes(include=[np.number]).columns
     if len(num_cols) > 0:
-        n_rows = (len(num_cols) + 1) // 2  # Ensure there are enough rows to handle the columns
-        fig, axes = plt.subplots(n_rows, 2, figsize=(14, 5 * n_rows))  # Adjust the figure size based on the number of rows
-        axes = axes.flatten()  # Flatten the axes array to make indexing easier
+        n_rows = (len(num_cols) + 1) // 2  # Calculate rows needed
+        fig, axes = plt.subplots(n_rows, 2, figsize=(14, 5 * n_rows))  # Dynamically create subplots
+        axes = axes.flatten()  # Flatten the axes array for easier indexing
         for i, col in enumerate(num_cols):
             sns.histplot(data[col], kde=True, ax=axes[i])
             axes[i].set_title(f'Distribution of {col}')
         for j in range(i + 1, len(axes)):  # Hide unused axes if any
             axes[j].set_visible(False)
         plt.tight_layout()
+        st.pyplot(fig)  # Display the figure within the function
     else:
         st.write("No numerical columns available for distribution analysis.")
 
