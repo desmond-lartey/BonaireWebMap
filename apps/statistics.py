@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
-import numpy as np
+import numpy as np  # Import numpy for numerical operations
 
 def load_data(filename):
     base_path = os.path.dirname(__file__)
@@ -40,40 +40,37 @@ def plot_analysis(data, question):
 
     else:
         fig, axes = plt.subplots(2, 2, figsize=(14, 18))
-        # Define color palettes
         color_palette = ["Set2", "Set3", "Pastel1", "Pastel2"]
-
-    if question == "Demographic Distributions":
-        sns.countplot(data=data, x='Gender', ax=axes[0, 0], palette=color_palette[0])
-        axes[0, 0].set_title('Gender Distribution')
-
-        sns.countplot(data=data, x='Agegroup', ax=axes[0, 1], palette=color_palette[1])
-        axes[0, 1].set_title('Age Group Distribution')
-        axes[0, 1].tick_params(axis='x', rotation=45)
-
-        sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0], palette=color_palette[2])
-        axes[1, 0].set_title('Ethnicity Distribution')
-        axes[1, 0].tick_params(axis='x', rotation=45)
-
-        sns.countplot(data=data, x='Activitytype', ax=axes[1, 1], palette=color_palette[3])
-        axes[1, 1].set_title('Activity Type Distribution')
-        axes[1, 1].tick_params(axis='x', rotation=45)
-
-    elif question == "Travel Mode Analysis":
-        travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
-        sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 0])
-        axes[0, 0].set_title('Travel Mode by Age Group')
-
-        sns.countplot(data=data, x='Travel', ax=axes[0, 1], palette=color_palette[1])
-        axes[0, 1].set_title('Travel Mode Preferences')
-        axes[0, 1].tick_params(axis='x', rotation=45)
-
-        sns.countplot(data=data, x='Car', ax=axes[1, 0], palette=color_palette[2])
-        axes[1, 0].set_title('Car Usage Frequency')
-        axes[1, 0].tick_params(axis='x', rotation=45)
-
+        # Handle specific analysis cases
+        if question == "Demographic Distributions":
+            demographics(data, axes, color_palette)
+        elif question == "Travel Mode Analysis":
+            travel_modes(data, axes, color_palette)
         plt.tight_layout()
         st.pyplot(fig)
+
+def demographics(data, axes, color_palette):
+    sns.countplot(data=data, x='Gender', ax=axes[0, 0], palette=color_palette[0])
+    axes[0, 0].set_title('Gender Distribution')
+    sns.countplot(data=data, x='Agegroup', ax=axes[0, 1], palette=color_palette[1])
+    axes[0, 1].set_title('Age Group Distribution')
+    axes[0, 1].tick_params(axis='x', rotation=45)
+    sns.countplot(data=data, x='Ethnicity', ax=axes[1, 0], palette=color_palette[2])
+    axes[1, 0].set_title('Ethnicity Distribution')
+    sns.countplot(data=data, x='Activitytype', ax=axes[1, 1], palette=color_palette[3])
+    axes[1, 1].set_title('Activity Type Distribution')
+    axes[1, 1].tick_params(axis='x', rotation=45)
+
+def travel_modes(data, axes, color_palette):
+    travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
+    sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 0])
+    axes[0, 0].set_title('Travel Mode by Age Group')
+    sns.countplot(data=data, x='Travel', ax=axes[0, 1], palette=color_palette[1])
+    axes[0, 1].set_title('Travel Mode Preferences')
+    axes[0, 1].tick_params(axis='x', rotation=45)
+    sns.countplot(data=data, x='Car', ax=axes[1, 0], palette=color_palette[2])
+    axes[1, 0].set_title('Car Usage Frequency')
+    axes[1, 0].tick_params(axis='x', rotation=45)
 
 def app():
     st.title("Active Mobility Data Analysis")
@@ -87,7 +84,6 @@ def app():
     if st.sidebar.checkbox("Show Data"):
         st.write(data)
 
-    # Update questions to include new analyses
     questions = {
         'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis"],
         'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Distribution Analysis"]
