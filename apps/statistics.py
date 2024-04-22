@@ -75,9 +75,6 @@ def app():
         if st.sidebar.button("Model"):
             st.write("Predictive Model would be implemented here")
 
-    # Footer with contact information and additional resources
-    st.sidebar.markdown("### Contact Information")
-    st.sidebar.info("This web app is maintained by [Your Name]. For any issues or suggestions, contact us via [Email](mailto:your_email@example.com).")
-
+    
 if __name__ == "__main__":
     app()
