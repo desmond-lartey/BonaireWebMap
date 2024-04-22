@@ -27,3 +27,4 @@ pandas
 altair
 plotly
 seaborn
+numpy
