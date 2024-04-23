@@ -65,17 +65,29 @@ def enhanced_correlation_analysis(data, title='Correlation Matrix'):
         ax.set_title(title)
         st.pyplot(fig)
 
-def cross_correlation_analysis(data1, data2, title='Cross-Dataset Correlation Matrix'):
-    # This example assumes there's a way to reasonably merge these datasets. Adjust as needed.
-    combined_data = pd.concat([data1, data2], axis=1).dropna()
-    numeric_data = combined_data.select_dtypes(include=[np.number])
-    if numeric_data.empty or numeric_data.shape[1] < 2:
+def cross_correlation_analysis(data1, data2):
+    # Ensure both data sets are numeric and have the same length
+    numeric_data1 = data1.select_dtypes(include=[np.number]).dropna()
+    numeric_data2 = data2.select_dtypes(include=[np.number]).dropna()
+
+    # Check if both datasets have rows to concatenate correctly
+    if len(numeric_data1) != len(numeric_data2):
+        st.error("The datasets cannot be directly correlated due to differing number of rows.")
+        return
+
+    # Concatenate along the columns after ensuring the same number of rows
+    combined_data = pd.concat([numeric_data1.reset_index(drop=True), numeric_data2.reset_index(drop=True)], axis=1)
+
+    # Check if there are enough columns to compute a correlation matrix
+    if combined_data.empty or combined_data.shape[1] < 2:
         st.write("Not enough numerical columns for cross-dataset correlation analysis.")
     else:
+        # Create plot
         fig, ax = plt.subplots(figsize=(12, 10))
-        sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm', ax=ax)
-        ax.set_title(title)
+        sns.heatmap(combined_data.corr(), annot=True, cmap='coolwarm', ax=ax)
+        ax.set_title('Cross-Dataset Correlation Matrix')
         st.pyplot(fig)
+
 
 def distribution_analysis(data):
     num_cols = data.select_dtypes(include=[np.number]).columns
@@ -144,32 +156,37 @@ def activity_analysis(data):
 
 
 def app():
-    st.title("Active Mobility Data Analysis")
+    # Load and prepare data
     observations_data = load_data('Bonaire_Observations2.xlsx')
     survey_data = load_data('Bonaire_Survey2.xlsx')
+
+    # Convert data as necessary
     observations_numeric_data, observations_categorical_data = convert_categorical_to_numeric(observations_data)
 
+    # User interface for data selection
     st.sidebar.title("User Selection")
     dataset_choice = st.sidebar.radio("Choose the dataset:", ('Observations', 'Survey'))
-    data_numeric = observations_numeric_data if dataset_choice == 'Observations' else survey_data
-    data_categorical = observations_categorical_data if dataset_choice == 'Observations' else survey_data
+    data = observations_numeric_data if dataset_choice == 'Observations' else survey_data
 
+    # Display data option
     if st.sidebar.checkbox("Show Data"):
-        st.write(data_categorical)
+        st.write(data)
 
+    # Define available questions
     questions = {
         'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Cross Correlation Analysis", "Distribution Analysis"],
         'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Cross Correlation Analysis", "Distribution Analysis"]
     }
 
+    # Allow user to select a question
     selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
-    if "Correlation" in selected_question:
-        if "Cross" in selected_question:
-            plot_analysis(data_numeric, selected_question, data2=survey_data)
-        else:
-            plot_analysis(data_numeric, selected_question)
+    
+    # Determine which analysis to perform based on the selection
+    if "Cross Correlation Analysis" in selected_question:
+        plot_analysis(observations_numeric_data, selected_question, data2=survey_data)
     else:
-        plot_analysis(data_categorical, selected_question)
+        plot_analysis(data, selected_question)
+
 
 
 
