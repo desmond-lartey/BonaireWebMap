@@ -67,15 +67,30 @@ def enhanced_correlation_analysis(data, title='Correlation Matrix'):
         st.pyplot(fig)
 
 def merge_datasets(data1, data2):
-    # Ensure the data types are the same for merging
+    # Define common columns used for merging
     common_columns = ['Gender', 'Agegroup']
-    for col in common_columns:
-        data1[col] = data1[col].astype(str)
-        data2[col] = data2[col].astype(str)
+
+    # Convert these common columns to string to ensure consistent merging
+    data1[common_columns] = data1[common_columns].astype(str)
+    data2[common_columns] = data2[common_columns].astype(str)
 
     # Merge the datasets on these common columns
     combined_data = pd.merge(data1, data2, on=common_columns, how='inner')
+
+    # Ensure that additional necessary numeric columns are included
+    # Note: You need to specify which columns from each dataset should be included post-merge
+    # For example, if 'Income' and 'Household' are from survey_data, include them explicitly
+    combined_data = pd.merge(data1[['Gender', 'Agegroup', 'SomeOtherNumericColumn1']],
+                             data2[['Gender', 'Agegroup', 'Income', 'Household']],
+                             on=common_columns, how='inner')
+
+    # Debugging: Print or log the structure of the merged data to verify it contains what you expect
+    st.write("Combined Data Structure:", combined_data.head())
+    st.write("Numeric columns available for analysis:", combined_data.select_dtypes(include=[np.number]).columns)
+
     return combined_data
+
+
 
 def cross_correlation_analysis(combined_data):
     numeric_data = combined_data.select_dtypes(include=[np.number])
