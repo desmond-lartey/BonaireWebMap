@@ -4,9 +4,9 @@ def display_key_insights():
     st.header("Key Insights")
     st.markdown("""
         
-        - **Income and Transportation Choices**: Not strong relationship showing a slight tendency towards both car usage and bicycle use with higher incomes.
+        - **Car Use and Income**: There is a significant negative correlation (-0.41) between 'Car' usage and 'Travel', indicating that as car usage increases, active travel methods (like walking, cycling) decrease. Additionally, 'Income' has a small positive correlation with 'Car' usage (0.11), suggesting that higher income may be associated with increased car usage. 
         - **Gender and Mobility**: Mobility choices show very weak correlation with gender, suggesting similar behaviors across genders or that gender isn't a primary factor.
-        - **Household Size and Transport**: Larger household sizes correlate negatively with car usage, suggesting economic influences on transport choices.
+        - **Household Size and Transport**: Larger household sizes correlate negatively with car usage. 'Household' size shows a small positive correlation with 'Income' (0.25) but a negative correlation with 'Car' usage (-0.14), which may imply that larger households could be using cars less frequently
         - **Gender:** There's a very weak correlation between gender and other variables such as 'Car', 'Bicycle', and 'Travel'. This suggests that gender alone isn't a strong predictor of transportation preferences in this dataset.
         - **Agegroup:** There's a moderate positive correlation (0.31) between 'Agegroup' and 'Country', suggesting that age may be related to the country of the respondents, perhaps indicating a demographic trend where certain age groups might be tourists or expatriates. There's no strong correlation between age group and the modes of transport ('Car', 'Bicycle', 'Travel') which implies that age may not be a defining factor in how people choose to travel in Bonaire.
         - **Site:** The 'Site' variable has very weak to no correlation with 'Bicycle' and 'Travel', suggesting that the location within Bonaire may not significantly affect these aspects of mobility.
