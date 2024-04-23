@@ -80,8 +80,8 @@ def merge_datasets(data1, data2):
     # Ensure that additional necessary numeric columns are included
     # Note: You need to specify which columns from each dataset should be included post-merge
     # For example, if 'Income' and 'Household' are from survey_data, include them explicitly
-    combined_data = pd.merge(data1[['Gender', 'Agegroup']],
-                             data2[['Gender', 'Agegroup', 'Income', 'Household']],
+    combined_data = pd.merge(data1[['Gender', 'Agegroup', 'Ethnicity',	'Activitytype', 'Timeofday']],
+                             data2[['Gender', 'Agegroup', 'Travel',	'Car' 'Income', 'Household']],
                              on=common_columns, how='inner')
 
     # Debugging: Print or log the structure of the merged data to verify it contains what you expect
@@ -210,9 +210,3 @@ def app():
 if __name__ == "__main__":
     app()
 
-
-
-
-
-if __name__ == "__main__":
-    app()
