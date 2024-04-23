@@ -77,7 +77,7 @@ def merge_datasets(data1, data2):
     # Ensure that additional necessary numeric columns are included
     # This approach assumes all columns needed for analysis are kept
     combined_data = combined_data[[col for col in data1.columns if col in common_columns] + 
-                                  ['Ethnicity', 'Site', 'Activitytype', 'Timeofday', 'Travel', 'Car', 'Income', 'Country', 'Household']]
+                                  ['Ethnicity', 'Site', 'Activitytype', 'Timeofday', 'Travel', 'Car', 'Income', 'Bicycle', 'Country', 'Household']]
 
     # Debugging: Print or log the structure of the merged data to verify it contains what you expect
     st.write("Combined Data Structure:", combined_data.head())
