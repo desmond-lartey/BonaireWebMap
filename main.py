@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from apps import home, facilities, popdashboard2, yearlypopulation, statistics #area  # Make sure to import your app modules here
+from apps import home, findings, facilities, popdashboard2, yearlypopulation, statistics #area  # Make sure to import your app modules here
 
 # import streamlit as st
 # from streamlit_option_menu import option_menu
@@ -12,6 +12,7 @@ st.set_page_config(page_title="Bonaire Geospatial", layout="wide")
 # Defining the apps and their titles and icons
 apps = [
     {"func": home.app, "title": "Home", "icon": "house"},
+    {"func": findings.app, "title": "Findings", "icon": "building"},
     {"func": facilities.app, "title": "Facilities", "icon": "building"},
     {"func": popdashboard2.app, "title": "Population by Age_Sex", "icon": "building"},
     {"func": yearlypopulation.app, "title": "Population by Area", "icon": "building"},
