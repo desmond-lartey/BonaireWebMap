@@ -131,16 +131,10 @@ def app():
 
     st.sidebar.title("User Selection")
     dataset_choice = st.sidebar.radio("Choose the dataset:", ('Observations', 'Survey'))
-    # Decide which data to use based on the type of analysis selected
-    if dataset_choice == 'Observations':
-        data_numeric = observations_numeric_data
-        data_categorical = observations_categorical_data
-    else:
-        data_numeric = survey_data  # Assuming survey_data is already numeric
-        data_categorical = survey_data  # Assuming no conversion needed or already handled
+    data = observations_categorical_data if dataset_choice == 'Observations' else survey_data
 
     if st.sidebar.checkbox("Show Data"):
-        st.write(data_categorical)  # Show the readable version
+        st.write(data)
 
     questions = {
         'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis"],
@@ -148,11 +142,7 @@ def app():
     }
 
     selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
-    if selected_question in ["Correlation Analysis", "Distribution Analysis"]:
-        plot_analysis(data_numeric, selected_question)  # Use numeric data for these analyses
-    else:
-        plot_analysis(data_categorical, selected_question)  # Use categorical data for visual plots
-
+    plot_analysis(data, selected_question)  # Automatically plot when a question is selected
 
 if __name__ == "__main__":
     app()
