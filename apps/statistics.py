@@ -33,14 +33,9 @@ def convert_categorical_to_numeric(data):
     return numeric_data, data
 
 
-def plot_analysis(data, question, data2=None):
+def plot_analysis(data, question):
     if question == "Correlation Analysis":
         enhanced_correlation_analysis(data)
-    elif question == "Cross Correlation Analysis":
-        if data2 is not None:
-            cross_correlation_analysis(data, data2)
-        else:
-            st.error("Additional data needed for cross-correlation analysis is not provided.")
     elif question == "Distribution Analysis":
         distribution_analysis(data)
     elif question == "Demographic Distributions":
@@ -48,9 +43,15 @@ def plot_analysis(data, question, data2=None):
     elif question == "Travel Mode Analysis":
         travel_mode_analysis(data)
     elif question == "Vehicle Use Patterns":
-        vehicle_use_patterns(data)  # For survey
+        vehicle_use_patterns(data)
     elif question == "Activity Analysis":
-        activity_analysis(data)  # For observations
+        activity_analysis(data)
+    elif question == "Cross Correlation Analysis":
+        # Ensure that the correct numeric datasets are loaded for cross-correlation
+        observations_numeric_data = load_data('Bonaire_Observations3.xlsx')
+        survey_numeric_data = load_data('Bonaire_Survey3.xlsx')
+        combined_data = merge_datasets(observations_numeric_data, survey_numeric_data)
+        cross_correlation_analysis(combined_data)
     else:
         st.error("Selected analysis type is not supported.")
 
