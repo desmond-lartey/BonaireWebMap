@@ -71,33 +71,20 @@ def merge_datasets(data1, data2):
     # Define common columns used for merging
     common_columns = ['Gender', 'Agegroup']
 
-    # Convert these common columns to string to ensure consistent merging
-    data1[common_columns] = data1[common_columns].astype(str)
-    data2[common_columns] = data2[common_columns].astype(str)
-
     # Merge the datasets on these common columns
     combined_data = pd.merge(data1, data2, on=common_columns, how='inner')
 
-    # Convert 'Gender' and 'Agegroup' back to numeric for analysis if they were originally numeric
-    # You can use your original mappings to convert these back to numbers
-    mappings = {
-        'Gender': {'Male': 1, 'Female': 2, 'Prefer not to say': 3},
-        'Agegroup': {'Infant': 1, 'Child': 2, 'Teen': 3, 'Adult': 4, 'Older adults': 5}
-    }
-
-    for col in ['Gender', 'Agegroup']:
-        combined_data[col] = combined_data[col].map({v: k for k, v in mappings[col].items()})
-
     # Ensure that additional necessary numeric columns are included
-    # Here you ensure all necessary columns are in the dataframe
-    necessary_columns = ['Gender', 'Agegroup', 'Ethnicity', 'Site', 'Activitytype', 'Timeofday', 'Travel', 'Car', 'Income', 'Country', 'Household']
-    combined_data = combined_data[necessary_columns]
+    # This approach assumes all columns needed for analysis are kept
+    combined_data = combined_data[[col for col in data1.columns if col in common_columns] + 
+                                  ['Ethnicity', 'Site', 'Activitytype', 'Timeofday', 'Travel', 'Car', 'Income', 'Country', 'Household']]
 
     # Debugging: Print or log the structure of the merged data to verify it contains what you expect
     st.write("Combined Data Structure:", combined_data.head())
     st.write("Numeric columns available for analysis:", combined_data.select_dtypes(include=[np.number]).columns)
 
     return combined_data
+
 
 
 
