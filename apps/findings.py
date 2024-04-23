@@ -4,7 +4,7 @@ def display_key_insights():
     st.header("Key Insights")
     st.markdown("""
         
-        - **Car Use and Income**: There is a significant negative correlation (-0.41) between 'Car' usage and 'Travel', indicating that as car usage increases, active travel methods (like walking, cycling) decrease. Additionally, 'Income' has a small positive correlation with 'Car' usage (0.11), suggesting that higher income may be associated with increased car usage. 
+        - **Car Use and Income**: There is a negative correlation (-0.41) between 'Car' usage and 'Travel', indicating that as car usage increases, active travel methods (like walking, cycling) decrease. Additionally, 'Income' has a small positive correlation with 'Car' usage (0.11), suggesting that higher income may be associated with increased car usage. 
         - **Gender and Mobility**: Mobility choices show very weak correlation with gender, suggesting similar behaviors across genders or that gender isn't a primary factor.
         - **Household Size and Transport**: Larger household sizes correlate negatively with car usage. 'Household' size shows a small positive correlation with 'Income' (0.25) but a negative correlation with 'Car' usage (-0.14), which may imply that larger households could be using cars less frequently
         - **Gender:** There's a very weak correlation between gender and other variables such as 'Car', 'Bicycle', and 'Travel'. This suggests that gender alone isn't a strong predictor of transportation preferences in this dataset.
@@ -39,12 +39,15 @@ def app():
     st.title("Active Mobility Data Insights")
     
     # Divide the page into two columns to display insights and policy recommendations side by side
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     
     with col1:
         display_key_insights()
-        
+
     with col2:
+        display_key_insights()
+        
+    with col3:
         display_policy_recommendations()
         
     # Display bold statements below the columns
