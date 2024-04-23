@@ -49,18 +49,22 @@ def plot_analysis(data, question):
 
 
 def correlation_analysis(data):
-    if data.select_dtypes(include=[np.number]).shape[1] > 1:
+    numeric_data = data.select_dtypes(include=[np.number]).dropna()
+    if numeric_data.empty or numeric_data.shape[1] < 2:
+        st.write("Not enough numerical columns for correlation analysis.")
+    else:
         plt.figure(figsize=(10, 8))
-        sns.heatmap(data.corr(), annot=True, cmap='coolwarm')
+        sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm')
         plt.title('Correlation Matrix')
         st.pyplot()
-    else:
-        st.write("Not enough numerical columns for correlation analysis.")
 
 def distribution_analysis(data):
     num_cols = data.select_dtypes(include=[np.number]).columns
     if len(num_cols) > 0:
-        fig, axes = plt.subplots(1, len(num_cols), figsize=(5 * len(num_cols), 4))
+        n_cols = min(len(num_cols), 4)  # Display up to 4 histograms per row
+        n_rows = (len(num_cols) + 3) // 4  # Calculate rows needed
+        fig, axes = plt.subplots(n_rows, n_cols, figsize=(5 * n_cols, 4 * n_rows))
+        axes = axes.flatten()
         for i, col in enumerate(num_cols):
             sns.histplot(data[col], kde=True, ax=axes[i])
             axes[i].set_title(f'Distribution of {col}')
@@ -88,10 +92,15 @@ def travel_mode_analysis(data):
     travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
     sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 0])
     axes[0, 0].set_title('Travel Mode by Age Group')
+
     sns.countplot(data=data, x='Travel', ax=axes[0, 1])
     axes[0, 1].set_title('Travel Mode Preferences')
+    axes[0, 1].tick_params(axis='x', rotation=45)
+
     sns.countplot(data=data, x='Car', ax=axes[1, 0])
     axes[1, 0].set_title('Car Usage Frequency')
+    axes[1, 0].tick_params(axis='x', rotation=45)
+
     plt.tight_layout()
     st.pyplot()
 
