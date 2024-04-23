@@ -33,9 +33,14 @@ def convert_categorical_to_numeric(data):
     return numeric_data, data
 
 
-def plot_analysis(data, question):
+def plot_analysis(data, question, additional_data=None):
     if question == "Correlation Analysis":
-        correlation_analysis(data)
+        enhanced_correlation_analysis(data)
+    elif question == "Cross Correlation Analysis":
+        if additional_data is not None:
+            cross_correlation_analysis(data, additional_data)
+        else:
+            st.error("Additional data needed for cross-correlation analysis is not provided.")
     elif question == "Distribution Analysis":
         distribution_analysis(data)
     elif question == "Demographic Distributions":
@@ -46,16 +51,30 @@ def plot_analysis(data, question):
         vehicle_use_patterns(data)  # For survey
     elif question == "Activity Analysis":
         activity_analysis(data)  # For observations
+    else:
+        st.error("Selected analysis type is not supported.")
 
 
-def correlation_analysis(data):
+def enhanced_correlation_analysis(data, title='Correlation Matrix'):
     numeric_data = data.select_dtypes(include=[np.number]).dropna()
     if numeric_data.empty or numeric_data.shape[1] < 2:
         st.write("Not enough numerical columns for correlation analysis.")
     else:
         fig, ax = plt.subplots(figsize=(10, 8))
         sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm', ax=ax)
-        ax.set_title('Correlation Matrix')
+        ax.set_title(title)
+        st.pyplot(fig)
+
+def cross_correlation_analysis(data1, data2, title='Cross-Dataset Correlation Matrix'):
+    # This example assumes there's a way to reasonably merge these datasets. Adjust as needed.
+    combined_data = pd.concat([data1, data2], axis=1).dropna()
+    numeric_data = combined_data.select_dtypes(include=[np.number])
+    if numeric_data.empty or numeric_data.shape[1] < 2:
+        st.write("Not enough numerical columns for cross-dataset correlation analysis.")
+    else:
+        fig, ax = plt.subplots(figsize=(12, 10))
+        sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm', ax=ax)
+        ax.set_title(title)
         st.pyplot(fig)
 
 def distribution_analysis(data):
@@ -132,27 +151,26 @@ def app():
 
     st.sidebar.title("User Selection")
     dataset_choice = st.sidebar.radio("Choose the dataset:", ('Observations', 'Survey'))
-    # Decide which data to use based on the type of analysis selected
-    if dataset_choice == 'Observations':
-        data_numeric = observations_numeric_data
-        data_categorical = observations_categorical_data
-    else:
-        data_numeric = survey_data  # Assuming survey_data is already numeric
-        data_categorical = survey_data  # Assuming no conversion needed or already handled
+    data_numeric = observations_numeric_data if dataset_choice == 'Observations' else survey_data
+    data_categorical = observations_categorical_data if dataset_choice == 'Observations' else survey_data
 
     if st.sidebar.checkbox("Show Data"):
-        st.write(data_categorical)  # Show the readable version
+        st.write(data_categorical)
 
     questions = {
-        'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis"],
-        'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Distribution Analysis"]
+        'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Cross Correlation Analysis", "Distribution Analysis"],
+        'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Cross Correlation Analysis", "Distribution Analysis"]
     }
 
     selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
-    if selected_question in ["Correlation Analysis", "Distribution Analysis"]:
-        plot_analysis(data_numeric, selected_question)  # Use numeric data for these analyses
+    if "Correlation" in selected_question:
+        if "Cross" in selected_question:
+            plot_analysis(data_numeric, selected_question, data2=survey_data)
+        else:
+            plot_analysis(data_numeric, selected_question)
     else:
-        plot_analysis(data_categorical, selected_question)  # Use categorical data for visual plots
+        plot_analysis(data_categorical, selected_question)
+
 
 
 if __name__ == "__main__":
