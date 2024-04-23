@@ -4,15 +4,15 @@ def display_key_insights():
     st.header("Key Insights")
     st.markdown("""
         
-        - **Income and Transportation Choices**: Not string relationship showing a slight tendency towards both car usage and bicycle use with higher incomes.
+        - **Income and Transportation Choices**: Not strong relationship showing a slight tendency towards both car usage and bicycle use with higher incomes.
         - **Gender and Mobility**: Mobility choices show very weak correlation with gender, suggesting similar behaviors across genders or that gender isn't a primary factor.
         - **Household Size and Transport**: Larger household sizes correlate negatively with car usage, suggesting economic influences on transport choices.
-        - **Gender: There's a very weak correlation between gender and other variables such as 'Car', 'Bicycle', and 'Travel'. This suggests that gender alone isn't a strong predictor of transportation preferences in this dataset.
-        - **Agegroup: There's no strong correlation between age group and the modes of transport ('Car', 'Bicycle', 'Travel') which implies that age may not be a defining factor in how people choose to travel in Bonaire. The moderate correlation with 'Country' could suggest that certain age groups are more prevalent in specific countries, potentially due to migration patterns or tourism.
-        - **Site: The 'Site' variable has very weak to no correlation with 'Bicycle' and 'Travel', suggesting that the location within Bonaire may not significantly affect these aspects of mobility.
-        - **Bicycle vs. Car: There's a negative correlation (-0.39) between 'Bicycle' usage and 'Car' usage, which indicates that people who cycle more tend to use cars less. This is a key insight for policy as it suggests that improvements to bicycle infrastructure could reduce car dependency.
-        - **Bicycle vs. Travel: There's no strong correlation between 'Bicycle' and 'Travel', which may include various modes such as walking, public transport, etc. This lack of a strong relationship indicates that cycling habits might be independent of other travel preferences.
-        - **Travel vs. Car: The negative correlation (-0.41) between 'Travel' and 'Car' suggests that people who frequently use other modes of travel are less likely to use cars. This is consistent with what you'd expect if 'Travel' includes active travel modes.
+        - **Gender:** There's a very weak correlation between gender and other variables such as 'Car', 'Bicycle', and 'Travel'. This suggests that gender alone isn't a strong predictor of transportation preferences in this dataset.
+        - **Agegroup:** There's no strong correlation between age group and the modes of transport ('Car', 'Bicycle', 'Travel') which implies that age may not be a defining factor in how people choose to travel in Bonaire. The moderate correlation with 'Country' could suggest that certain age groups are more prevalent in specific countries, potentially due to migration patterns or tourism.
+        - **Site:** The 'Site' variable has very weak to no correlation with 'Bicycle' and 'Travel', suggesting that the location within Bonaire may not significantly affect these aspects of mobility.
+        - **Bicycle vs. Car:** There's a negative correlation (-0.39) between 'Bicycle' usage and 'Car' usage, which indicates that people who cycle more tend to use cars less. This is a key insight for policy as it suggests that improvements to bicycle infrastructure could reduce car dependency.
+        - **Bicycle vs. Travel:** There's no strong correlation between 'Bicycle' and 'Travel', which may include various modes such as walking, public transport, etc. This lack of a strong relationship indicates that cycling habits might be independent of other travel preferences.
+        - **Travel vs. Car:** The negative correlation (-0.41) between 'Travel' and 'Car' suggests that people who frequently use other modes of travel are less likely to use cars. This is consistent with what you'd expect if 'Travel' includes active travel modes.
     """)
 
 def display_policy_recommendations():
