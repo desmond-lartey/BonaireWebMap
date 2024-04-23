@@ -169,46 +169,49 @@ def activity_analysis(data):
     st.pyplot(fig)
 
 
-def load_and_prepare_data():
+def app():
+    st.title("Active Mobility Data Analysis")
+    
+    # Load and prepare data
     observations_data = load_data('Bonaire_Observations2.xlsx')
     survey_data = load_data('Bonaire_Survey2.xlsx')
 
-    # Convert both datasets
-    observations_numeric, observations_original = convert_categorical_to_numeric(observations_data)
-    survey_numeric, survey_original = convert_categorical_to_numeric(survey_data)
+    # Convert data as necessary
+    observations_numeric_data, observations_categorical_data = convert_categorical_to_numeric(observations_data)
 
-    return observations_numeric, observations_original, survey_numeric, survey_original
-
-def app():
-    st.title("Active Mobility Data Analysis")
-
-    # Load and convert data
-    observations_numeric, observations_original, survey_numeric, survey_original = load_and_prepare_data()
-
-    # UI for data selection
+    # User interface for data selection
     st.sidebar.title("User Selection")
-    dataset_choice = st.sidebar.radio("Choose the dataset:", ('Observations', 'Survey'))
-    data_numeric = observations_numeric if dataset_choice == 'Observations' else survey_numeric
-    data_original = observations_original if dataset_choice == 'Observations' else survey_original
+    dataset_choice = st.sidebar.radio("Choose the dataset for single dataset analysis:", ('Observations', 'Survey'))
+    data = observations_categorical_data if dataset_choice == 'Observations' else survey_data
+    data_numeric = observations_numeric_data if dataset_choice == 'Observations' else survey_data  # Numeric data for correlation/distribution
 
+    # Display data option
     if st.sidebar.checkbox("Show Data"):
-        st.write(data_original)  # Show the readable version
+        st.write(data)  # Show the readable version of the data
 
+    # Define available questions including cross-dataset analysis option
     questions = {
-        'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis", "Cross Correlation Analysis"],
-        'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Distribution Analysis", "Cross Correlation Analysis"]
+        'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis"],
+        'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Distribution Analysis"]
     }
 
-    selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
+    # Select analysis type
+    analysis_type = st.sidebar.radio("Choose the type of analysis:", ['Single Dataset Analysis', 'Cross-Dataset Analysis'])
 
-    if "Cross Correlation Analysis" in selected_question:
-        # Here you would merge and then perform correlation
-        combined_data = merge_datasets(observations_numeric, survey_numeric)
-        cross_correlation_analysis(combined_data)
-    elif "Correlation Analysis" in selected_question or "Distribution Analysis" in selected_question:
-        plot_analysis(data_numeric, selected_question)
-    else:
-        plot_analysis(data_original, selected_question)
+    if analysis_type == 'Single Dataset Analysis':
+        selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
+        if selected_question in ["Correlation Analysis", "Distribution Analysis"]:
+            plot_analysis(data_numeric, selected_question)  # Use numeric data for these analyses
+        else:
+            plot_analysis(data, selected_question)  # Use categorical data for visual plots
+    elif analysis_type == 'Cross-Dataset Analysis':
+        if st.sidebar.button("Perform Cross Correlation Analysis"):
+            combined_data = merge_datasets(observations_categorical_data, survey_data)  # Prepare combined data
+            cross_correlation_analysis(combined_data)  # Perform cross-dataset correlation analysis
+
+
+
+
 
 if __name__ == "__main__":
     app()
