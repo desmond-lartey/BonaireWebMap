@@ -13,7 +13,7 @@ def app():
     This effort, supported by the Netherlands’ Ministry of Public Health, involves a multidisciplinary team including researchers from the Urban Cycling Institute, local government staff, and key stakeholders on the island. The objective is to integrate physical activity into daily life, addressing all related health conditions prevalent in the region.
     """)
 
-    st.image("https://www.example.com/path-to-bonaire-image.jpg", caption="Bonaire - Enhancing Active Mobility")
+    st.image("C:\Users\Gebruiker\Desktop\My Lab\Bonaire\BonaireWebMap\bonaire.jpg", caption="Bonaire - Enhancing Active Mobility")
 
     st.subheader("Project Goals")
     st.markdown("""
