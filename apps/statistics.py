@@ -33,6 +33,21 @@ def convert_categorical_to_numeric(data):
     return numeric_data, data
 
 
+def plot_analysis(data, question):
+    if question == "Correlation Analysis":
+        correlation_analysis(data)
+    elif question == "Distribution Analysis":
+        distribution_analysis(data)
+    elif question == "Demographic Distributions":
+        demographic_distributions(data)
+    elif question == "Travel Mode Analysis":
+        travel_mode_analysis(data)
+    elif question == "Vehicle Use Patterns":
+        vehicle_use_patterns(data)  # For survey
+    elif question == "Activity Analysis":
+        activity_analysis(data)  # For observations
+
+
 def correlation_analysis(data):
     numeric_data = data.select_dtypes(include=[np.number]).dropna()
     if numeric_data.empty or numeric_data.shape[1] < 2:
