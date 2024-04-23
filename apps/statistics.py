@@ -66,26 +66,24 @@ def enhanced_correlation_analysis(data, title='Correlation Matrix'):
         ax.set_title(title)
         st.pyplot(fig)
 
-def cross_correlation_analysis(data1, data2):
-    # Ensure both data sets are numeric and have the same length
-    numeric_data1 = data1.select_dtypes(include=[np.number]).dropna()
-    numeric_data2 = data2.select_dtypes(include=[np.number]).dropna()
+def merge_datasets(data1, data2):
+    # Ensure the data types are the same for merging
+    common_columns = ['Gender', 'Agegroup']
+    for col in common_columns:
+        data1[col] = data1[col].astype(str)
+        data2[col] = data2[col].astype(str)
 
-    # Check if both datasets have rows to concatenate correctly
-    if len(numeric_data1) != len(numeric_data2):
-        st.error("The datasets cannot be directly correlated due to differing number of rows.")
-        return
+    # Merge the datasets on these common columns
+    combined_data = pd.merge(data1, data2, on=common_columns, how='inner')
+    return combined_data
 
-    # Concatenate along the columns after ensuring the same number of rows
-    combined_data = pd.concat([numeric_data1.reset_index(drop=True), numeric_data2.reset_index(drop=True)], axis=1)
-
-    # Check if there are enough columns to compute a correlation matrix
-    if combined_data.empty or combined_data.shape[1] < 2:
+def cross_correlation_analysis(combined_data):
+    numeric_data = combined_data.select_dtypes(include=[np.number])
+    if numeric_data.empty or numeric_data.shape[1] < 2:
         st.write("Not enough numerical columns for cross-dataset correlation analysis.")
     else:
-        # Create plot
         fig, ax = plt.subplots(figsize=(12, 10))
-        sns.heatmap(combined_data.corr(), annot=True, cmap='coolwarm', ax=ax)
+        sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm', ax=ax)
         ax.set_title('Cross-Dataset Correlation Matrix')
         st.pyplot(fig)
 
@@ -157,6 +155,8 @@ def activity_analysis(data):
 
 
 def app():
+    st.title("Active Mobility Data Analysis")
+    
     # Load and prepare data
     observations_data = load_data('Bonaire_Observations2.xlsx')
     survey_data = load_data('Bonaire_Survey2.xlsx')
@@ -166,27 +166,34 @@ def app():
 
     # User interface for data selection
     st.sidebar.title("User Selection")
-    dataset_choice = st.sidebar.radio("Choose the dataset:", ('Observations', 'Survey'))
-    data = observations_numeric_data if dataset_choice == 'Observations' else survey_data
+    dataset_choice = st.sidebar.radio("Choose the dataset for single dataset analysis:", ('Observations', 'Survey'))
+    data = observations_categorical_data if dataset_choice == 'Observations' else survey_data
+    data_numeric = observations_numeric_data if dataset_choice == 'Observations' else survey_data  # Numeric data for correlation/distribution
 
     # Display data option
     if st.sidebar.checkbox("Show Data"):
-        st.write(data)
+        st.write(data)  # Show the readable version of the data
 
-    # Define available questions
+    # Define available questions including cross-dataset analysis option
     questions = {
-        'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Cross Correlation Analysis", "Distribution Analysis"],
-        'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Cross Correlation Analysis", "Distribution Analysis"]
+        'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis"],
+        'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Distribution Analysis"]
     }
 
-    # Allow user to select a question
-    selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
-    
-    # Determine which analysis to perform based on the selection
-    if "Cross Correlation Analysis" in selected_question:
-        plot_analysis(observations_numeric_data, selected_question, data2=survey_data)
-    else:
-        plot_analysis(data, selected_question)
+    # Select analysis type
+    analysis_type = st.sidebar.radio("Choose the type of analysis:", ['Single Dataset Analysis', 'Cross-Dataset Analysis'])
+
+    if analysis_type == 'Single Dataset Analysis':
+        selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
+        if selected_question in ["Correlation Analysis", "Distribution Analysis"]:
+            plot_analysis(data_numeric, selected_question)  # Use numeric data for these analyses
+        else:
+            plot_analysis(data, selected_question)  # Use categorical data for visual plots
+    elif analysis_type == 'Cross-Dataset Analysis':
+        if st.sidebar.button("Perform Cross Correlation Analysis"):
+            combined_data = merge_datasets(observations_categorical_data, survey_data)  # Prepare combined data
+            cross_correlation_analysis(combined_data)  # Perform cross-dataset correlation analysis
+
 
 
 
