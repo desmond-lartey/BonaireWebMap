@@ -33,12 +33,12 @@ def convert_categorical_to_numeric(data):
     return numeric_data, data
 
 
-def plot_analysis(data, question, additional_data=None):
+def plot_analysis(data, question, data2=None):
     if question == "Correlation Analysis":
         enhanced_correlation_analysis(data)
     elif question == "Cross Correlation Analysis":
-        if additional_data is not None:
-            cross_correlation_analysis(data, additional_data)
+        if data2 is not None:
+            cross_correlation_analysis(data, data2)
         else:
             st.error("Additional data needed for cross-correlation analysis is not provided.")
     elif question == "Distribution Analysis":
@@ -53,6 +53,7 @@ def plot_analysis(data, question, additional_data=None):
         activity_analysis(data)  # For observations
     else:
         st.error("Selected analysis type is not supported.")
+
 
 
 def enhanced_correlation_analysis(data, title='Correlation Matrix'):
