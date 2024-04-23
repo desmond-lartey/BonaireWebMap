@@ -178,26 +178,30 @@ def app():
 
     st.sidebar.title("User Selection")
     dataset_choice = st.sidebar.radio("Choose the dataset for analysis:", ('Observations', 'Survey'))
-    data = observations_data if dataset_choice == 'Observations' else survey_data
-    data_numeric = observations_numeric_data if dataset_choice == 'Observations' else survey_numeric_data
+    analysis_type = st.sidebar.radio("Choose the type of analysis:", ['Single Dataset Analysis', 'Cross-Dataset Analysis', 'Predictive Analysis'])
 
-    if st.sidebar.checkbox("Show Data"):
-        st.write(data)  # Show the readable version of the data
+    if analysis_type == 'Single Dataset Analysis':
+        data = observations_data if dataset_choice == 'Observations' else survey_data
+        if st.sidebar.checkbox("Show Data"):
+            st.write(data)  # Show the readable version of the data
 
-    questions = {
-        'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis", "Cross Correlation Analysis"],
-        'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Distribution Analysis", "Cross Correlation Analysis"]
-    }
+        questions = {
+            'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis"],
+            'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Distribution Analysis"]
+        }
 
-    analysis_type = st.sidebar.radio("Choose the type of analysis:", ['Descriptive', 'Predictive'])
-
-    if analysis_type == 'Descriptive':
         selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
-        if selected_question in ["Correlation Analysis", "Distribution Analysis", "Cross Correlation Analysis"]:
-            plot_analysis(data_numeric, selected_question)
+        if selected_question in ["Correlation Analysis", "Distribution Analysis"]:
+            plot_analysis(observations_numeric_data if dataset_choice == 'Observations' else survey_numeric_data, selected_question)
         else:
             plot_analysis(data, selected_question)
-    elif analysis_type == "Predictive":
+
+    elif analysis_type == 'Cross-Dataset Analysis':
+        if st.sidebar.button("Perform Cross Correlation Analysis"):
+            combined_data = merge_datasets(observations_numeric_data, survey_numeric_data)  # Prepare combined data for cross-correlation
+            cross_correlation_analysis(combined_data)  # Perform cross-dataset correlation analysis
+
+    elif analysis_type == "Predictive Analysis":
         st.subheader("Predictive Model Results")
         if st.sidebar.button("Run Prediction Model"):
             # Placeholder for predictive analysis
@@ -210,6 +214,9 @@ def app():
             st.pyplot()  # Replace with actual plot
             st.write("Predictions for 2038:")
             st.pyplot()  # Replace with actual plot
+
+if __name__ == "__main__":
+    app()
 
 
 if __name__ == "__main__":
