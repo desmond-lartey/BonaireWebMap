@@ -11,12 +11,12 @@ st.set_page_config(page_title="Bonaire Geospatial", layout="wide")
 
 # Defining the apps and their titles and icons
 apps = [
-    {"func": home.app, "title": "Home", "icon": "house"},
-    {"func": facilities.app, "title": "Facilities", "icon": "building"},
-    {"func": popdashboard2.app, "title": "Population by Age_Sex", "icon": "building"},
-    {"func": yearlypopulation.app, "title": "Population by Area", "icon": "building"},
-    {"func": statistics.app, "title": "Field Observation", "icon": "building"},
-    {"func": findings.app, "title": "Findings", "icon": "building"}
+    {"func": home.app, "title": "Home", "icon": "house_buildings"},
+    {"func": facilities.app, "title": "Facilities", "icon": "sparkle"},
+    {"func": popdashboard2.app, "title": "Population by Age_Sex", "icon": "bar_chart"},
+    {"func": yearlypopulation.app, "title": "Population by Area", "icon": "chart_with_upwards_trends"},
+    {"func": statistics.app, "title": "Field Observation", "icon": "chart"},
+    {"func": findings.app, "title": "Findings", "icon": "closed_book"}
 ]
 
 # Creating the sidebar menu
