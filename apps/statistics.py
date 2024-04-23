@@ -82,7 +82,7 @@ def merge_datasets(data1, data2):
     # For example, if 'Income' and 'Household' are from survey_data, include them explicitly
     combined_data = pd.merge(data1[['Gender', 'Agegroup', 'Ethnicity', 'Site','Activitytype', 'Timeofday']],
                              data2[['Gender', 'Agegroup', 'Travel',	'Car', 'Income', 'Country', 'Household']],
-                             on=common_columns, how='outer')
+                             on=common_columns, how='inner')
 
     # Debugging: Print or log the structure of the merged data to verify it contains what you expect
     st.write("Combined Data Structure:", combined_data.head())
