@@ -189,11 +189,28 @@ def app():
         'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Distribution Analysis", "Cross Correlation Analysis"]
     }
 
-    selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
-    if selected_question in ["Correlation Analysis", "Distribution Analysis", "Cross Correlation Analysis"]:
-        plot_analysis(data_numeric, selected_question)
-    else:
-        plot_analysis(data, selected_question)
+    analysis_type = st.sidebar.radio("Choose the type of analysis:", ['Descriptive', 'Predictive'])
+
+    if analysis_type == 'Descriptive':
+        selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
+        if selected_question in ["Correlation Analysis", "Distribution Analysis", "Cross Correlation Analysis"]:
+            plot_analysis(data_numeric, selected_question)
+        else:
+            plot_analysis(data, selected_question)
+    elif analysis_type == "Predictive":
+        st.subheader("Predictive Model Results")
+        if st.sidebar.button("Run Prediction Model"):
+            # Placeholder for predictive analysis
+            st.write("Predictive Model would be implemented here")
+
+            # Placeholder for predicted plots
+            st.write("Current (2024) Predictions:")
+            st.pyplot()  # Replace with actual plot
+            st.write("Predictions for 2028:")
+            st.pyplot()  # Replace with actual plot
+            st.write("Predictions for 2038:")
+            st.pyplot()  # Replace with actual plot
+
 
 if __name__ == "__main__":
     app()
