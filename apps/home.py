@@ -8,12 +8,12 @@ def app():
 
     st.header("Enhancing Active Mobility in Bonaire")
     st.markdown("""
-    In recent years, global initiatives have emphasized the need to increase physical activity levels, especially through walking and cycling, to improve public and planetary health. The Caribbean Dutch municipality of Bonaire is embarking on an ambitious project to enhance active mobility and promote health equity among its residents.
+    In recent years, global initiatives have emphasized the need to increase physical activity levels, especially through walking and cycling, to improve public and planetary health. The Caribbean Dutch municipality of Bonaire wants to enhance active mobility and promote health equity among its residents.
     
-    This effort, supported by the Netherlands’ Ministry of Public Health, involves a multidisciplinary team including researchers from the Urban Cycling Institute, local government staff, and key stakeholders on the island. A pivotal aim is to integrate physical activity into daily life, combatting obesity and related health conditions prevalent in the region.
+    This effort, supported by the Netherlands’ Ministry of Public Health, involves a multidisciplinary team including researchers from the Urban Cycling Institute, local government staff, and key stakeholders on the island. The objective is to integrate physical activity into daily life, addressing all related health conditions prevalent in the region.
     """)
 
-    #st.image("https://www.example.com/path-to-bonaire-image.jpg", caption="Bonaire - Enhancing Active Mobility")
+    st.image("https://www.example.com/path-to-bonaire-image.jpg", caption="Bonaire - Enhancing Active Mobility")
 
     st.subheader("Project Goals")
     st.markdown("""
