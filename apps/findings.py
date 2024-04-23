@@ -36,7 +36,7 @@ def display_bold_statements():
     """)
 
 def app():
-    st.title("Active Mobility Data Insights and Policies")
+    st.title("Active Mobility Data Insights")
     
     # Divide the page into two columns to display insights and policy recommendations side by side
     col1, col2 = st.columns(2)
