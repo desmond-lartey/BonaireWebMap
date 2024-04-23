@@ -12,7 +12,7 @@ def display_key_insights():
         
     """)
 
-def display_key_insights():
+def display_key_insights2():
     st.header("Key Insights")
     st.markdown("""
         
@@ -52,7 +52,7 @@ def app():
         display_key_insights()
 
     with col2:
-        display_key_insights()
+        display_key_insights2()
         
     with col3:
         display_policy_recommendations()
