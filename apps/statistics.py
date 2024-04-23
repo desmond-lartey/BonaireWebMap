@@ -33,30 +33,15 @@ def convert_categorical_to_numeric(data):
     return numeric_data, data
 
 
-def plot_analysis(data, question):
-    if question == "Correlation Analysis":
-        correlation_analysis(data)
-    elif question == "Distribution Analysis":
-        distribution_analysis(data)
-    elif question == "Demographic Distributions":
-        demographic_distributions(data)
-    elif question == "Travel Mode Analysis":
-        travel_mode_analysis(data)
-    elif question == "Vehicle Use Patterns":
-        vehicle_use_patterns(data)  # For survey
-    elif question == "Activity Analysis":
-        activity_analysis(data)  # For observations
-
-
 def correlation_analysis(data):
     numeric_data = data.select_dtypes(include=[np.number]).dropna()
     if numeric_data.empty or numeric_data.shape[1] < 2:
         st.write("Not enough numerical columns for correlation analysis.")
     else:
-        plt.figure(figsize=(10, 8))
-        sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm')
-        plt.title('Correlation Matrix')
-        st.pyplot()
+        fig, ax = plt.subplots(figsize=(10, 8))
+        sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm', ax=ax)
+        ax.set_title('Correlation Matrix')
+        st.pyplot(fig)
 
 def distribution_analysis(data):
     num_cols = data.select_dtypes(include=[np.number]).columns
@@ -69,7 +54,7 @@ def distribution_analysis(data):
             sns.histplot(data[col], kde=True, ax=axes[i])
             axes[i].set_title(f'Distribution of {col}')
         plt.tight_layout()
-        st.pyplot()
+        st.pyplot(fig)
     else:
         st.write("No numerical columns available for distribution analysis.")
 
@@ -85,52 +70,44 @@ def demographic_distributions(data):
     sns.countplot(data=data, x='Activitytype', ax=axes[1, 1], palette=color_palette[3])
     axes[1, 1].set_title('Activity Type Distribution')
     plt.tight_layout()
-    st.pyplot()
+    st.pyplot(fig)
 
 def travel_mode_analysis(data):
     fig, axes = plt.subplots(2, 2, figsize=(14, 18))
     travel_mode_crosstab = pd.crosstab(data['Agegroup'], data['Travel'])
     sns.heatmap(travel_mode_crosstab, annot=True, fmt="d", cmap="viridis", ax=axes[0, 0])
     axes[0, 0].set_title('Travel Mode by Age Group')
-
     sns.countplot(data=data, x='Travel', ax=axes[0, 1])
     axes[0, 1].set_title('Travel Mode Preferences')
     axes[0, 1].tick_params(axis='x', rotation=45)
-
     sns.countplot(data=data, x='Car', ax=axes[1, 0])
     axes[1, 0].set_title('Car Usage Frequency')
     axes[1, 0].tick_params(axis='x', rotation=45)
-
     plt.tight_layout()
-    st.pyplot()
+    st.pyplot(fig)
 
 def vehicle_use_patterns(data):
     fig, axes = plt.subplots(1, 2, figsize=(14, 7))
     sns.countplot(data=data, x='Car', ax=axes[0], palette="Set3")
     axes[0].set_title('Car Usage Frequency')
     axes[0].tick_params(axis='x', rotation=45)
-    
     sns.countplot(data=data, x='Bicycle', ax=axes[1], palette="Set2")
     axes[1].set_title('Bicycle Usage Frequency')
     axes[1].tick_params(axis='x', rotation=45)
-    
     plt.tight_layout()
-    st.pyplot()
+    st.pyplot(fig)
 
 def activity_analysis(data):
     fig, axes = plt.subplots(1, 2, figsize=(14, 7))
     sns.countplot(data=data, x='Activitytype', ax=axes[0], palette="Pastel1")
     axes[0].set_title('Activity Type Distribution')
     axes[0].tick_params(axis='x', rotation=45)
-    
-    # If you have another relevant categorical variable to show, replace 'ExampleCategory' with that variable name.
-    # For example, if you want to show data based on time of day or another aspect:
     sns.countplot(data=data, x='Timeofday', ax=axes[1], palette="Pastel2")
     axes[1].set_title('Time of Day Distribution')
     axes[1].tick_params(axis='x', rotation=45)
-    
     plt.tight_layout()
-    st.pyplot()
+    st.pyplot(fig)
+
 
 def app():
     st.title("Active Mobility Data Analysis")
