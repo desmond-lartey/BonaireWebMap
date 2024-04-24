@@ -265,5 +265,6 @@ def app():
             st.write("Predictions for 2038:")
             st.pyplot()  # Replace with actual plot
 
+
 if __name__ == "__main__":
     app()
