@@ -16,7 +16,7 @@ apps = [
     {"func": popdashboard2.app, "title": "Population by Age_Sex", "icon": "bar_chart"},
     {"func": yearlypopulation.app, "title": "Population by Area", "icon": "chart_with_upwards_trends"},
     {"func": statistics.app, "title": "Field Observation", "icon": "chart"},
-    {"func": findings.app, "title": "Findings", "icon": "closed_book"}
+    {"func": findings.app, "title": "Insights", "icon": "closed_book"}
 ]
 
 # Creating the sidebar menu
