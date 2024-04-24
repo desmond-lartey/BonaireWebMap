@@ -25,10 +25,10 @@ def display_key_insights2():
 def display_policy_recommendations():
     st.header("Policy Recommendations")
     st.markdown("""
-        - **Demographic-Specific Mobility Programs**: Cater mobility programs to different demographic segments for better effectiveness.
+        - **Demographic-Specific Mobility Programs**: Cater mobility programs to different demographic segments.
         - **Active Mobility in High-Income Groups**: Introduce incentives for high-income individuals to adopt active travel modes.
         - **Infrastructure Investment**: Encourage cycling through robust infrastructure to decrease reliance on cars.
-        - **Household-Centric Travel Solutions**: Create family-friendly travel options and subsidies for larger households.
+        - **Household-Centric Travel Solutions**: 
         - **Country-Specific Mobility Strategies**: Consider cultural and economic contexts in mobility strategies.
     """)
 
