@@ -167,52 +167,39 @@ def activity_analysis(data):
     plt.tight_layout()
     st.pyplot(fig)
 
-@st.experimental_memo
-def get_sankey_chart(data):
-    # Example to adapt with your actual data columns
+def create_sankey_data(data, source_col, target_col):
+    # Count the frequency of source-target pairs
+    counts = data.groupby([source_col, target_col]).size().reset_index(name='Counts')
+    
+    # Create mappings for source and target
+    source_mapping = {source: idx for idx, source in enumerate(counts[source_col].unique())}
+    target_mapping = {target: idx+len(source_mapping) for idx, target in enumerate(counts[target_col].unique())}
+    
+    # Apply mappings to get source and target indices
+    counts['source_idx'] = counts[source_col].map(source_mapping)
+    counts['target_idx'] = counts[target_col].map(target_mapping)
+    
+    return counts, list(source_mapping.keys()) + list(target_mapping.keys())
+
+# Function to plot the Sankey diagram
+def plot_sankey_chart(data, source_col='Site', target_col='Activitytype'):
+    counts, labels = create_sankey_data(data, source_col, target_col)
+    
     fig = go.Figure(data=[go.Sankey(
         node=dict(
             pad=15,
             thickness=15,
             line=dict(color="black", width=0.5),
-            label=["Site A", "Site B", "Cycling", "Walking", "Adult", "Teen"],  # Adjust labels based on your data
-            color="blue"
+            label=labels
         ),
         link=dict(
-            source=[0, 1, 0, 1, 0, 1],  # indices correspond to labels, e.g., Site A -> Cycling
-            target=[2, 2, 3, 3, 4, 5],
-            value=[10, 5, 15, 10, 5, 5]  # Adjust values based on your data
+            source=counts['source_idx'],
+            target=counts['target_idx'],
+            value=counts['Counts']
         ))])
-
-    fig.update_layout(title_text="Site to Activity Relationship", font_size=10)
-    return fig
-
-def site_related_plots(data):
-    # Sankey diagram
-    sankey_fig = get_sankey_chart(data)
-    st.plotly_chart(sankey_fig, use_container_width=True)
-
-    # Additional plot examples
-    # Heatmap of Categorical Variables
-    categorical_data = data[['Site', 'Activitytype', 'Gender', 'Agegroup']]
-    categorical_data_encoded = pd.get_dummies(categorical_data)
-    corr = categorical_data_encoded.corr()
-    fig, ax = plt.subplots()
-    sns.heatmap(corr, annot=True, ax=ax)
-    st.pyplot(fig)
-
-    # Bar Chart for Activity Types by Site
-    fig, ax = plt.subplots()
-    sns.countplot(x='Site', hue='Activitytype', data=data, ax=ax)
-    ax.set_title('Activity Type by Site')
-    st.pyplot(fig)
-
-    # Example of another plot
-    # Distribution of Agegroup by Site
-    fig, ax = plt.subplots()
-    sns.countplot(x='Site', hue='Agegroup', data=data, ax=ax)
-    ax.set_title('Age Distribution by Site')
-    st.pyplot(fig)
+    
+    fig.update_layout(title_text=f"{target_col} by {source_col} Relationship", font_size=10)
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def app():
