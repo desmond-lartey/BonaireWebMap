@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 import numpy as np
+import plotly.graph_objects as go
+
 
 def load_data(filename):
     base_path = os.path.dirname(__file__)
@@ -165,6 +167,53 @@ def activity_analysis(data):
     plt.tight_layout()
     st.pyplot(fig)
 
+@st.experimental_memo
+def get_sankey_chart(data):
+    # Example to adapt with your actual data columns
+    fig = go.Figure(data=[go.Sankey(
+        node=dict(
+            pad=15,
+            thickness=15,
+            line=dict(color="black", width=0.5),
+            label=["Site A", "Site B", "Cycling", "Walking", "Adult", "Teen"],  # Adjust labels based on your data
+            color="blue"
+        ),
+        link=dict(
+            source=[0, 1, 0, 1, 0, 1],  # indices correspond to labels, e.g., Site A -> Cycling
+            target=[2, 2, 3, 3, 4, 5],
+            value=[10, 5, 15, 10, 5, 5]  # Adjust values based on your data
+        ))])
+
+    fig.update_layout(title_text="Site to Activity Relationship", font_size=10)
+    return fig
+
+def site_related_plots(data):
+    # Sankey diagram
+    sankey_fig = get_sankey_chart(data)
+    st.plotly_chart(sankey_fig, use_container_width=True)
+
+    # Additional plot examples
+    # Heatmap of Categorical Variables
+    categorical_data = data[['Site', 'Activitytype', 'Gender', 'Agegroup']]
+    categorical_data_encoded = pd.get_dummies(categorical_data)
+    corr = categorical_data_encoded.corr()
+    fig, ax = plt.subplots()
+    sns.heatmap(corr, annot=True, ax=ax)
+    st.pyplot(fig)
+
+    # Bar Chart for Activity Types by Site
+    fig, ax = plt.subplots()
+    sns.countplot(x='Site', hue='Activitytype', data=data, ax=ax)
+    ax.set_title('Activity Type by Site')
+    st.pyplot(fig)
+
+    # Example of another plot
+    # Distribution of Agegroup by Site
+    fig, ax = plt.subplots()
+    sns.countplot(x='Site', hue='Agegroup', data=data, ax=ax)
+    ax.set_title('Age Distribution by Site')
+    st.pyplot(fig)
+
 
 def app():
     st.title("Active Mobility Data Analysis")
@@ -172,7 +221,6 @@ def app():
     # Load and prepare data
     observations_data = load_data('Bonaire_Observations2.xlsx')
     survey_data = load_data('Bonaire_Survey2.xlsx')
-    # Load numeric data for correlation and distribution
     observations_numeric_data = load_data('Bonaire_Observations3.xlsx')
     survey_numeric_data = load_data('Bonaire_Survey3.xlsx')
 
@@ -186,12 +234,14 @@ def app():
             st.write(data)  # Show the readable version of the data
 
         questions = {
-            'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis"],
+            'Observations': ["Demographic Distributions", "Activity Analysis", "Correlation Analysis", "Distribution Analysis", "Site Related Analysis"],
             'Survey': ["Travel Mode Analysis", "Vehicle Use Patterns", "Correlation Analysis", "Distribution Analysis"]
         }
 
         selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
-        if selected_question in ["Correlation Analysis", "Distribution Analysis"]:
+        if selected_question == "Site Related Analysis":
+            site_related_plots(data)  # Assuming site_related_plots is defined to handle the new analysis
+        elif selected_question in ["Correlation Analysis", "Distribution Analysis"]:
             plot_analysis(observations_numeric_data if dataset_choice == 'Observations' else survey_numeric_data, selected_question)
         else:
             plot_analysis(data, selected_question)
@@ -217,8 +267,3 @@ def app():
 
 if __name__ == "__main__":
     app()
-
-
-if __name__ == "__main__":
-    app()
-
