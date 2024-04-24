@@ -204,7 +204,7 @@ def plot_sankey_chart(data, source_col='Site', target_col='Activitytype'):
 
 def app():
     st.title("Active Mobility Data Analysis")
-    
+
     # Load and prepare data
     observations_data = load_data('Bonaire_Observations2.xlsx')
     survey_data = load_data('Bonaire_Survey2.xlsx')
@@ -215,6 +215,7 @@ def app():
     dataset_choice = st.sidebar.radio("Choose the dataset for analysis:", ('Observations', 'Survey'))
     analysis_type = st.sidebar.radio("Choose the type of analysis:", ['Single Dataset Analysis', 'Cross-Dataset Analysis', 'Predictive Analysis'])
 
+    # Single Dataset Analysis
     if analysis_type == 'Single Dataset Analysis':
         data = observations_data if dataset_choice == 'Observations' else survey_data
         if st.sidebar.checkbox("Show Data"):
@@ -227,23 +228,24 @@ def app():
 
         selected_question = st.sidebar.selectbox("Select a question:", questions[dataset_choice])
         if selected_question == "Site Related Analysis":
-            site_related_plots(data)  # Assuming site_related_plots is defined to handle the new analysis
+            plot_sankey_chart(observations_data)  # Call the function to plot the Sankey chart
         elif selected_question in ["Correlation Analysis", "Distribution Analysis"]:
             plot_analysis(observations_numeric_data if dataset_choice == 'Observations' else survey_numeric_data, selected_question)
         else:
             plot_analysis(data, selected_question)
 
+    # Cross-Dataset Analysis
     elif analysis_type == 'Cross-Dataset Analysis':
         if st.sidebar.button("Perform Cross Correlation Analysis"):
             combined_data = merge_datasets(observations_numeric_data, survey_numeric_data)  # Prepare combined data for cross-correlation
             cross_correlation_analysis(combined_data)  # Perform cross-dataset correlation analysis
 
+    # Predictive Analysis
     elif analysis_type == "Predictive Analysis":
         st.subheader("Predictive Model Results")
         if st.sidebar.button("Run Prediction Model"):
             # Placeholder for predictive analysis
             st.write("Predictive Model would be implemented here")
-
             # Placeholder for predicted plots
             st.write("Current (2024) Predictions:")
             st.pyplot()  # Replace with actual plot
@@ -252,6 +254,7 @@ def app():
             st.write("Predictions for 2038:")
             st.pyplot()  # Replace with actual plot
 
-
+# Call the app function to run the app
 if __name__ == "__main__":
     app()
+
