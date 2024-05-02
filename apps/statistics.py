@@ -76,7 +76,7 @@ def merge_datasets(data1, data2):
     # Merge the datasets on these common columns
     combined_data = pd.merge(data1, data2, on=common_columns, how='inner')
 
-    # Ensure that additional necessary numeric columns are included
+    
     # This approach assumes all columns needed for analysis are kept
     combined_data = combined_data[[col for col in data1.columns if col in common_columns] + 
                                   ['Ethnicity', 'Site', 'Activitytype', 'Timeofday', 'Travel', 'Car', 'Income', 'Bicycle', 'Country', 'Household']]
