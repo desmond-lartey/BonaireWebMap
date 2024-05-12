@@ -17,7 +17,24 @@ alt.themes.enable("dark")
 
 
 #######################
-# Load data
+def add_shapefile_layer(shapefile_path, layer_name):
+    # Check if the shapefile path exists
+    if os.path.exists(shapefile_path):
+        # Read the shapefile using GeoPandas
+        gdf = gpd.read_file(shapefile_path)
+        
+        # Add the GeoDataFrame to the map and zoom to the layer
+        m.add_gdf(gdf, layer_name=layer_name, zoom_to_layer=True)
+    else:
+        # Display an error message if the shapefile is not found
+        st.error(f"Shapefile not found at {shapefile_path}")
+
+# Establish the path to the shapefile
+base_path = os.path.dirname(__file__)  # Directory of this script
+project_root = os.path.join(base_path, os.pardir)  # Navigate up to the project root directory
+shapefile_path = os.path.join(project_root, "newlyexportedshp", "NeighborhoodPopulationByYear_CSVeditedfornewdashboard.shp")
+
+# Load the reshaped data
 df_reshaped = pd.read_csv('NeighborhoodPopulationByYear_CSVeditedfornewdashboard.csv')
 
 
