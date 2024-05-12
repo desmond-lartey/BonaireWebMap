@@ -9,7 +9,7 @@ import os
 #######################
 # Page configuration
 st.set_page_config(
-    page_title="US Population Dashboard",
+    page_title="Bonaire Population Dashboard",
     page_icon="🏂",
     layout="wide",
     initial_sidebar_state="expanded")
@@ -18,23 +18,20 @@ alt.themes.enable("dark")
 
 
 #######################
-def add_shapefile_layer(shapefile_path, layer_name):
-    # Check if the shapefile path exists
-    if os.path.exists(shapefile_path):
-        # Read the shapefile using GeoPandas
-        gdf = gpd.read_file(shapefile_path)
-        
-        # Add the GeoDataFrame to the map and zoom to the layer
-        m.add_gdf(gdf, layer_name=layer_name, zoom_to_layer=True)
+def load_data(filename):
+    # Dynamically construct the path to the data file
+    base_path = os.path.dirname(__file__)
+    project_root = os.path.join(base_path, os.pardir)
+    data_path = os.path.join(project_root, "newlyexportedshp", filename)
+
+    # Ensure the data file path exists
+    if os.path.exists(data_path):
+        # Read the CSV data file
+        return pd.read_csv(data_path)
     else:
-        # Display an error message if the shapefile is not found
-        st.error(f"Shapefile not found at {shapefile_path}")
-
-# Establish the path to the shapefile
-base_path = os.path.dirname(__file__)  # Directory of this script
-project_root = os.path.join(base_path, os.pardir)  # Navigate up to the project root directory
-shapefile_path = os.path.join(project_root, "newlyexportedshp", "NeighborhoodPopulationByYear_CSVeditedfornewdashboard.shp")
-
+        st.error(f"Data file not found at {data_path}")
+        return pd.DataFrame()
+    
 # Load the reshaped data
 df_reshaped = pd.read_csv('NeighborhoodPopulationByYear_CSVeditedfornewdashboard.csv')
 
@@ -42,7 +39,7 @@ df_reshaped = pd.read_csv('NeighborhoodPopulationByYear_CSVeditedfornewdashboard
 #######################
 # Sidebar
 with st.sidebar:
-    st.title('🏂 US Population Dashboard')
+    st.title('🏂 Bonaire Population Dashboard')
     
     year_list = list(df_reshaped.year.unique())[::-1]
     
