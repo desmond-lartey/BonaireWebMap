@@ -31,9 +31,10 @@ def load_data(filename):
     else:
         st.error(f"Data file not found at {data_path}")
         return pd.DataFrame()
-    
-# Load the reshaped data
-df_reshaped = pd.read_csv('NeighborhoodPopulationByYear_CSVeditedfornewdashboard.csv')
+
+# Load the reshaped data using the load_data function
+df_reshaped = load_data('NeighborhoodPopulationByYear_CSVeditedfornewdashboard.csv')
+
 
 
 #######################
