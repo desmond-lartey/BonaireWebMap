@@ -3,45 +3,46 @@ import plotly.express as px
 import pandas as pd
 import geopandas as gpd
 import os
-import numpy as np
 
-# Configuration and data loading
+# Set page configuration
 st.set_page_config(page_title="Bonaire Population Insights", layout="wide")
 
+# Function to load CSV data
 def load_data(file_name):
     base_path = os.path.dirname(__file__)
-    project_root = os.path.join(base_path, os.pardir)
-    file_path = os.path.join(project_root, "data", file_name)
-    if os.path.exists(file_path):
-        return pd.read_csv(file_path)
+    data_path = os.path.join(base_path, "data", file_name)
+    if os.path.exists(data_path):
+        return pd.read_csv(data_path)
     else:
-        st.error("File not found: " + file_name)
+        st.error("CSV file not found: " + file_name)
         return pd.DataFrame()
 
+# Function to load GeoJSON data
 def load_geodata(file_name):
     base_path = os.path.dirname(__file__)
-    project_root = os.path.join(base_path, os.pardir)
-    file_path = os.path.join(project_root, "data", file_name)
-    if os.path.exists(file_path):
-        return gpd.read_file(file_path)
+    geojson_path = os.path.join(base_path, "data", file_name)
+    if os.path.exists(geojson_path):
+        return gpd.read_file(geojson_path)
     else:
         st.error("GeoJSON file not found: " + file_name)
         return gpd.GeoDataFrame()
 
-# Main app
+# Main application function
 def app():
     st.title("Bonaire Population Dashboard")
-    population_data = load_data("NeighborhoodPopulationByYear_CSV.csv")
+
+    # Load data
+    population_data = load_data("NeighborhoodPopulationByYear.csv")
     geodata = load_geodata("bonaire_geo.json")
 
-    # Sidebar
+    # Sidebar for user inputs
     with st.sidebar:
         st.title("Settings")
-        years = population_data['Year'].unique()
-        year_selected = st.selectbox('Select Year', sorted(years))
+        years = sorted(population_data['Year'].unique())
+        year_selected = st.selectbox('Select Year', years)
         filtered_data = population_data[population_data['Year'] == year_selected]
 
-    # Choropleth map
+    # Display choropleth map if data is available
     if not geodata.empty and not filtered_data.empty:
         st.subheader("Population Choropleth Map")
         geodata = geodata.merge(filtered_data, on='id', how='left')
@@ -68,7 +69,7 @@ def app():
     )
     st.plotly_chart(treemap_fig, use_container_width=True)
 
-    # Population scatter plot
+    # Population scatter plot over time
     st.subheader("Population Over Time")
     scatter_fig = px.scatter(
         population_data,
