@@ -32,8 +32,8 @@ def app():
     st.title("Bonaire Population Dashboard")
 
     # Load data
-    population_data = load_data("NeighborhoodPopulationByYear.csv")
-    geodata = load_geodata("bonaire_geo.json")
+    population_data = load_data("NeighborhoodPopulationByYear_CSV.csv")
+    geodata = load_geodata("HexagonDemographicStatistics_AllBands1.geojson")
 
     # Sidebar for user inputs
     with st.sidebar:
