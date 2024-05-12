@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from apps import home, findings, facilities, popdashboard2, yearlypopulation, statistics #area  # Make sure to import your app modules here
+from apps import home, findings, facilities, popdashboard2, newpopdashboard, yearlypopulation, statistics #area  # Make sure to import your app modules here
 
 # import streamlit as st
 # from streamlit_option_menu import option_menu
@@ -14,6 +14,7 @@ apps = [
     {"func": home.app, "title": "Home", "icon": "house_buildings"},
     {"func": facilities.app, "title": "Facilities", "icon": "sparkle"},
     {"func": popdashboard2.app, "title": "Population by Age_Sex", "icon": "bar_chart"},
+    {"func": newpopdashboard.app, "title": "General dashboard", "icon": "bar_chart"},
     {"func": yearlypopulation.app, "title": "Population by Area", "icon": "chart_with_upwards_trends"},
     {"func": statistics.app, "title": "Field Observation", "icon": "chart"},
     {"func": findings.app, "title": "Insights", "icon": "closed_book"}
