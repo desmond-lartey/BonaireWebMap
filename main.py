@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from apps import home, findings, facilities, popdashboard2, newpopdashboard, yearlypopulation, statistics #area  # Make sure to import your app modules here
+from apps import home, findings, facilities, popdashboard2, yearlypopulation, statistics #newpopdashboard, #area  # Make sure to import your app modules here
 
 # import streamlit as st
 # from streamlit_option_menu import option_menu
