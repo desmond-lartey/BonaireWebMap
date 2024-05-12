@@ -5,6 +5,7 @@ import pandas as pd
 import altair as alt
 import plotly.express as px
 import os
+import json
 
 #######################
 # Page configuration
@@ -34,6 +35,7 @@ def load_data(filename):
 
 # Load the reshaped data using the load_data function
 df_reshaped = load_data('NeighborhoodPopulationByYear_CSVeditedfornewdashboard.csv')
+df_reshaped = load_data('HexagonDemographicStatistics_AllBands1.geojson')
 
 
 
@@ -74,21 +76,33 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
     return heatmap
 
 # Choropleth map
-def make_choropleth(input_df, input_id, input_column, input_color_theme):
-    choropleth = px.choropleth(input_df, locations=input_id, color=input_column, locationmode="USA-states",
-                               color_continuous_scale=input_color_theme,
-                               range_color=(0, max(df_selected_year.population)),
-                               scope="usa",
-                               labels={'population':'Population'}
-                              )
-    choropleth.update_layout(
-        template='plotly_dark',
-        plot_bgcolor='rgba(0, 0, 0, 0)',
-        paper_bgcolor='rgba(0, 0, 0, 0)',
-        margin=dict(l=0, r=0, t=0, b=0),
-        height=350
+def make_choropleth(input_df, geodata, input_id, input_column, input_color_theme):
+    # Ensure that 'id' columns in both dataframes are the same data type for proper merging
+    input_df[input_id] = input_df[input_id].astype(str)
+    geodata['id'] = geodata['id'].astype(str)
+
+    # Merge the GeoDataFrame with your population data on the 'id' column
+    merged_data = geodata.merge(input_df, how='left', left_on='id', right_on=input_id)
+
+    # Create the choropleth map using Plotly with the merged GeoDataFrame
+    fig = px.choropleth(merged_data,
+                        geojson=json.loads(geodata.to_json()),  # Convert GeoDataFrame to JSON format
+                        locations='id',  # Use 'id' for locations
+                        color=input_column,  # Specify the column for population values
+                        color_continuous_scale=input_color_theme,
+                        featureidkey="properties.id",  # Ensure this key matches the GeoJSON ID
+                        labels={'population': 'Population'})
+
+    fig.update_geos(
+        fitbounds="locations",
+        visible=False)
+    fig.update_layout(
+        margin={"r":0, "t":0, "l":0, "b":0},
+        paper_bgcolor='rgba(0,0,0,0)',  # Optional: for a transparent background
+        geo=dict(bgcolor='rgba(0,0,0,0)')
     )
-    return choropleth
+
+    return fig
 
 
 # Donut chart
