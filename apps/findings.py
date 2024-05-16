@@ -46,7 +46,8 @@ def app():
     st.title("Active Mobility Data Insights")
     
     # Divide the page into two columns to display insights and policy recommendations side by side
-    col1, col2, col3 = st.columns(3)
+    col1, col2, = st.columns(2)
+    #col1, col2, col3 = st.columns(3)
     
     with col1:
         display_key_insights()
