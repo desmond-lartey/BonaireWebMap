@@ -58,7 +58,7 @@ def app():
         display_policy_recommendations()
         
     # Display bold statements below the columns
-    display_bold_statements()
+    #display_bold_statements()
 
 if __name__ == "__main__":
     app()
