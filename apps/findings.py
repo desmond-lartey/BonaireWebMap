@@ -22,25 +22,25 @@ def display_key_insights2():
         - **Travel vs. Car:** The negative correlation (-0.41) between 'Travel' and 'Car' suggests that people who frequently use other modes of travel are less likely to use cars. This is consistent with what you'd expect if 'Travel' includes active travel modes.
     """)
 
-def display_policy_recommendations():
-    st.header("Policy Recommendations")
-    st.markdown("""
-        - **Demographic-Specific Mobility Programs**: Cater mobility programs to different demographic segments.
-        - **Active Mobility in High-Income Groups**: Introduce incentives for high-income individuals to adopt active travel modes.
-        - **Infrastructure Investment**: Encourage cycling through robust infrastructure to decrease reliance on cars.
-        - **Household-Centric Travel Solutions**: 
-        - **Country-Specific Mobility Strategies**: Consider cultural and economic contexts in mobility strategies.
-    """)
+# def display_policy_recommendations():
+#     st.header("Policy Recommendations")
+#     st.markdown("""
+#         - **Demographic-Specific Mobility Programs**: Cater mobility programs to different demographic segments.
+#         - **Active Mobility in High-Income Groups**: Introduce incentives for high-income individuals to adopt active travel modes.
+#         - **Infrastructure Investment**: Encourage cycling through robust infrastructure to decrease reliance on cars.
+#         - **Household-Centric Travel Solutions**: 
+#         - **Country-Specific Mobility Strategies**: Consider cultural and economic contexts in mobility strategies.
+#     """)
 
-def display_bold_statements():
-    st.header("Bold Policy Statements")
-    st.markdown("""
-        - **"Creating a Bicycle-Friendly Bonaire"**: A robust cycling infrastructure will reduce car dependency.
-        - **"Culturally Inclusive Active Mobility"**: Mobility solutions should respect and incorporate cultural differences.
-        - **"Economic Incentives for Sustainable Transport"**: Financial benefits for sustainable transport can encourage a shift in high-income groups.
-        - **"Family-Friendly Transportation"**: Develop practical transportation plans for larger households.
-        - **"Data-Driven Mobility Enhancement"**: Policies should be responsive to the evolving needs of Bonaire's population.
-    """)
+# def display_bold_statements():
+#     st.header("Bold Policy Statements")
+#     st.markdown("""
+#         - **"Creating a Bicycle-Friendly Bonaire"**: A robust cycling infrastructure will reduce car dependency.
+#         - **"Culturally Inclusive Active Mobility"**: Mobility solutions should respect and incorporate cultural differences.
+#         - **"Economic Incentives for Sustainable Transport"**: Financial benefits for sustainable transport can encourage a shift in high-income groups.
+#         - **"Family-Friendly Transportation"**: Develop practical transportation plans for larger households.
+#         - **"Data-Driven Mobility Enhancement"**: Policies should be responsive to the evolving needs of Bonaire's population.
+#     """)
 
 def app():
     st.title("Active Mobility Data Insights")
