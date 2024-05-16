@@ -54,8 +54,8 @@ def app():
     with col2:
         display_key_insights2()
         
-    with col3:
-        display_policy_recommendations()
+    # with col3:
+    #     display_policy_recommendations()
         
     # Display bold statements below the columns
     #display_bold_statements()
