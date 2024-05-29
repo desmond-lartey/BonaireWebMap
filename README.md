@@ -1,6 +1,5 @@
-# Documentation of Bonaire Spatial Analysis and Streamlit App
+# Documentation of Bonaire Spatial Analysis
 
-# Enhancing Active Mobility in Bonaire
 
 ## Overview
 In recent years, there has been a global call to increase physical activity levels, especially among vulnerable population groups. Incorporating physical activities such as walking and cycling into daily routines can significantly benefit public and planetary health. This need is particularly pressing in the Caribbean, where physical activity levels are low, and obesity, mortality, and morbidity rates are high. The Caribbean Dutch municipality of Bonaire is no exception, with data indicating that 60% of its residents suffer from overweight, obesity, and other preventable health conditions.
