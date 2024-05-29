@@ -1,4 +1,4 @@
-# Documentation of All spatial analysis for the app
+# Documentation of Bonaire Spatial Analysis and Streamlit App
 
 # Enhancing Active Mobility in Bonaire
 
