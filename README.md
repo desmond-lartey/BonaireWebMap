@@ -1,4 +1,4 @@
-# BonaireWebMap
+# Documentation of All spatial analysis for the app
 
 # Enhancing Active Mobility in Bonaire
 
@@ -11,10 +11,10 @@ Bonaire is a small island with a population of approximately 25,000, located 80k
 The project will culminate in the development of a suite of evidence-based policy recommendations designed to increase physical activity among the population of Bonaire. Central to the project is community-based participatory research, which involves local stakeholders and citizens throughout the entire process. This approach ensures that the policy actions developed are tailored specifically for Bonaire by Bonaireans.
 
 ## Contact Information
-For any inquiries regarding the project, please contact:
-**Dr. Dylan Power**
-Senior Researcher at Urban Cycling Institute
-Email: dylan@urbancyclinginstitute.org
+For any inquiries regarding the datasets used in the porject, how they were computed and the function of the application, please contact:
+**Desmond Lartey**
+Researcher at Urban Cycling Institute
+Email: desmond@urbancyclinginstitute.org
 
 ## Applications Created and Their Objectives
 
@@ -34,6 +34,22 @@ Email: dylan@urbancyclinginstitute.org
 - **Objective:** To support policymakers in developing evidence-based strategies for increasing physical activity.
 - **Description:** A data-driven tool that analyzes collected data to generate actionable policy recommendations for enhancing active mobility in Bonaire.
 
+### Facilities App
+- **Objective:** To show various locations of facilities and where they are.
+- **Description:** This app provides a map of key facilities such as parks, health centers, and recreational areas, helping residents find places to engage in physical activity.
+
+### Population Analysis App
+- **Objective:** To visualize the population distribution and changes over time in Bonaire.
+- **Description:** This app uses data visualizations like treemaps and scatter plots to display population data by year, neighborhood, and demographic characteristics.
+
+### Demographic Analysis App
+- **Objective:** To analyze the population by sex and age cohorts across neighborhoods.
+- **Description:** This app includes choropleth maps and bar charts to display the distribution of population demographics, providing insights into the needs of different groups.
+
+### Field Survey and Observation Analysis App
+- **Objective:** To analyze data from field surveys and observations.
+- **Description:** This app offers various analyses such as correlation, distribution, and Sankey diagrams to understand mobility patterns and preferences from survey data.
+
 ## Datasets Descriptions
 
 | Dataset Name          | Description                                                                                   | Creation Method                                                                                  |
@@ -42,7 +58,50 @@ Email: dylan@urbancyclinginstitute.org
 | Sex                   | Gender distribution data used for analyzing activity level differences between men and women. | Extracted from the Population dataset and validated with additional surveys and health records.  |
 | Neighborhood          | Spatial data on different neighborhoods in Bonaire, including infrastructure and amenities.   | Created using GIS mapping tools, satellite imagery, and field surveys conducted by local teams.  |
 | Activity Levels       | Data on walking and cycling activities of residents across different neighborhoods.            | Collected through the Active Mobility Tracker app and aggregated for spatial analysis.           |
-| Health Metrics        | Health indicators such as BMI, blood pressure, and chronic conditions prevalence.              | Obtained from local health departments and anonymized for research purposes.                     |
+| Health Metrics        | **(In Progress)** Health indicators such as BMI, blood pressure, and chronic conditions prevalence. | Data to be obtained from local health departments and anonymized for research purposes.                     |
+| Field Surveys and Observations | Data on mobility patterns, vehicle use, and demographic characteristics.              | Collected through structured field surveys and observations across various locations in Bonaire. |
+
+### Methodology for Data Collection and Analysis
+
+#### Hexagon Grid Creation
+We used QGIS to compute 1250-meter hexagons for the entire area of Bonaire. This breaks the whole country into neighborhoods that represent a 15-minute walk. These hexagons are used as the basis for many of our spatial analyses, including service area and population statistics.
+
+#### Population Data Collection
+The population data from 2000-2020 was collected and grouped by neighborhood. The Global Population of the World (GPWv4.11) dataset from CIESIN was used to extract population counts. The data was processed in Google Earth Engine (GEE) to calculate zonal statistics for each hexagon.
+
+#### Age and Sex Data Collection
+We used the WorldPop dataset to gather population data by age and sex. The data was filtered and processed to create a comprehensive demographic profile for each neighborhood. The processed data was then exported as GeoTIFF and CSV files for further analysis.
+
+#### Survey and Observation Data
+Field surveys and observations were conducted to gather data on mobility patterns, vehicle use, and demographic characteristics. This data was analyzed using various statistical and visualization techniques to provide insights into the factors influencing mobility in Bonaire.
+
+## Prediction and Impact Analysis App
+
+### Overview
+This application is still in progress and aims to model the current situation based on our survey and observation data for 2024 and project future scenarios up to 2038. The goal is to assess the impact of active mobility on health and other factors over time.
+
+### Data Required
+- **Current Mobility Data:** Collected from the Active Mobility Tracker and Field Surveys.
+- **Health Data:** Health metrics such as BMI, blood pressure, and incidence of chronic conditions.
+- **Demographic Data:** Age, sex, occupation, and other relevant demographic information.
+- **Environmental Data:** Data on infrastructure, neighborhood amenities, and environmental factors.
+
+### Methodology
+We plan to use statistical models and machine learning techniques to predict future trends in physical activity, health outcomes, and demographic changes. The models will be calibrated using the collected data and validated against historical trends.
+
+## Impact Assessment
+The impact assessment will evaluate the benefits of increased active mobility on various health outcomes. This will include:
+- Reduction in obesity and overweight prevalence.
+- Decrease in the incidence of chronic diseases such as diabetes and cardiovascular conditions.
+- Improvements in mental health and reduction in prescriptions for antidepressants and anxiolytics.
+- Economic benefits due to reduced healthcare costs and increased productivity.
+
+## References
+- Berrie, L., Feng, Z., Rice, D., Clemens, T., Williamson, L., & Dibben, C. (2024). Does cycle commuting reduce the risk of mental ill-health? An instrumental variable analysis using distance to nearest cycle path. *International Journal of Epidemiology*, 53(1), dyad153. https://doi.org/10.1093/ije/dyad153
 
 ## Conclusion
-This comprehensive project aims to improve the health and well-being of Bonaire residents by promoting active mobility. By leveraging local knowledge and involving community stakeholders, the Urban Cycling Institute and its partners are dedicated to creating sustainable, impactful changes in Bonaire's public health landscape. For more details and updates, please visit our project page or contact Dr. Dylan Power.
+This project aims to improve the health and well-being of Bonaire residents by promoting active mobility. Combining local knowledge, involving community stakeholders, spatial analysis of the area helps us to understand better what active mobility policy options exist for Bonaire.
+For any inquiries regarding the execution of the project, please contact:
+**Dr. Dylan Power**
+Senior Researcher at Urban Cycling Institute
+Email: dylan@urbancyclinginstitute.org
