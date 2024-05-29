@@ -21,10 +21,6 @@ Email: desmond@urbancyclinginstitute.org
 - **Objective:** To monitor and analyze the physical activity levels of Bonaire residents, focusing on walking and cycling with key faciclities and roadnetwroks as benchmarks. Also to show various locations of facilities and where they are.
 - **Description:** This app provides a map of key facilities such as parks, health centers, and recreational areas, helping residents find places to engage in physical activity. It also computes service area netwrok analysis for major faccilities. From this app, we know which areas have high and low accebitlity with =in specific dsitances and how do they compare per neighborhoods.
 
-### Policy Recommendation Tool
-- **Objective:** To support policymakers in developing evidence-based strategies for increasing physical activity.
-- **Description:** A page that reflects on the data collected and analysed as well as what actionable policy recommendations necessary for enhancing active mobility in Bonaire. It aslo 
-
 ### Population Analysis App
 - **Objective:** To visualize the population distribution and changes over time in Bonaire.
 - **Description:** This app uses data visualizations like treemaps and scatter plots to display population data by year, neighborhood, and demographic characteristics.
@@ -36,6 +32,10 @@ Email: desmond@urbancyclinginstitute.org
 ### Field Survey and Observation Analysis App
 - **Objective:** To analyze data from field surveys and observations.
 - **Description:** This app offers various analyses such as correlation, distribution, and Sankey diagrams to understand mobility patterns and preferences from survey data.
+
+### Policy Insights
+- **Objective:** To support policymakers in developing evidence-based strategies for increasing physical activity.
+- **Description:** There is a reflection on the data collected and analysed as well as what actionable policy recommendations necessary for enhancing active mobility in Bonaire.
 
 ## Datasets Descriptions
 
