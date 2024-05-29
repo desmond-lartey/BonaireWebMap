@@ -18,25 +18,13 @@ Email: desmond@urbancyclinginstitute.org
 
 ## Applications Created and Their Objectives
 
-### Active Mobility Tracker
-- **Objective:** To monitor and analyze the physical activity levels of Bonaire residents, focusing on walking and cycling.
-- **Description:** This app collects data on users' daily walking and cycling activities, providing insights into patterns and areas that need improvement.
-
-### Community Engagement Platform
-- **Objective:** To facilitate communication and collaboration among local stakeholders, researchers, and residents.
-- **Description:** A social platform that allows users to share ideas, participate in discussions, and stay informed about project updates and events.
-
-### Health and Fitness Dashboard
-- **Objective:** To provide residents with personalized health and fitness recommendations based on their activity data.
-- **Description:** This app integrates with the Active Mobility Tracker to offer tailored advice and goals, helping users improve their health outcomes.
+### Facilities App
+- **Objective:** To monitor and analyze the physical activity levels of Bonaire residents, focusing on walking and cycling with key faciclities and roadnetwroks as benchmarks. Also to show various locations of facilities and where they are.
+- **Description:** This app provides a map of key facilities such as parks, health centers, and recreational areas, helping residents find places to engage in physical activity. It also computes service area netwrok analysis for major faccilities. From this app, we know which areas have high and low accebitlity with =in specific dsitances and how do they compare per neighborhoods.
 
 ### Policy Recommendation Tool
 - **Objective:** To support policymakers in developing evidence-based strategies for increasing physical activity.
-- **Description:** A data-driven tool that analyzes collected data to generate actionable policy recommendations for enhancing active mobility in Bonaire.
-
-### Facilities App
-- **Objective:** To show various locations of facilities and where they are.
-- **Description:** This app provides a map of key facilities such as parks, health centers, and recreational areas, helping residents find places to engage in physical activity.
+- **Description:** A page that reflects on the data collected and analysed as well as what actionable policy recommendations necessary for enhancing active mobility in Bonaire. It aslo 
 
 ### Population Analysis App
 - **Objective:** To visualize the population distribution and changes over time in Bonaire.
@@ -70,15 +58,15 @@ Email: desmond@urbancyclinginstitute.org
 We used QGIS to compute 1250-meter hexagons for the entire area of Bonaire. This breaks the whole country into neighborhoods that represent a 15-minute walk. These hexagons are used as the basis for many of our spatial analyses, including service area and population statistics.
 
 #### Population Data Collection
-The population data from 2000-2020 was collected and grouped by neighborhood. The Global Population of the World (GPWv4.11) dataset from CIESIN was used to extract population counts. The data was processed in Google Earth Engine (GEE) to calculate zonal statistics for each hexagon.
+The population data from 2000-2020 was collected and grouped by neighborhood. The Global Population of the World (CIESIN/GPWv411/GPW_Population_Count) dataset from CIESIN was used to extract population counts. The data was processed in Google Earth Engine (GEE) to calculate zonal statistics for each hexagon.
 
 #### Age and Sex Data Collection
-We used the WorldPop dataset to gather population data by age and sex. The data was filtered and processed to create a comprehensive demographic profile for each neighborhood. The processed data was then exported as GeoTIFF and CSV files for further analysis.
+We used the WorldPop/GP/100m/pop_age_sex dataset to gather population data by age and sex. The data was filtered and processed to create a comprehensive demographic profile for each neighborhood. The processed data was then exported as GeoTIFF and CSV files for further analysis.
 
 #### Survey and Observation Data
 Field surveys and observations were conducted to gather data on mobility patterns, vehicle use, and demographic characteristics. This data was analyzed using various statistical and visualization techniques to provide insights into the factors influencing mobility in Bonaire.
 
-### Preliminary Analysis Findings: Service Area
+### Preliminary Spatial Analysis: Service Area
 
 #### Introduction
 The service area analysis aimed to assess the accessibility of various facilities on Bonaire within 15 and 30-minute walking distances. This analysis helps to identify the population served by each facility and evaluate the overall coverage of essential services.
