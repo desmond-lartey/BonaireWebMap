@@ -45,7 +45,7 @@ def app():
     st.sidebar.markdown(
         """
         **Urban Cycling Institute**  
-        [Check Documentation of this App] (https://github.com/desmond-lartey/BonaireWebMap?tab=readme-ov-file)  
+        [Check Documentation of this App](https://github.com/desmond-lartey/BonaireWebMap?tab=readme-ov-file)  
         [Education](https://urbancyclinginstitute.org/education/) | [Events](https://urbancyclinginstitute.org/events/) | [Project](https://urbancyclinginstitute.org/enhancing-active-mobility-on-bonaire/) | [LinkedIn](https://www.linkedin.com/company/urbancyclinginstitute/)
         """
     )
