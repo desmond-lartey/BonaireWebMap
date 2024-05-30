@@ -31,6 +31,6 @@ with st.expander("See source code"):
             spin=True,
             add_legend=True,
         )
-        
-m.set_center(lat=12.15, lon=-68.26, zoom=12)  # Centering and zooming to Bonaire
+
+        m.set_center(lat=12.15, lon=-68.26, zoom=12)  # Centering and zooming to Bonaire
 m.to_streamlit(height=700)
