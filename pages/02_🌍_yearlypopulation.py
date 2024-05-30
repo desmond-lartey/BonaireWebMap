@@ -92,10 +92,13 @@ def app():
         st.plotly_chart(neighborhood_treemap_fig, use_container_width=True)
 
 # Customize the sidebar
-st.sidebar.title("About")
-st.sidebar.info("A Streamlit map template\n<https://github.com/opengeos/streamlit-map-template>")
-logo = "https://i.imgur.com/UbOXYAU.png"
-st.sidebar.image(logo)
+# st.sidebar.title("About")
+# st.sidebar.info("A Streamlit map template\n<https://github.com/opengeos/streamlit-map-template>")
+
+# Adding the logo image
+logo_url = "https://urbancyclinginstitute.org/wp-content/uploads/2024/01/active-mobility-Bonaire.jpeg"
+st.sidebar.image(logo_url, caption="Bonaire")
+
 
 # Execute the Streamlit app
 if __name__ == '__main__':
