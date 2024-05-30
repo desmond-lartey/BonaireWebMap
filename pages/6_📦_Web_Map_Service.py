@@ -74,5 +74,5 @@ with row1_col2:
         if add_legend and legend_text:
             legend_dict = ast.literal_eval(legend_text)
             m.add_legend(legend_dict=legend_dict)
-
+            m.set_center(lat=12.15, lon=-68.26, zoom=12)  # Centering and zooming to Bonaire
         m.to_streamlit(width, height)

@@ -18,6 +18,7 @@ with st.expander("See source code"):
     with st.echo():
         filepath = "https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/us_cities.csv"
         m = leafmap.Map(center=[40, -100], zoom=4)
+        m.set_center(lat=12.15, lon=-68.26, zoom=12)  # Centering and zooming to Bonaire
         m.add_heatmap(
             filepath,
             latitude="latitude",

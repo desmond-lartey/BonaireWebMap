@@ -28,4 +28,5 @@ with col1:
         locate_control=True, latlon_control=True, draw_export=True, minimap_control=True
     )
     m.add_basemap(basemap)
+    m.set_center(lat=12.15, lon=-68.26, zoom=12)  # Centering and zooming to Bonaire
     m.to_streamlit(height=700)

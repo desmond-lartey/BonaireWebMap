@@ -47,5 +47,5 @@ with row1_col2:
         if tiles is not None:
             for tile in tiles:
                 m.add_xyz_service(tile)
-
+        m.set_center(lat=12.15, lon=-68.26, zoom=12)  # Centering and zooming to Bonaire
         m.to_streamlit(width, height)
