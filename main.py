@@ -1,37 +1,40 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
-from apps import home, findings, facilities, popdashboard2, yearlypopulation, statistics #newpopdashboard, #area  # Make sure to import your app modules here
+import leafmap.foliumap as leafmap
 
-# import streamlit as st
-# from streamlit_option_menu import option_menu
-# from apps import home, facilities, neighbourhoods
+st.set_page_config(layout="wide")
 
-# Setting up the page configuration
-st.set_page_config(page_title="Bonaire Geospatial", layout="wide")
+# Customize the sidebar
+markdown = """
+A Streamlit map template
+<https://github.com/opengeos/streamlit-map-template>
+"""
 
-# Defining the apps and their titles and icons
-apps = [
-    {"func": home.app, "title": "Home"},
-    {"func": facilities.app, "title": "Facilities"},
-    {"func": popdashboard2.app, "title": "Population by Age_Sex"},
-    #{"func": newpopdashboard.app, "title": "General dashboard", "icon": "bar_chart"},
-    {"func": yearlypopulation.app, "title": "Population by Area"},
-    {"func": statistics.app, "title": "Field Observation"},
-    {"func": findings.app, "title": "Insights"}
-]
+st.sidebar.title("About")
+st.sidebar.info(markdown)
+logo = "https://i.imgur.com/UbOXYAU.png"
+st.sidebar.image(logo)
 
-# Creating the sidebar menu
-with st.sidebar:
-    selected = option_menu(
-        menu_title="Main Menu",  # The title of the menu
-        options=[app["title"] for app in apps],  # The list of options
-        icons=[app["icon"] for app in apps],  # The list of icons
-        menu_icon="cast",  # The icon of the menu
-        default_index=0,  # The default option selected
-    )
+# Customize page title
+st.title("Streamlit for Geospatial Applications")
 
-# Displaying the selected app
-for app in apps:
-    if app["title"] == selected:
-        app["func"]()
-        break
+st.markdown(
+    """
+    This multipage app template demonstrates various interactive web apps created using [streamlit](https://streamlit.io) and [leafmap](https://leafmap.org). It is an open-source project and you are very welcome to contribute to the [GitHub repository](https://github.com/opengeos/streamlit-map-template).
+    """
+)
+
+st.header("Instructions")
+
+markdown = """
+1. For the [GitHub repository](https://github.com/opengeos/streamlit-map-template) or [use it as a template](https://github.com/opengeos/streamlit-map-template/generate) for your own project.
+2. Customize the sidebar by changing the sidebar text and logo in each Python files.
+3. Find your favorite emoji from https://emojipedia.org.
+4. Add a new app to the `pages/` directory with an emoji in the file name, e.g., `1_🚀_Chart.py`.
+
+"""
+
+st.markdown(markdown)
+
+m = leafmap.Map(minimap_control=True)
+m.add_basemap("OpenTopoMap")
+m.to_streamlit(height=500)

@@ -28,3 +28,7 @@ altair
 plotly
 seaborn
 numpy
+geopandas
+leafmap
+owslib
+streamlit
