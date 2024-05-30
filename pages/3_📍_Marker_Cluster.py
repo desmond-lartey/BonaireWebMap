@@ -18,6 +18,7 @@ with st.expander("See source code"):
     with st.echo():
 
         m = leafmap.Map(center=[40, -100], zoom=4)
+        m.set_center(lat=12.15, lon=-68.26, zoom=12)  # Centering and zooming to Bonaire
         cities = "https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/us_cities.csv"
         regions = "https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/us_regions.geojson"
 
@@ -32,5 +33,5 @@ with st.expander("See source code"):
             add_legend=True,
         )
 
-        m.set_center(lat=12.15, lon=-68.26, zoom=12)  # Centering and zooming to Bonaire
+        
 m.to_streamlit(height=700)
