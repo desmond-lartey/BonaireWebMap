@@ -182,7 +182,8 @@ def app():
         st.plotly_chart(fig_age_groups)
 
         
-
+logo_url = "https://urbancyclinginstitute.org/wp-content/uploads/2024/01/active-mobility-Bonaire.jpeg"
+st.sidebar.image(logo_url, caption="Bonaire")
 
 
 if __name__ == "__main__":

@@ -61,5 +61,14 @@ def app():
     # Display bold statements below the columns
     #display_bold_statements()
 
+markdown = """
+"A Streamlit Application for Active Mobility \n<https://active-mobility-bonaire-uci.streamlit.app/>
+"""
+
+st.sidebar.title("About")
+st.sidebar.info(markdown)
+logo = "https://i.imgur.com/UbOXYAU.png"
+st.sidebar.image(logo)
+
 if __name__ == "__main__":
     app()

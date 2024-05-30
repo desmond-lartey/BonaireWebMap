@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 
 # Customize the sidebar
 st.sidebar.title("About")
-st.sidebar.info("A Streamlit map template\n<https://github.com/opengeos/streamlit-map-template>")
+st.sidebar.info("A Streamlit Application for Active Mobility \n<https://active-mobility-bonaire-uci.streamlit.app/>")
 logo = "https://i.imgur.com/UbOXYAU.png"
 st.sidebar.image(logo)
 
