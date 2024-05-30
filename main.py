@@ -86,14 +86,19 @@ st.sidebar.markdown(f"© {current_year} Urban Cycling Institute")
 #     st.image("https://github.com/giswqs/data/raw/main/timelapse/fire.gif")
 
 # Set the page configuration to hide the GitHub repository icon
-st.set_page_config(
-    layout="wide",
-    menu_items={
-        'Get Help': None,
-        'Report a bug': None,
-        'About': None,
-        'GitHub': None
-    }
-)
+st.set_page_config(layout="wide")
+
+# Custom CSS to hide GitHub icon and other elements
+hide_github_icon = """
+    <style>
+        .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob, 
+        .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137, 
+        .viewerBadge_text__1JaDK { display: none; } 
+        #MainMenu { visibility: hidden; } 
+        footer { visibility: hidden; } 
+        header { visibility: hidden; }
+    </style>
+"""
+st.markdown(hide_github_icon, unsafe_allow_html=True)
 
 
