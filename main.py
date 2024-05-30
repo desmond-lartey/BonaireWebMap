@@ -86,7 +86,7 @@ st.sidebar.markdown(f"© {current_year} Urban Cycling Institute")
 #     st.image("https://github.com/giswqs/data/raw/main/timelapse/fire.gif")
 
 # Set the page configuration to hide the GitHub repository icon
-st.set_page_config(layout="wide")
+
 
 # Custom CSS to hide GitHub icon and other elements
 hide_github_icon = """
