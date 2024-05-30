@@ -13,7 +13,6 @@ logo = "https://i.imgur.com/UbOXYAU.png"
 st.sidebar.image(logo)
 
 # Page Title
-st.title("Streamlit for Geospatial Applications")
 
 # Home Page Content
 st.header("Enhancing Active Mobility in Bonaire")

@@ -91,6 +91,12 @@ def app():
         neighborhood_treemap_fig = create_neighborhood_treemap(neighborhood_data)
         st.plotly_chart(neighborhood_treemap_fig, use_container_width=True)
 
+# Customize the sidebar
+st.sidebar.title("About")
+st.sidebar.info("A Streamlit map template\n<https://github.com/opengeos/streamlit-map-template>")
+logo = "https://i.imgur.com/UbOXYAU.png"
+st.sidebar.image(logo)
+
 # Execute the Streamlit app
 if __name__ == '__main__':
     app()
