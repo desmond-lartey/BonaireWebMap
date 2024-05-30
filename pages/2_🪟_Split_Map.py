@@ -12,7 +12,7 @@ st.sidebar.info(markdown)
 logo = "https://i.imgur.com/UbOXYAU.png"
 st.sidebar.image(logo)
 
-st.title("Split-panel Map")
+st.title("Land Cover Map")
 
 with st.expander("See source code"):
     #with st.echo():
