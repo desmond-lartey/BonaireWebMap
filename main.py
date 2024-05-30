@@ -24,6 +24,8 @@ This effort, supported by the Netherlands’ Ministry of Public Health, involves
 
 # st.image("https://urbancyclinginstitute.org/wp-content/uploads/2024/01/active-mobility-Bonaire.jpeg", caption="Bonaire")
 
+st.info("Click on the left sidebar menu to navigate to the different apps.")
+
 # Instructions
 st.header("Instructions")
 st.markdown("""
@@ -69,9 +71,7 @@ st.sidebar.markdown("""
 [Education](https://urbancyclinginstitute.org/education/) | [Events](https://urbancyclinginstitute.org/events/) | [Project](https://urbancyclinginstitute.org/enhancing-active-mobility-on-bonaire/) | [LinkedIn](https://www.linkedin.com/company/urbancyclinginstitute/)
 """)
 
-st.info("Click on the left sidebar menu to navigate to the different apps.")
-
-st.subheader("Timelapse of Satellite Imagery")
+#st.subheader("Timelapse of Satellite Imagery")
 
 current_year = datetime.datetime.now().year
 st.sidebar.markdown(f"© {current_year} Urban Cycling Institute")
