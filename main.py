@@ -21,7 +21,22 @@ In recent years, global initiatives have emphasized the need to increase physica
 
 This effort, supported by the Netherlands’ Ministry of Public Health, involves a multidisciplinary team including researchers from the Urban Cycling Institute, local government staff, and key stakeholders on the island. The objective is to integrate physical activity into daily life, addressing all related health conditions prevalent in the region.
 """)
-st.image("https://urbancyclinginstitute.org/wp-content/uploads/2024/01/active-mobility-Bonaire.jpeg", caption="Bonaire")
+
+# st.image("https://urbancyclinginstitute.org/wp-content/uploads/2024/01/active-mobility-Bonaire.jpeg", caption="Bonaire")
+
+# Instructions
+st.header("Instructions")
+st.markdown("""
+1. For the [GitHub repository](https://github.com/desmond-lartey/BonaireWebMap) or [check the entire project description](https://github.com/desmond-lartey/BonaireWebMap) here.
+2. Check out each of the apps for all spatial related information we currently have on Bonaire.
+3. This is a streamlit app, this means that sometimes it can have issues with front and back end interoparability.
+4. When the app is inactive for a while or without a push/commit operation, you may have to wake the app up from sleep ):.
+""")
+
+# Add map
+m = leafmap.Map(minimap_control=True)
+m.add_basemap("OpenTopoMap")
+m.to_streamlit(height=500)
 
 st.subheader("Project Goals")
 st.markdown("""
@@ -70,16 +85,4 @@ st.sidebar.markdown(f"© {current_year} Urban Cycling Institute")
 #     st.image("https://github.com/giswqs/data/raw/main/timelapse/goes.gif")
 #     st.image("https://github.com/giswqs/data/raw/main/timelapse/fire.gif")
 
-# Instructions
-st.header("Instructions")
-st.markdown("""
-1. For the [GitHub repository](https://github.com/opengeos/streamlit-map-template) or [use it as a template](https://github.com/opengeos/streamlit-map-template/generate) for your own project.
-2. Customize the sidebar by changing the sidebar text and logo in each Python files.
-3. Find your favorite emoji from https://emojipedia.org.
-4. Add a new app to the `pages/` directory with an emoji in the file name, e.g., `1_🚀_Chart.py`.
-""")
 
-# Add map
-m = leafmap.Map(minimap_control=True)
-m.add_basemap("OpenTopoMap")
-m.to_streamlit(height=500)
