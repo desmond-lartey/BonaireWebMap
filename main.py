@@ -57,25 +57,31 @@ Email: [dylan@urbancyclinginstitute.org](mailto:dylan@urbancyclinginstitute.org)
 
 **Rita Gemerts**  
 Embedded Citizen Scientist, Ray-Action  
+            
+For any malfunctioning of this app, contact Desmond Lartey @ 
+- [Email](desmond@urbancyclinginstitute.org)
+- [LinkedIn](https://www.linkedin.com/in/desmond-lartey/)
 """)
 
 
 
 
-st.markdown(
-    """
-    <div style='text-align: center; margin-top: 20px;'>
-        <p><strong>For any malfunctioning of this app, contact Desmond Lartey @</strong></p>
-        <a href='mailto:desmond@urbancyclinginstitute.org'>
-            <img src='https://static.vecteezy.com/system/resources/previews/022/484/516/original/google-mail-gmail-icon-logo-symbol-free-png.png' alt='Email Desmond Lartey' width='24' height='24'>
-        </a>
-        <a href='https://linkedin.com/in/desmond-lartey'>
-            <img src='https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png' alt='LinkedIn Profile' width='24' height='24'>
-        </a>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+
+
+# st.markdown(
+#     """
+#     <div style='text-align: center; margin-top: 20px;'>
+#         <p><strong>For any malfunctioning of this app, contact Desmond Lartey @</strong></p>
+#         <a href='mailto:desmond@urbancyclinginstitute.org'>
+#             <img src='https://static.vecteezy.com/system/resources/previews/022/484/516/original/google-mail-gmail-icon-logo-symbol-free-png.png' alt='Email Desmond Lartey' width='24' height='24'>
+#         </a>
+#         <a href='https://linkedin.com/in/desmond-lartey'>
+#             <img src='https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png' alt='LinkedIn Profile' width='24' height='24'>
+#         </a>
+#     </div>
+#     """,
+#     unsafe_allow_html=True
+# )
 
 
 st.sidebar.info("""
