@@ -64,7 +64,7 @@ st.markdown(
     <div style='text-align: center; margin-top: 20px;'>
         <p><strong>For any malfunctioning of this app, contact Desmond Lartey:</strong></p>
         <a href='desmond@urbancyclinginstitute.org'>
-            <img src='https://iconscout.com/free-3d-illustration/gmail-2950163' alt='Contact Desmond Lartey' width='50' height='50'>
+            <img src='https://static.vecteezy.com/system/resources/previews/022/484/516/original/google-mail-gmail-icon-logo-symbol-free-png.png' alt='Contact Desmond Lartey' width='50' height='50'>
         </a>
         <p><a href='https://linkedin.com/in/desmond-lartey'>LinkedIn Profile</a></p>
     </div>
