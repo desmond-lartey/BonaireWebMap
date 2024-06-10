@@ -68,7 +68,7 @@ st.markdown(
             <img src='https://static.vecteezy.com/system/resources/previews/022/484/516/original/google-mail-gmail-icon-logo-symbol-free-png.png' alt='Email Desmond Lartey' width='24' height='24'>
         </a>
         <a href='https://linkedin.com/in/desmond-lartey'>
-            <img src='hhttps://www.vecteezy.com/png/23986970-linkedin-logo-png-linkedin-logo-transparent-png-linkedin-icon-transparent-free-png.png' alt='LinkedIn Profile' width='24' height='24'>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png' alt='LinkedIn Profile' width='24' height='24'>
         </a>
     </div>
     """,
