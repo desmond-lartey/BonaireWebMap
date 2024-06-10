@@ -65,7 +65,7 @@ Embedded Citizen Scientist, Ray-Action
 st.markdown(
     """
     <div style='text-align: center; margin-top: 20px;'>
-        <p><strong>For any malfunctioning of this app, contact Desmond Lartey:</strong></p>
+        <p><strong>For any malfunctioning of this app, contact Desmond Lartey @</strong></p>
         <a href='mailto:desmond@urbancyclinginstitute.org'>
             <img src='https://static.vecteezy.com/system/resources/previews/022/484/516/original/google-mail-gmail-icon-logo-symbol-free-png.png' alt='Email Desmond Lartey' width='24' height='24'>
         </a>
