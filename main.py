@@ -58,7 +58,7 @@ Email: [dylan@urbancyclinginstitute.org](mailto:dylan@urbancyclinginstitute.org)
 **Rita Gemerts**  
 Embedded Citizen Scientist, Ray-Action  
             
-For any malfunctioning of this app, contact Desmond Lartey @ [Email](desmond@urbancyclinginstitute.org) or [LinkedIn](https://www.linkedin.com/in/desmond-lartey/)
+For any malfunctioning of this app, contact Desmond Lartey @ [Email](malto: desmond@urbancyclinginstitute.org) or [LinkedIn](https://www.linkedin.com/in/desmond-lartey/)
 """)
 
 
