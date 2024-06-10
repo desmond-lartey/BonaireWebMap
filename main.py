@@ -59,6 +59,20 @@ Email: [dylan@urbancyclinginstitute.org](mailto:dylan@urbancyclinginstitute.org)
 Embedded Citizen Scientist, Ray-Action  
 """)
 
+st.markdown(
+    """
+    <div style='text-align: center; margin-top: 20px;'>
+        <p><strong>For any malfunctioning of this app, contact Desmond Lartey:</strong></p>
+        <a href='desmond@urbancyclinginstitute.org'>
+            <img src='https://example.com/logo.png' alt='Contact Desmond Lartey' width='50' height='50'>
+        </a>
+        <p><a href='https://linkedin.com/in/desmond-lartey'>LinkedIn Profile</a></p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
 st.sidebar.info("""
 [**Web App URL**]: (https://active-mobility-bonaire-uci.streamlit.app/)  
 [**GitHub repository**]: (https://github.com/desmond-lartey/BonaireWebMap)
