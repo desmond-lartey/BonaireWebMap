@@ -17,9 +17,15 @@ st.sidebar.image(logo)
 # Home Page Content
 st.header("Enhancing Active Mobility in Bonaire")
 st.markdown("""
-In recent years, global initiatives have emphasized the need to increase physical activity levels, especially through walking and cycling, to improve public and planetary health. The Caribbean Dutch municipality of Bonaire wants to enhance active mobility and promote health equity among its residents.
+In recent years, global initiatives have emphasized the need to increase physical activity levels, 
+especially through walking and cycling, to improve public and planetary health. 
+The Caribbean Dutch municipality of Bonaire wants to enhance active mobility and promote 
+health equity among its residents.
 
-This effort, supported by the Netherlands’ Ministry of Public Health, involves a multidisciplinary team including researchers from the Urban Cycling Institute, local government staff, and key stakeholders on the island. The objective is to integrate physical activity into daily life, addressing all related health conditions prevalent in the region.
+This effort, supported by the Netherlands’ Ministry of Public Health, involves a 
+multidisciplinary team including researchers from the Urban Cycling Institute, local government staff, 
+and key stakeholders on the island. The objective is to integrate physical activity into daily life, 
+addressing all related health conditions prevalent in the region.
 """)
 
 # st.image("https://urbancyclinginstitute.org/wp-content/uploads/2024/01/active-mobility-Bonaire.jpeg", caption="Bonaire")
