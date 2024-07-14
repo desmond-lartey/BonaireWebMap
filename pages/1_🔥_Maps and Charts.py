@@ -12,10 +12,14 @@ def get_project_root():
 def load_image_files_from_directory(directory="Maps", extensions=("jpg", "jpeg", "png", "gif")):
     project_root = get_project_root()
     directory_path = os.path.join(project_root, directory)
-    if os.path.exists(directory_path):
-        return [f for f in listdir(directory_path) if f.lower().endswith(extensions)]
-    else:
-        st.error(f"Directory not found at {directory_path}")
+    try:
+        if os.path.exists(directory_path):
+            return [f for f in os.listdir(directory_path) if f.lower().endswith(extensions)]
+        else:
+            st.error(f"Directory not found at {directory_path}")
+            return []
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
         return []
 
 # Load files from the Maps directory
