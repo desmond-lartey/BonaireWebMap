@@ -4,7 +4,7 @@ from math import ceil
 import pandas as pd
 
 # Set the directory for images, maps, and charts
-image_directory = r'C:/Users/Gebruiker/Desktop/My Lab/Bonaire/BonaireWebMap/Maps/Walkingtime.png'
+image_directory = r'C:\Users\Gebruiker\Desktop\My Lab\Bonaire\BonaireWebMap\Maps\Walkingtime.png'
 map_directory = 'images/maps'
 chart_directory = 'images/charts'
 
