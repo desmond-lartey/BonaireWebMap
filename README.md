@@ -139,6 +139,9 @@ The impact assessment will evaluate the benefits of increased active mobility on
 ## References
 - Berrie, L., Feng, Z., Rice, D., Clemens, T., Williamson, L., & Dibben, C. (2024). Does cycle commuting reduce the risk of mental ill-health? An instrumental variable analysis using distance to nearest cycle path. *International Journal of Epidemiology*, 53(1), dyad153. https://doi.org/10.1093/ije/dyad153
 
+- Novack, T., Wang, Z., & Zipf, A. (2018). A system for generating customized pleasant pedestrian routes based on OpenStreetMap data. Sensors, 18(11), 3794.  https://doi.org/10.3390/s18113794
+- Ewing, R., & Cervero, R. (2010). Travel and the built environment: A meta-analysis. Journal of the American planning association, 76(3), 265-294. https://doi.org/10.1080/01944361003766766
+
 ## Conclusion
 This project aims to improve the health and well-being of Bonaire residents by promoting active mobility. Combining local knowledge, involving community stakeholders, spatial analysis of the area helps us to understand better what active mobility policy options exist for Bonaire.
 For any inquiries regarding the execution of the project, please contact:
