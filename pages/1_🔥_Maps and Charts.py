@@ -83,3 +83,22 @@ cols = st.columns(len(image_files))
 for i, image_file in enumerate(image_files):
     with cols[i]:
         st.image(os.path.join(get_project_root(), "Maps", image_file), caption=f'{image_file}')
+
+
+
+# Execute the Streamlit app
+if __name__ == '__main__':
+    app()
+
+
+hide_github_icon = """
+    <style>
+        .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob, 
+        .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137, 
+        .viewerBadge_text__1JaDK { display: none; } 
+        #MainMenu { visibility: hidden; } 
+        footer { visibility: hidden; } 
+        header { visibility: hidden; }
+    </style>
+"""
+st.markdown(hide_github_icon, unsafe_allow_html=True)
