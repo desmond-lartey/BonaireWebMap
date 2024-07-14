@@ -87,8 +87,8 @@ for i, image_file in enumerate(image_files):
 
 
 # Execute the Streamlit app
-if __name__ == '__main__':
-    app()
+# if __name__ == '__main__':
+#     app()
 
 
 hide_github_icon = """
