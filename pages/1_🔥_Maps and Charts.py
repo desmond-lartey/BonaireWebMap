@@ -1,22 +1,30 @@
 import streamlit as st
-from os import listdir
+import os
 from math import ceil
 import pandas as pd
 
-# Set the directory for images, maps, and charts
-image_directory = r'C:\Users\Gebruiker\Desktop\My Lab\Bonaire\BonaireWebMap\Maps\Walkingtime.png'
-# map_directory = 'images/maps'
-# chart_directory = 'images/charts'
+# Function to get the project root directory
+def get_project_root():
+    base_path = os.path.dirname(__file__)
+    return os.path.join(base_path, os.pardir)
 
-# List files in each directory
-image_files = listdir(image_directory)
-# map_files = listdir(map_directory)
-# chart_files = listdir(chart_directory)
+# Function to load all image files from the Maps directory
+def load_image_files_from_directory(directory="Maps", extensions=("jpg", "jpeg", "png", "gif")):
+    project_root = get_project_root()
+    directory_path = os.path.join(project_root, directory)
+    if os.path.exists(directory_path):
+        return [f for f in listdir(directory_path) if f.lower().endswith(extensions)]
+    else:
+        st.error(f"Directory not found at {directory_path}")
+        return []
+
+# Load files from the Maps directory
+image_files = load_image_files_from_directory()
 
 def initialize(files):    
-    df = pd.DataFrame({'file':files,
-                       'incorrect':[False]*len(files),
-                       'label':['']*len(files)})
+    df = pd.DataFrame({'file': files,
+                       'incorrect': [False] * len(files),
+                       'label': [''] * len(files)})
     df.set_index('file', inplace=True)
     return df
 
@@ -48,7 +56,7 @@ grid = st.columns(row_size)
 col = 0
 for image in batch:
     with grid[col]:
-        st.image(f'{image_directory}/{image}', caption='bike')
+        st.image(os.path.join(get_project_root(), "Maps", image), caption='bike')
         st.checkbox("Incorrect", key=f'incorrect_{image}', 
                     value=df.at[image, 'incorrect'], 
                     on_change=update, args=(image, 'incorrect'))
@@ -66,14 +74,8 @@ st.write('## Corrections')
 st.dataframe(df[df['incorrect'] == True])
 
 # Display maps and charts
-st.write('## Maps')
-map_cols = st.columns(len(map_files))
-for i, map_file in enumerate(map_files):
-    with map_cols[i]:
-        st.image(f'{map_directory}/{map_file}', caption=f'Map {i+1}')
-
-st.write('## Charts')
-chart_cols = st.columns(len(chart_files))
-for i, chart_file in enumerate(chart_files):
-    with chart_cols[i]:
-        st.image(f'{chart_directory}/{chart_file}', caption=f'Chart {i+1}')
+st.write('## Maps and Charts')
+cols = st.columns(len(image_files))
+for i, image_file in enumerate(image_files):
+    with cols[i]:
+        st.image(os.path.join(get_project_root(), "Maps", image_file), caption=f'{image_file}')
