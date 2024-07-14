@@ -5,13 +5,13 @@ import pandas as pd
 
 # Set the directory for images, maps, and charts
 image_directory = r'C:\Users\Gebruiker\Desktop\My Lab\Bonaire\BonaireWebMap\Maps\Walkingtime.png'
-map_directory = 'images/maps'
-chart_directory = 'images/charts'
+# map_directory = 'images/maps'
+# chart_directory = 'images/charts'
 
 # List files in each directory
 image_files = listdir(image_directory)
-map_files = listdir(map_directory)
-chart_files = listdir(chart_directory)
+# map_files = listdir(map_directory)
+# chart_files = listdir(chart_directory)
 
 def initialize(files):    
     df = pd.DataFrame({'file':files,
