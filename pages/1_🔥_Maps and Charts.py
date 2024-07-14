@@ -60,7 +60,7 @@ grid = st.columns(row_size)
 col = 0
 for image in batch:
     with grid[col]:
-        st.image(os.path.join(get_project_root(), "Maps", image), caption='bike')
+        st.image(os.path.join(get_project_root(), "Maps", image), caption='ToWalkto')
         st.checkbox("Incorrect", key=f'incorrect_{image}', 
                     value=df.at[image, 'incorrect'], 
                     on_change=update, args=(image, 'incorrect'))
