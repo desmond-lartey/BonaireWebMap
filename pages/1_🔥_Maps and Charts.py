@@ -41,9 +41,9 @@ else:
 
 controls = st.columns(3)
 with controls[0]:
-    batch_size = st.select_slider("Batch size:", range(10, 110, 10))
+    batch_size = st.select_slider("Batch size:", range(100, 110, 10))
 with controls[1]:
-    row_size = st.select_slider("Row size:", range(1, 6), value=2)
+    row_size = st.select_slider("Row size:", range(1, 6), value=5)
 num_batches = ceil(len(image_files) / batch_size)
 with controls[2]:
     page = st.selectbox("Page", range(1, num_batches + 1))
