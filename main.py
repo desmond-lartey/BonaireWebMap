@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 # Customize the sidebar
 st.sidebar.title("About")
 st.sidebar.info("A Streamlit Application for Active Mobility \n<https://active-mobility-bonaire-uci.streamlit.app/>")
-logo = "https://i.imgur.com/UbOXYAU.png"
+logo = "https://prettymapp.streamlit.app/~/+/media/c6190cec50c70926d27e53b309e7a6d96a8f441f673d0dd977d5e3c1.png"
 st.sidebar.image(logo)
 
 # Page Title
