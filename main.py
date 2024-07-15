@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 # Customize the sidebar
 st.sidebar.title("About")
 st.sidebar.info("A Streamlit Application for Active Mobility \n<https://active-mobility-bonaire-uci.streamlit.app/>")
-logo = "https://prettymapp.streamlit.app/~/+/media/c6190cec50c70926d27e53b309e7a6d96a8f441f673d0dd977d5e3c1.png"
+logo = "https://cyclingresearchboard.com/wp-content/uploads/2024/01/Urban-cycling-institute-logo-red-1536x1024.png"
 st.sidebar.image(logo)
 
 # Page Title
