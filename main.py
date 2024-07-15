@@ -8,7 +8,11 @@ st.set_page_config(layout="wide")
 
 # Customize the sidebar
 st.sidebar.title("About")
-st.sidebar.info("A Streamlit Application for Active Mobility \n<https://active-mobility-bonaire-uci.streamlit.app/>\n     Start Date: 2024\n      Funding: Ministry of Health, Welfare and Sport")
+st.sidebar.info(
+    "A Streamlit Application for Active Mobility \n<https://active-mobility-bonaire-uci.streamlit.app/>\n"
+    "Start Date: 2024\n"
+    "Funding: Ministry of Health, Welfare and Sport"
+)
 logo = "https://cyclingresearchboard.com/wp-content/uploads/2024/01/Urban-cycling-institute-logo-red-1536x1024.png"
 st.sidebar.image(logo)
 
