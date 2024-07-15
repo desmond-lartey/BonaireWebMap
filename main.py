@@ -13,6 +13,7 @@ st.sidebar.info(
     "<https://active-mobility-bonaire-uci.streamlit.app/>\n"
     "\n"
     "Start Date: 2024\n"
+    "\n"
     "Funding: Ministry of Health, Welfare and Sport"
 )
 
