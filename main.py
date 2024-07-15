@@ -10,7 +10,7 @@ st.set_page_config(layout="wide")
 st.sidebar.title("About")
 st.sidebar.info(
     "A Streamlit Application for Active Mobility\n"
-    "<https://active-mobility-bonaire-uci.streamlit.app/>\n"
+    # "<https://active-mobility-bonaire-uci.streamlit.app/>\n"
     "\n"
     "Start Date: 2024\n"
     "\n"
