@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 # Customize the sidebar
 st.sidebar.title("About")
 st.sidebar.info(
-    "A Streamlit Application for Active Mobility\n"
+    "A Streamlit Application for Active Mobility, Bonaire\n"
     # "<https://active-mobility-bonaire-uci.streamlit.app/>\n"
     "\n"
     "Start Date: 2024\n"
