@@ -14,7 +14,7 @@ st.sidebar.info(
     "\n"
     "Start Date: 2024\n"
     "\n"
-    "Funding: Ministry of Health, Welfare and Sport"
+    "Funding: Ministry of Health, Welfare and Sport, Netherlands"
 )
 
 logo = "https://cyclingresearchboard.com/wp-content/uploads/2024/01/Urban-cycling-institute-logo-red-1536x1024.png"
