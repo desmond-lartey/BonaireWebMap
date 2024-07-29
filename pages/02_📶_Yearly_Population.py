@@ -17,7 +17,7 @@ def load_neighborhood_population_data(filename="NeighborhoodPopulationByYear_CSV
         return pd.DataFrame()
 
 # Adjusted function to create a treemap for neighborhood population data considering the new data structure
-@st.experimental_memo
+@st.cache_data
 def create_neighborhood_treemap(data):
     # Ensure column names exist in DataFrame before melting
     existing_columns = data.columns.tolist()
