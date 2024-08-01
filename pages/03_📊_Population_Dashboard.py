@@ -134,7 +134,7 @@ def app():
     #-----We can continue with other visualisation fucntions----
     if not data.empty:
         # Apply a threshold to filter out neighborhoods with insignificant populations for clarity in visualization
-        threshold = st.slider('Drag the bar to regulate the Population Threshold for Visualization', min_value=50, max_value=2000, value=50, step=10)
+        threshold = st.slider('Drag the bar to regulate the Population Threshold for Visualization', min_value=500, max_value=2000, value=50, step=10)
         significant_data = data[data['_sum'] > threshold]
 
         # Display Overall Population Distribution Across All Significant Neighborhoods
