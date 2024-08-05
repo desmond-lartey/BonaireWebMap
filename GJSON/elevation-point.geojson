@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "NAME": "Mount Brandaris", "NAME_EN": null, "NATURAL": "peak", "ELE": "241", "MOUNTAIN_P": null, "OSM_TYPE": "node", "OSM_ID": 9523939999 }, "geometry": { "type": "Point", "coordinates": [ -68.3993415, 12.2738773 ] } },
+{ "type": "Feature", "properties": { "NAME": null, "NAME_EN": null, "NATURAL": "peak", "ELE": null, "MOUNTAIN_P": null, "OSM_TYPE": "node", "OSM_ID": 9906084429 }, "geometry": { "type": "Point", "coordinates": [ -68.387517, 12.2940785 ] } }
+]
+}

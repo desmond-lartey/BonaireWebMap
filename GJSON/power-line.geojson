@@ -1,0 +1,19 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "POWER": "minor_line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 332473729 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.314759, 12.2126376 ], [ -68.3145755, 12.211341 ], [ -68.314436, 12.2101665 ], [ -68.3143073, 12.2090655 ], [ -68.3110886, 12.2063496 ], [ -68.3089214, 12.204829 ], [ -68.3075589, 12.2040006 ], [ -68.306501, 12.203381 ], [ -68.3059986, 12.203064 ], [ -68.3047737, 12.2019338 ], [ -68.303531, 12.2009353 ], [ -68.3011492, 12.1988852 ], [ -68.2989908, 12.1969789 ], [ -68.2971079, 12.1956891 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052332 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2847059, 12.108179 ], [ -68.2857586, 12.108501 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052333 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2847059, 12.108179 ], [ -68.2839501, 12.108892 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052334 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2847059, 12.108179 ], [ -68.2844987, 12.107141 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052335 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2860647, 12.1068512 ], [ -68.2871177, 12.1071791 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052336 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2860647, 12.1068512 ], [ -68.2852985, 12.1075597 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052337 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2860647, 12.1068512 ], [ -68.2858648, 12.1058122 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052338 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2842614, 12.1077627 ], [ -68.2837979, 12.1068088 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052339 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2842614, 12.1077627 ], [ -68.2853693, 12.107802 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052340 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2842614, 12.1077627 ], [ -68.2837094, 12.1086359 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052341 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2856174, 12.1064236 ], [ -68.285069, 12.10731 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052342 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2856174, 12.1064236 ], [ -68.2867254, 12.1064683 ] ] } },
+{ "type": "Feature", "properties": { "POWER": "line", "VOLTAGE": null, "NAME": null, "OSM_TYPE": "way", "OSM_ID": 1209052343 }, "geometry": { "type": "LineString", "coordinates": [ [ -68.2856174, 12.1064236 ], [ -68.2851669, 12.1054756 ] ] } }
+]
+}
