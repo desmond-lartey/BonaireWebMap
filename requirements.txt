@@ -1,34 +1,25 @@
-# --- Prebuilt GDAL wheel to avoid compilation issues ---
 --find-links=https://girder.github.io/large_image_wheels
 GDAL
-
-# --- Core geospatial stack ---
 geopandas
-rasterstats
+rasterio
 fiona
 shapely
 pyproj
-rasterio
-folium
+rasterstats
 leafmap
 osmnx
 networkx
 openpyxl
-
-# --- Streamlit ecosystem ---
-streamlit
-streamlit-folium
-streamlit-option-menu
-
-# --- Data handling & visualization ---
 pandas
 numpy
 plotly
 altair
 seaborn
-
-# --- Optional utilities ---
+streamlit
+streamlit-folium
+streamlit-option-menu
 psycopg2-binary
 localtileserver
-nbserverproxy
-jupyter-server-proxy
+earthengine-api
+geemap
+folium
