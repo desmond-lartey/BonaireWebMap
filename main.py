@@ -33,7 +33,7 @@ health equity among its residents.
 This effort, supported by the Netherlands’ Ministry of Public Health, involves a 
 multidisciplinary team including researchers from the Urban Cycling Institute, local government staff, 
 and key stakeholders on the island. The objective is to integrate physical activity into daily life, 
-addressing all related health conditions prevalent in the region.
+addressing all related health conditions prevalent in the region. 
 """)
 
 # st.image("https://urbancyclinginstitute.org/wp-content/uploads/2024/01/active-mobility-Bonaire.jpeg", caption="Bonaire")
